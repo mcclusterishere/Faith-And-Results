@@ -7,7 +7,7 @@
   <meta name="description" content="Demo rebuild of faithandresults.com: Freedom, Inc.'s economic development, education, housing, and sustainability work — with the FDIC, HUD, and NeighborWorks credentials on the front door and type built for every pair of eyes.">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="Freedom, Inc. — Faith, Backed by Results">
-  <meta property="og:description" content="Economic development, education, housing, and sustainability — delivered with faith communities in sixteen American cities.">
+  <meta property="og:description" content="Economic development, education, housing, and sustainability — delivered with faith communities in seventeen American cities.">
   <meta name="theme-color" content="#101c2c">
   <meta property="og:image" content="assets/og.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -125,6 +125,53 @@
     .connect .direct { margin-top: 2rem; font-size: 1.25rem; font-weight: 700; }
     .connect .direct a { color: var(--gold); }
 
+    /* motion: gentle, and only for those who want it */
+    @media (prefers-reduced-motion: no-preference) {
+      .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+      .rv.in { opacity: 1; transform: none; }
+    }
+    .nav a.on { color: var(--gold); border-bottom: 4px solid var(--gold); padding-bottom: 2px; }
+
+    /* the counting band */
+    .band { background: var(--navy); color: var(--cream); padding: 2.2rem clamp(1.2rem, 4vw, 2.6rem); }
+    .band .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr)); gap: 1.4rem; text-align: center; }
+    .band b { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 3.2rem; color: var(--gold); display: block; line-height: 1; }
+    .band span { font-size: 1.1rem; font-weight: 700; display: block; margin-top: 0.35rem; }
+
+    /* the constellation */
+    .sky { margin-top: 1.8rem; background: var(--navy); border-radius: 20px; padding: 1rem; }
+    .sky svg { width: 100%; height: auto; display: block; }
+    .sky .dot { fill: var(--gold); cursor: pointer; transition: r 0.15s; }
+    .sky .dot:hover { r: 14; }
+    .sky .dot.lit { fill: #fff; }
+    .sky text { fill: var(--cream); font-family: "Atkinson", Verdana, sans-serif; font-size: 19px; font-weight: 700; pointer-events: none; }
+    .sky line { stroke: rgba(201, 154, 46, 0.28); stroke-width: 2; }
+
+    /* pillar deep-dives: native accordions, elder-sized */
+    .pillar details { margin-top: 0.7rem; }
+    .pillar summary { cursor: pointer; font-weight: 700; font-size: 1.08rem; color: var(--clay); padding: 0.5rem 0; list-style-position: inside; }
+    .pillar summary:hover { color: var(--navy); }
+    .pillar details p { padding: 0.3rem 0 0.2rem; }
+
+    /* the founder's words */
+    .quote { background: var(--navy); color: var(--cream); text-align: center; }
+    .quote blockquote { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: clamp(1.7rem, 5.5vw, 2.9rem);
+      line-height: 1.25; max-width: 46rem; margin: 0 auto; }
+    .quote blockquote::before { content: "\201C"; color: var(--gold); font-size: 1.4em; display: block; line-height: 0.6; margin-bottom: 0.2em; }
+    .quote cite { display: block; font-style: normal; font-family: "Atkinson", Verdana, sans-serif; font-weight: 700;
+      font-size: 1.15rem; color: var(--gold); margin-top: 1.2rem; }
+
+    /* gold rule between light sections */
+    .rule { display: flex; align-items: center; gap: 0.8rem; max-width: 60rem; margin: 0 auto; padding: 0 clamp(1.2rem, 4vw, 2.6rem); }
+    .rule::before, .rule::after { content: ""; flex: 1; height: 3px; background: var(--gold); border-radius: 3px; }
+    .rule span { color: var(--gold); font-size: 1.4rem; }
+
+    /* back to top: big, gold, unmissable */
+    .top { position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 60; width: 64px; height: 64px; border-radius: 50%;
+      background: var(--gold); color: var(--navy); border: 3px solid var(--navy); font-size: 1.7rem; font-weight: 700;
+      cursor: pointer; display: none; box-shadow: 0 6px 18px rgba(16, 28, 44, 0.35); }
+    .top.show { display: block; }
+
     footer { background: var(--navy); color: var(--cream); text-align: center; padding: 0 1rem 2.6rem; font-size: 1rem; font-weight: 700; }
     footer small { display: block; font-size: 1rem; font-weight: 400; margin-top: 0.4rem; color: rgba(247, 241, 227, 0.75); }
   </style>
@@ -150,7 +197,7 @@
       <p class="kick">Freedom, Inc. · Faith Restoration Empowerment &amp; Economic Development Outreach Ministries</p>
       <h1>Faith, backed<br>by results.</h1>
       <p class="sub">Economic development, education, housing, and sustainability — delivered with
-        faith communities in <strong>sixteen American cities</strong>.</p>
+        faith communities in <strong id="heroCount">seventeen American cities</strong>.</p>
       <div class="seals" aria-label="Consulting credentials">
         <span class="seal">FDIC</span>
         <span class="seal">HUD</span>
@@ -164,8 +211,18 @@
     </div>
   </section>
 
+  <!-- THE RECORD, COUNTED -->
+  <div class="band" aria-label="The record in numbers">
+    <div class="wrap">
+      <div><b data-count="17">0</b><span>American cities</span></div>
+      <div><b data-count="4">0</b><span>Pillars of work</span></div>
+      <div><b data-count="3">0</b><span>Federal Home Loan Banks</span></div>
+      <div><b data-count="1">0</b><span>Mission</span></div>
+    </div>
+  </div>
+
   <!-- THE WORK -->
-  <section id="work">
+  <section id="work" class="rv">
     <div class="wrap">
       <p class="kick">The work</p>
       <h2>Four pillars. One mission.</h2>
@@ -174,10 +231,18 @@
       <div class="pillars">
         <div class="pillar"><span class="num">01</span><h3>Economic Development</h3>
           <p>Financial empowerment with the institutions that move money — from foreclosure prevention
-            with the FDIC and Federal Home Loan Banks to community lending partnerships.</p></div>
+            with the FDIC and Federal Home Loan Banks to community lending partnerships.</p>
+          <details><summary>See how this works</summary>
+            <p>Foreclosure prevention and intervention programs built with the FDIC, HUD, and the Federal
+              Home Loan Banks of Atlanta, Boston, and San Francisco — plus state and municipal housing
+              finance authorities — bringing bank-grade tools to church-anchored communities.</p></details></div>
         <div class="pillar"><span class="num">02</span><h3>Education &amp; Training</h3>
           <p>Workforce and business training designed and delivered nationally — including training for
-            NeighborWorks America, the country's largest HUD housing intermediary.</p></div>
+            NeighborWorks America, the country's largest HUD housing intermediary.</p>
+          <details><summary>See how this works</summary>
+            <p>The Connecticut Faith Jobs Collaborative designs workforce programs — race and gender
+              neutral by design — that move residents into building-trade employment and training,
+              through the congregations they already trust.</p></details></div>
         <div class="pillar"><span class="num">03</span><h3>Housing</h3>
           <p>Homes saved and homes built: foreclosure intervention, housing counseling, and development
             with state and municipal housing finance authorities.</p></div>
@@ -188,8 +253,10 @@
     </div>
   </section>
 
+  <div class="rule" aria-hidden="true"><span>★</span></div>
+
   <!-- COLLABORATIVES -->
-  <section class="collab" id="collab">
+  <section class="collab rv" id="collab">
     <div class="wrap">
       <p class="kick">The collaboratives</p>
       <h2>Programs in plain English.</h2>
@@ -212,18 +279,19 @@
   </section>
 
   <!-- CITIES -->
-  <section id="cities">
+  <section id="cities" class="rv">
     <div class="wrap">
       <p class="kick">The footprint</p>
       <h2 id="cityCount">The cities. One screen.</h2>
       <p class="sub">Tap any city — projects and affiliates load here as the client supplies each city's story.</p>
+      <div class="sky rv" aria-hidden="true"><svg id="skyMap" viewBox="0 0 1000 560"></svg></div>
       <div class="cities-grid" id="cityGrid"></div>
       <div class="citynote" id="cityNote" aria-live="polite"></div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section class="about" id="about">
+  <section class="about rv" id="about">
     <div class="wrap">
       <p class="kick">About</p>
       <h2>Led from the pulpit and the boardroom.</h2>
@@ -247,8 +315,14 @@
     </div>
   </section>
 
+  <!-- THE FOUNDER'S WORDS -->
+  <section class="quote dark rv">
+    <blockquote>Change the course of our state, our nation, and of the world.</blockquote>
+    <cite>— Rev. Carl McCluster · Shiloh Baptist Church, Bridgeport</cite>
+  </section>
+
   <!-- NEWS & EVENTS: self-expiring — stale entries hide themselves -->
-  <section id="news">
+  <section id="news" class="rv">
     <div class="wrap">
       <p class="kick">News &amp; events</p>
       <h2>What's happening now.</h2>
@@ -257,7 +331,7 @@
   </section>
 
   <!-- CONNECT -->
-  <section class="connect dark" id="connect">
+  <section class="connect dark rv" id="connect">
     <div class="wrap">
       <p class="kick">Connect</p>
       <h2>Four doors. All open.</h2>
@@ -267,7 +341,7 @@
         <a class="door" href="mailto:info@faithandresults.com?subject=Training%20request"><b>Book training</b>
           <span>Workforce, housing counseling, and capacity-building programs.</span></a>
         <a class="door" href="mailto:info@faithandresults.com?subject=Newsletter%20signup"><b>Stay close</b>
-          <span>The newsletter — news, events, and wins from all fifteen cities.</span></a>
+          <span>The newsletter — news, events, and wins from all seventeen cities.</span></a>
         <a class="door" href="mailto:info@faithandresults.com?subject=Giving"><b>Give</b>
           <span>Fuel the mission — every gift builds capacity in a community.</span></a>
       </div>
@@ -277,6 +351,7 @@
   </section>
 
   </main>
+  <button class="top" id="toTop" type="button" aria-label="Back to the top">↑</button>
   <footer>
     FREEDOM, INC. — Faith, backed by results.
     <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible — type built for every pair of eyes.</small>
@@ -287,7 +362,7 @@
       "use strict";
       var CITIES = ["Atlanta, GA", "Baltimore, MD", "Bridgeport, CT", "Chicago, IL", "Cleveland, OH",
         "Denver, CO", "Detroit, MI", "Houston, TX", "Little Rock, AR", "New Britain, CT",
-        "New Orleans, LA", "Oakland, CA", "Orlando, FL", "Providence, RI", "Tulsa, OK", "Washington, D.C."];
+        "New Orleans, LA", "Oakland, CA", "Orlando, FL", "Providence, RI", "San Antonio, TX", "Tulsa, OK", "Washington, D.C."];
       var KNOWN = {
         "Bridgeport, CT": "Home base — <b>Shiloh Baptist Church</b> and the Faith Community Development Corporation. Rev. McCluster chaired the South End Neighborhood Revitalization Zone here.",
         "New Britain, CT": "A collaborative initiative with <b>Mayor Erin Stewart</b>, <b>Bishop Dale Shaw</b>, and the Black Ministers Alliance of New Britain.",
@@ -311,6 +386,108 @@
           note.classList.add("show");
         });
       });
+
+      /* ---- the constellation: seventeen lights, real geography ---- */
+      var GEO = {
+        "Oakland, CA": [37.8, -122.3], "Denver, CO": [39.7, -105.0], "Tulsa, OK": [36.2, -95.9],
+        "Little Rock, AR": [34.7, -92.3], "Houston, TX": [29.8, -95.4], "San Antonio, TX": [29.4, -98.5],
+        "New Orleans, LA": [30.0, -90.1], "Chicago, IL": [41.9, -87.6], "Detroit, MI": [42.3, -83.0],
+        "Cleveland, OH": [41.5, -81.7], "Atlanta, GA": [33.7, -84.4], "Orlando, FL": [28.5, -81.4],
+        "Washington, D.C.": [38.9, -77.0], "Baltimore, MD": [39.3, -76.6], "Providence, RI": [41.8, -71.4],
+        "Bridgeport, CT": [41.2, -73.2], "New Britain, CT": [41.7, -72.8]
+      };
+      var LABEL_SHIFT = { "Baltimore, MD": [14, 20], "Washington, D.C.": [-14, 26], "New Britain, CT": [-16, -12],
+        "Bridgeport, CT": [-16, 26], "Providence, RI": [-16, 4], "Houston, TX": [-16, 30], "San Antonio, TX": [-30, 30] };
+      var END = { "Washington, D.C.": 1, "New Britain, CT": 1, "Bridgeport, CT": 1, "Providence, RI": 1 };
+      var LINKS = [["Oakland, CA","Denver, CO"],["Denver, CO","Tulsa, OK"],["Tulsa, OK","Little Rock, AR"],
+        ["Little Rock, AR","New Orleans, LA"],["Houston, TX","San Antonio, TX"],["Houston, TX","New Orleans, LA"],
+        ["New Orleans, LA","Atlanta, GA"],["Atlanta, GA","Orlando, FL"],["Atlanta, GA","Washington, D.C."],
+        ["Denver, CO","Chicago, IL"],["Chicago, IL","Detroit, MI"],["Detroit, MI","Cleveland, OH"],
+        ["Cleveland, OH","Washington, D.C."],["Washington, D.C.","Baltimore, MD"],["Baltimore, MD","Bridgeport, CT"],
+        ["Bridgeport, CT","New Britain, CT"],["New Britain, CT","Providence, RI"]];
+      function XY(city) {
+        var g = GEO[city];
+        var x = (g[1] + 125) / (125 - 69) * 940 + 30;
+        var y = (44.5 - g[0]) / (44.5 - 27.5) * 490 + 30;
+        return [Math.round(x), Math.round(y)];
+      }
+      var svg = document.getElementById("skyMap");
+      if (svg) {
+        var parts = [];
+        LINKS.forEach(function (l) {
+          if (!GEO[l[0]] || !GEO[l[1]]) return;
+          var a = XY(l[0]), b2 = XY(l[1]);
+          parts.push('<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b2[0] + '" y2="' + b2[1] + '"/>');
+        });
+        CITIES.forEach(function (c) {
+          if (!GEO[c]) return;
+          var p = XY(c), sh = LABEL_SHIFT[c] || [12, 6];
+          parts.push('<circle class="dot" data-city="' + c + '" cx="' + p[0] + '" cy="' + p[1] + '" r="10"/>');
+          parts.push('<text x="' + (p[0] + sh[0]) + '" y="' + (p[1] + sh[1]) + '"' +
+            (END[c] ? ' text-anchor="end"' : "") + ">" + c.split(",")[0] + "</text>");
+        });
+        svg.innerHTML = parts.join("");
+        svg.querySelectorAll(".dot").forEach(function (d) {
+          d.addEventListener("click", function () {
+            svg.querySelectorAll(".dot").forEach(function (x) { x.classList.toggle("lit", x === d); });
+            var name = d.getAttribute("data-city");
+            grid.querySelectorAll(".city").forEach(function (btn) {
+              if (btn.textContent === name) btn.click();
+            });
+          });
+        });
+      }
+
+      /* ---- the counting band: numbers rise once, when seen ---- */
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function countUp(el) {
+        var end = +el.getAttribute("data-count");
+        if (reduce) { el.textContent = end; return; }
+        var t0 = null;
+        function step(t) {
+          if (!t0) t0 = t;
+          var k = Math.min(1, (t - t0) / 1200);
+          el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+          if (k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      if ("IntersectionObserver" in window) {
+        var seen = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            if (e.target.hasAttribute("data-count")) countUp(e.target);
+            else e.target.classList.add("in");
+            seen.unobserve(e.target);
+          });
+        }, { threshold: 0.25 });
+        document.querySelectorAll("[data-count], .rv").forEach(function (el) { seen.observe(el); });
+      } else {
+        document.querySelectorAll("[data-count]").forEach(function (el) { el.textContent = el.getAttribute("data-count"); });
+        document.querySelectorAll(".rv").forEach(function (el) { el.classList.add("in"); });
+      }
+
+      /* ---- scrollspy: the nav knows where you are ---- */
+      var navLinks = document.querySelectorAll(".nav div a");
+      if ("IntersectionObserver" in window) {
+        var spy = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            navLinks.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
+          });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        ["work", "collab", "cities", "about", "news", "connect"].forEach(function (id) {
+          var el = document.getElementById(id); if (el) spy.observe(el);
+        });
+      }
+
+      /* ---- the way back up: one big gold button ---- */
+      var top = document.getElementById("toTop");
+      window.addEventListener("scroll", function () {
+        top.classList.toggle("show", window.scrollY > 900);
+      }, { passive: true });
+      top.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
+
       /* News & Events: anything older than ~18 months hides itself.
          The old site showed a 2020 event in 2026 — this site cannot. */
       fetch("data/news.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
