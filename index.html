@@ -7,8 +7,26 @@
   <meta name="description" content="Demo rebuild of faithandresults.com: Freedom, Inc.'s economic development, education, housing, and sustainability work — with the FDIC, HUD, and NeighborWorks credentials on the front door and type built for every pair of eyes.">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="Freedom, Inc. — Faith, Backed by Results">
-  <meta property="og:description" content="Economic development, education, housing, and sustainability — delivered with faith communities in fifteen American cities.">
+  <meta property="og:description" content="Economic development, education, housing, and sustainability — delivered with faith communities in sixteen American cities.">
   <meta name="theme-color" content="#101c2c">
+  <meta property="og:image" content="assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- canonical switches to https://faithandresults.com/ at domain cutover -->
+  <link rel="preload" href="assets/fonts/bitter-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Freedom, Inc.",
+    "alternateName": "F.R.E.E.D.O.M. — Faith Restoration Empowerment & Economic Development Outreach Ministries",
+    "url": "https://faithandresults.com",
+    "telephone": "+1-203-549-8703",
+    "email": "info@faithandresults.com",
+    "founder": { "@type": "Person", "name": "Rev. Carl McCluster" },
+    "knowsAbout": ["Economic development", "Workforce training", "Housing", "Foreclosure prevention", "Community sustainability"]
+  }
+  </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23101c2c%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c99a2e%22>★</text></svg>">
   <style>
     /* ============================================================
@@ -24,6 +42,12 @@
 
     :root { --navy: #101c2c; --navy-2: #1a2b42; --cream: #f7f1e3; --cream-2: #efe6d2; --gold: #c99a2e; --clay: #9c3d22; --ink: #14100c; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    .skip { position: absolute; left: -999px; top: 0; z-index: 100; background: var(--gold); color: var(--navy);
+      font-weight: 700; font-size: 1.1rem; padding: 0.8em 1.4em; border-radius: 0 0 12px 0; }
+    .skip:focus { left: 0; }
+    a:focus-visible, button:focus-visible { outline: 4px solid var(--gold); outline-offset: 3px; }
+    @media print { .nav, .skip { display: none; } .dark, .hero, .connect { background: #fff !important; color: #000 !important; }
+      .hero h1, .connect h2 { color: #000 !important; } body { font-size: 14pt; } }
     html { font-size: 20px; scroll-behavior: smooth; }
     body { background: var(--cream); color: var(--ink); font-family: "Atkinson", Verdana, sans-serif; font-size: 1.1rem; line-height: 1.75; }
     h1, h2, h3 { font-family: "BitterSlab", Georgia, serif; font-weight: 900; color: var(--navy); line-height: 1.06; }
@@ -106,6 +130,7 @@
   </style>
 </head>
 <body>
+  <a class="skip" href="#work">Skip to the work</a>
   <nav class="nav" aria-label="Site">
     <b>FREEDOM<span>,</span> INC.</b>
     <div>
@@ -113,17 +138,19 @@
       <a href="#collab">Collaboratives</a>
       <a href="#cities">Cities</a>
       <a href="#about">About</a>
+      <a href="#news">News</a>
       <a href="#connect">Connect</a>
     </div>
   </nav>
 
+  <main>
   <!-- HERO: the credential wall is the front door -->
   <section class="hero dark" id="top">
     <div class="wrap">
       <p class="kick">Freedom, Inc. · Faith Restoration Empowerment &amp; Economic Development Outreach Ministries</p>
       <h1>Faith, backed<br>by results.</h1>
       <p class="sub">Economic development, education, housing, and sustainability — delivered with
-        faith communities in <strong>fifteen American cities</strong>.</p>
+        faith communities in <strong>sixteen American cities</strong>.</p>
       <div class="seals" aria-label="Consulting credentials">
         <span class="seal">FDIC</span>
         <span class="seal">HUD</span>
@@ -188,10 +215,10 @@
   <section id="cities">
     <div class="wrap">
       <p class="kick">The footprint</p>
-      <h2>Fifteen cities. One screen.</h2>
+      <h2 id="cityCount">The cities. One screen.</h2>
       <p class="sub">Tap any city — projects and affiliates load here as the client supplies each city's story.</p>
       <div class="cities-grid" id="cityGrid"></div>
-      <div class="citynote" id="cityNote"></div>
+      <div class="citynote" id="cityNote" aria-live="polite"></div>
     </div>
   </section>
 
@@ -200,8 +227,10 @@
     <div class="wrap">
       <p class="kick">About</p>
       <h2>Led from the pulpit and the boardroom.</h2>
+      <p class="sub" style="font-size:1.3rem; font-weight:700; color:var(--navy); margin-top:0.4rem">
+        “Initiate and nurture renewal and restoration for our communities — in faith, with results.”</p>
       <div class="card">
-        <h3>Rev. McCluster</h3>
+        <h3>Rev. Carl McCluster</h3>
         <p>Senior Pastor of Shiloh Baptist Church in Bridgeport, Connecticut. Founder of the Faith
           Community Development Corporation — the faith-based CDC chartered by Shiloh — and former
           chairperson of Bridgeport's South End Neighborhood Revitalization Zone. Decades of work at the
@@ -215,6 +244,15 @@
           institutions across the country. <em>(Impact numbers publish here as the client supplies them —
           people trained, homes saved, dollars moved.)</em></p>
       </div>
+    </div>
+  </section>
+
+  <!-- NEWS & EVENTS: self-expiring — stale entries hide themselves -->
+  <section id="news">
+    <div class="wrap">
+      <p class="kick">News &amp; events</p>
+      <h2>What's happening now.</h2>
+      <div id="newsList" class="pillars" style="grid-template-columns:repeat(auto-fit,minmax(min(20rem,100%),1fr))"></div>
     </div>
   </section>
 
@@ -238,6 +276,7 @@
     </div>
   </section>
 
+  </main>
   <footer>
     FREEDOM, INC. — Faith, backed by results.
     <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible — type built for every pair of eyes.</small>
@@ -248,7 +287,7 @@
       "use strict";
       var CITIES = ["Atlanta, GA", "Baltimore, MD", "Bridgeport, CT", "Chicago, IL", "Cleveland, OH",
         "Denver, CO", "Detroit, MI", "Houston, TX", "Little Rock, AR", "New Britain, CT",
-        "New Orleans, LA", "Oakland, CA", "Orlando, FL", "Providence, RI", "Washington, D.C."];
+        "New Orleans, LA", "Oakland, CA", "Orlando, FL", "Providence, RI", "Tulsa, OK", "Washington, D.C."];
       var KNOWN = {
         "Bridgeport, CT": "Home base — <b>Shiloh Baptist Church</b> and the Faith Community Development Corporation. Rev. McCluster chaired the South End Neighborhood Revitalization Zone here.",
         "New Britain, CT": "A collaborative initiative with <b>Mayor Erin Stewart</b>, <b>Bishop Dale Shaw</b>, and the Black Ministers Alliance of New Britain.",
@@ -257,6 +296,9 @@
       };
       var grid = document.getElementById("cityGrid");
       var note = document.getElementById("cityNote");
+      var WORDS = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen"];
+      document.getElementById("cityCount").textContent = (WORDS[CITIES.length] || CITIES.length) + " cities. One screen.";
       grid.innerHTML = CITIES.map(function (c) {
         return '<button class="city" type="button">' + c + "</button>";
       }).join("");
@@ -269,6 +311,22 @@
           note.classList.add("show");
         });
       });
+      /* News & Events: anything older than ~18 months hides itself.
+         The old site showed a 2020 event in 2026 — this site cannot. */
+      fetch("data/news.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
+        var FRESH = 550 * 864e5;
+        var now = Date.now();
+        var items = (d.items || []).filter(function (i) { return now - new Date(i.date).getTime() < FRESH; });
+        var box = document.getElementById("newsList");
+        if (!items.length) {
+          box.innerHTML = '<div class="pillar"><h3>New season loading</h3><p>Fresh news and events publish here — nothing stale is ever shown. Call (203) 549-8703 for what\u2019s next.</p></div>';
+          return;
+        }
+        box.innerHTML = items.slice(0, 4).map(function (i) {
+          var dt = new Date(i.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+          return '<div class="pillar"><span class="num">' + i.tag + " \u00b7 " + dt + "</span><h3>" + i.title + "</h3><p>" + i.body + "</p></div>";
+        }).join("");
+      }).catch(function () { document.getElementById("newsList").innerHTML = ""; });
     })();
   </script>
 </body>
