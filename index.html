@@ -231,6 +231,39 @@
     .tab[aria-current="page"] { color: var(--gold); }
     .tab[aria-current="page"] svg { stroke-width: 2.9; }
 
+    /* ---- forms (elder-first: big fields, visible labels, plain errors) ---- */
+    .field { margin-top: 1.05rem; }
+    .field label { display: block; font-weight: 700; font-size: 1.05rem; color: var(--navy); margin-bottom: 0.3rem; }
+    .field .req { color: var(--clay); }
+    .field input, .field select, .field textarea { width: 100%; font-family: inherit; font-size: 1.1rem; color: var(--ink);
+      background: #fffdf7; border: 3px solid var(--navy); border-radius: 14px; padding: 0.75rem 0.9rem; }
+    .field textarea { min-height: 6.5rem; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: 4px solid var(--gold); outline-offset: 2px; }
+    .field .err { display: none; color: var(--clay); font-weight: 700; font-size: 0.98rem; margin-top: 0.25rem; }
+    .field.bad input, .field.bad select { border-color: var(--clay); }
+    .field.bad .err { display: block; }
+    .check { display: flex; gap: 0.7rem; align-items: flex-start; margin-top: 1.05rem; font-size: 1.02rem; }
+    .check input { width: 1.5rem; height: 1.5rem; margin-top: 0.25rem; accent-color: var(--clay); flex: none; }
+    .formfoot { margin-top: 1.6rem; display: grid; gap: 0.8rem; }
+    .formfoot .btn { width: 100%; text-align: center; border-color: var(--navy); background: var(--navy); color: var(--cream); }
+
+    /* ---- status chips + badges ---- */
+    .chip { display: inline-block; font-weight: 700; font-size: 0.92rem; border-radius: 100px; padding: 0.2em 0.9em;
+      background: rgba(201, 154, 46, 0.2); color: var(--navy); border: 2px solid var(--gold); }
+    .chip--approved { background: rgba(46, 125, 79, 0.14); border-color: #2e7d4f; color: #1d5437; }
+    .chip--declined { background: rgba(156, 61, 34, 0.12); border-color: var(--clay); color: var(--clay); }
+    .badge-urgent { display: inline-block; font-weight: 700; font-size: 0.92rem; border-radius: 100px; padding: 0.2em 0.9em;
+      background: var(--clay); color: var(--cream); }
+    .pillar-head { margin-top: 2rem; }
+    .pillar-head h3 { font-size: 1.35rem; color: var(--clay); }
+    .pillar-head p { font-size: 1rem; }
+
+    /* ---- account button ---- */
+    .appbar .account { background: none; border: 0; cursor: pointer; padding: 0.2rem; display: flex; }
+    .appbar .account svg { width: 30px; height: 30px; stroke: var(--cream); fill: none; stroke-width: 2.3; stroke-linecap: round; }
+    .appbar .account:hover svg, .appbar .account:focus svg { stroke: var(--gold); }
+    .appbar .side { display: flex; align-items: center; gap: 0.7rem; }
+
     /* ---- toast ---- */
     .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tab-h) + var(--sab) + 0.9rem);
       z-index: 80; background: var(--navy-2); color: var(--cream); border: 2px solid var(--gold); border-radius: 14px;
@@ -258,7 +291,12 @@
 
   <header class="appbar">
     <b>FREEDOM<span>,</span> INC.</b>
-    <button class="get" id="barInstall" type="button">Get the app</button>
+    <div class="side">
+      <button class="get" id="barInstall" type="button">Get the app</button>
+      <button class="account" type="button" data-nav="#/profile" aria-label="My profile">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="10" r="4.4"/><path d="M5.2 23.2c0-5 17.6-5 17.6 0"/></svg>
+      </button>
+    </div>
   </header>
 
   <main id="view">
@@ -278,8 +316,8 @@
           <span class="seal">NeighborWorks America</span>
         </div>
         <div class="cta-row">
-          <a class="btn" href="#/connect">Partner with us</a>
-          <a class="btn btn--line" href="#/work">See the work</a>
+          <a class="btn" href="#/trainings">Apply for training</a>
+          <a class="btn btn--line" href="#/programs">See the programs</a>
         </div>
       </div>
     </section>
@@ -296,8 +334,13 @@
     <section class="rv">
       <div class="wrap">
         <p class="kick">Start here</p>
-        <h2>Three doors in.</h2>
+        <h2>Pick a door.</h2>
         <div class="cards two">
+          <a class="card" href="#/trainings"><span class="num">Trainings</span>
+            <h3>Apply today</h3>
+            <p>Workforce readiness, homebuyer education, foreclosure help, financial empowerment —
+              build a profile once, apply in minutes.</p>
+            <p class="go">See the trainings →</p></a>
           <a class="card" href="#/about"><span class="num">Leadership</span>
             <h3>Rev. Carl McCluster</h3>
             <p>Pulpit and boardroom: the founder's record with the FDIC, HUD, the Federal Home Loan
@@ -307,10 +350,10 @@
             <h3>Seventeen cities</h3>
             <p>From Bridgeport to Oakland — tap any city on the constellation and see the work there.</p>
             <p class="go">Open the map →</p></a>
-          <a class="card" href="deck.html"><span class="num">The pitch</span>
-            <h3>Ten slides</h3>
-            <p>The whole story in ten screens — web now, printable whenever you need it on paper.</p>
-            <p class="go">Open the deck →</p></a>
+          <a class="card" href="#/news"><span class="num">News &amp; events</span>
+            <h3>Happening now</h3>
+            <p>The latest from all seventeen cities — nothing stale is ever shown.</p>
+            <p class="go">Read the news →</p></a>
         </div>
       </div>
     </section>
@@ -343,12 +386,12 @@
       <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible — type built for every pair of eyes.</small></p>
   </div>
 
-  <!-- ================= THE WORK ================= -->
-  <div class="screen" id="scr-work" role="region" aria-label="The work">
+  <!-- ================= PROGRAMS ================= -->
+  <div class="screen" id="scr-programs" role="region" aria-label="Programs">
     <section>
       <div class="wrap">
         <p class="kick">The work</p>
-        <h2 tabindex="-1" data-title="The Work — Freedom, Inc.">Four pillars. One mission.</h2>
+        <h2 tabindex="-1" data-title="Programs — Freedom, Inc.">Four pillars. One mission.</h2>
         <p class="sub">FREEDOM was organized as a think-tank collaborative of senior pastors, grassroots
           leaders, and business and industry — working where faith and economics meet.</p>
         <div class="cards two">
@@ -386,22 +429,11 @@
 
     <section class="rv">
       <div class="wrap">
-        <p class="kick">Signature initiatives</p>
-        <h2>Where the pillars touch the ground.</h2>
-        <div class="cards">
-          <div class="card"><span class="num">Community design &amp; development</span>
-            <h3>MLK Corridors Initiative</h3>
-            <p>Reimagining the streets that carry Dr. King's name — community-led design and development
-              that turns symbolic corridors into engines of local economy.</p></div>
-          <div class="card"><span class="num">Faith-based housing</span>
-            <h3>FREEDOM–Faith CDC Collaborative</h3>
-            <p>The housing development partnership: congregations and the Faith Community Development
-              Corporation building and preserving homes together.</p></div>
-          <div class="card"><span class="num">Workforce development</span>
-            <h3>CT Faith Jobs Collaborative</h3>
-            <p>Jobs and workforce pipelines built through congregations — training people the economy
-              actually hires.</p></div>
-        </div>
+        <p class="kick">Every program</p>
+        <h2>The whole catalog. Nothing hidden.</h2>
+        <p class="sub">Every program from faithandresults.com, under its pillar — tap any one for the
+          full story, partners, and how to get involved.</p>
+        <div id="programCatalog"></div>
       </div>
     </section>
 
@@ -551,6 +583,115 @@
     </section>
   </div>
 
+  <!-- ================= TRAININGS ================= -->
+  <div class="screen" id="scr-trainings" role="region" aria-label="Trainings">
+    <section>
+      <div class="wrap">
+        <p class="kick">Trainings</p>
+        <h2 tabindex="-1" data-title="Trainings — Freedom, Inc.">Learn it. Apply for it. Today.</h2>
+        <p class="sub">Every training takes applications right here in the app. Build your profile once
+          and apply to any of them in minutes.</p>
+        <div class="cards" id="trainingList"></div>
+        <div class="card" style="margin-top:1rem"><span class="num">Your profile</span>
+          <h3>Fill it in once.</h3>
+          <p>Your name, contact, and congregation carry into every application automatically —
+            and your application statuses live there too.</p>
+          <div class="cta-row"><a class="btn btn--navy" href="#/profile">Open my profile</a></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= PROGRAM DETAIL ================= -->
+  <div class="screen" id="scr-program" role="region" aria-label="Program detail">
+    <section>
+      <div class="wrap">
+        <button class="back" type="button" data-nav="#/programs">← All programs</button>
+        <p class="kick" id="progKick"></p>
+        <h2 tabindex="-1" id="progName" data-title="Program — Freedom, Inc."></h2>
+        <p class="sub" id="progBody"></p>
+        <div class="cards" id="progExtra"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= TRAINING DETAIL ================= -->
+  <div class="screen" id="scr-training" role="region" aria-label="Training detail">
+    <section>
+      <div class="wrap">
+        <button class="back" type="button" data-nav="#/trainings">← All trainings</button>
+        <p class="kick" id="trKick"></p>
+        <h2 tabindex="-1" id="trName" data-title="Training — Freedom, Inc."></h2>
+        <p class="sub" id="trBody"></p>
+        <div class="cards" id="trExtra"></div>
+        <div class="cta-row" style="margin-top:1.5rem">
+          <a class="btn" id="trApply" href="#">Apply now</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= APPLY ================= -->
+  <div class="screen" id="scr-apply" role="region" aria-label="Apply">
+    <section>
+      <div class="wrap">
+        <button class="back" type="button" id="applyBack">← Back</button>
+        <div id="applyFormWrap">
+          <p class="kick">Application</p>
+          <h2 tabindex="-1" id="applyTitle" data-title="Apply — Freedom, Inc."></h2>
+          <p class="sub">Five minutes, no fine print. Fields marked <span class="req">*</span> are required.</p>
+          <form id="applyForm" novalidate>
+            <div id="applyFields"></div>
+            <label class="check"><input type="checkbox" id="applySave" checked>
+              <span>Save my details to my profile on this device, so the next application is two taps.</span></label>
+            <label class="check"><input type="checkbox" id="applyConsent">
+              <span>I agree that Freedom, Inc. may contact me about this application. <span class="req">*</span></span></label>
+            <p class="field bad" id="consentErr" style="display:none"><span class="err" style="display:block">Please check the consent box so we're allowed to reach you.</span></p>
+            <div class="formfoot">
+              <button class="btn" type="submit" id="applySubmit">Submit application</button>
+            </div>
+          </form>
+        </div>
+        <div id="applyDoneWrap" hidden>
+          <p class="kick">Application received</p>
+          <h2 tabindex="-1">It's in. We'll take it from here.</h2>
+          <div class="cards">
+            <div class="card"><span class="num">Reference</span>
+              <h3 id="doneRef"></h3>
+              <p id="doneMsg"></p></div>
+            <div class="card"><h3>What happens next</h3>
+              <p>The team reviews every application and reaches out — usually within a few business
+                days. Your application and its status live in <a href="#/profile">your profile</a>.</p></div>
+          </div>
+          <div class="cta-row" style="margin-top:1.5rem">
+            <a class="btn btn--navy" href="#/profile">See my applications</a>
+            <a class="btn btn--line" style="color:var(--navy); border-color:var(--navy)" href="#/trainings">Back to trainings</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= PROFILE ================= -->
+  <div class="screen" id="scr-profile" role="region" aria-label="My profile">
+    <section>
+      <div class="wrap">
+        <p class="kick">My profile</p>
+        <h2 tabindex="-1" data-title="My Profile — Freedom, Inc.">You, saved once.</h2>
+        <p class="sub">Lives on this device. Every application starts pre-filled from here.</p>
+        <form id="profileForm" novalidate>
+          <div id="profileFields"></div>
+          <div class="formfoot">
+            <button class="btn" type="submit">Save my profile</button>
+          </div>
+        </form>
+        <div class="pillar-head rv" style="margin-top:2.2rem"><h3>My applications</h3>
+          <p>Everything you've applied to from this device, with live status.</p></div>
+        <div class="cards" id="myApps"></div>
+      </div>
+    </section>
+  </div>
+
   </main>
 
   <!-- city bottom sheet -->
@@ -568,20 +709,21 @@
     <a class="tab" href="#/home" data-tab="home" aria-current="page">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 12.5 14 4.5l10 8M6.8 11.2V23h14.4V11.2"/></svg>
       Home</a>
-    <a class="tab" href="#/work" data-tab="work">
+    <a class="tab" href="#/programs" data-tab="programs">
       <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2"/><rect x="15.5" y="4.5" width="8" height="8" rx="2"/><rect x="4.5" y="15.5" width="8" height="8" rx="2"/><rect x="15.5" y="15.5" width="8" height="8" rx="2"/></svg>
-      The Work</a>
+      Programs</a>
+    <a class="tab" href="#/trainings" data-tab="trainings">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 5 25 10.2 14 15.4 3 10.2Z"/><path d="M8.2 12.9v4.9c0 2.4 11.6 2.4 11.6 0v-4.9M25 10.2v5.6"/></svg>
+      Trainings</a>
     <a class="tab" href="#/cities" data-tab="cities">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3.5 17 10.2l7.3.7-5.5 4.9 1.6 7.2L14 19.2 7.6 23l1.6-7.2-5.5-4.9 7.3-.7Z"/></svg>
       Cities</a>
-    <a class="tab" href="#/news" data-tab="news">
-      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="5.5" width="20" height="17" rx="2"/><path d="M8 10.5h12M8 14.5h12M8 18.5h7"/></svg>
-      News</a>
     <a class="tab" href="#/connect" data-tab="connect">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6.2 4.8c-1 0-1.7.8-1.6 1.7C5.5 15.7 12.3 22.5 21.5 23.4c.9.1 1.7-.6 1.7-1.6v-3.4c0-.8-.5-1.4-1.3-1.6l-3.5-.9c-.7-.2-1.4.1-1.8.7l-.9 1.3c-2.8-1.4-4.6-3.2-6-6l1.3-.9c.6-.4.9-1.1.7-1.8l-.9-3.5c-.2-.8-.8-1.3-1.6-1.3Z"/></svg>
       Connect</a>
   </nav>
 
+  <script src="js/store.js"></script>
   <script>
     (function () {
       "use strict";
@@ -627,8 +769,8 @@
       CITIES.forEach(function (c) { BY_SLUG[slug(c)] = c; });
 
       /* ================= router ================= */
-      var TABS = ["home", "work", "cities", "news", "connect"];
-      var SCREENS = TABS.concat(["about"]);
+      var TABS = ["home", "programs", "trainings", "cities", "connect"];
+      var SCREENS = TABS.concat(["news", "about", "program", "training", "apply", "profile"]);
       var current = "";
       var sheetOpenedFromApp = false;
 
@@ -656,7 +798,12 @@
           return;
         }
         closeSheetUi();
+        if ((m = hash.match(/^#\/program\/([a-z0-9-]+)$/))) { if (renderProgram(m[1])) { showScreen("program"); return; } }
+        if ((m = hash.match(/^#\/training\/([a-z0-9-]+)$/))) { if (renderTraining(m[1])) { showScreen("training"); return; } }
+        if ((m = hash.match(/^#\/apply\/([a-z0-9-]+)$/))) { if (renderApply(m[1])) { showScreen("apply"); return; } }
         var name = hash.replace(/^#\//, "");
+        if (name === "work") name = "programs";
+        if (name === "profile") renderProfileScreen();
         showScreen(SCREENS.indexOf(name) !== -1 ? name : "home");
       }
       window.addEventListener("hashchange", route);
@@ -742,6 +889,255 @@
       svg.innerHTML = parts.join("");
       svg.querySelectorAll(".dot").forEach(function (d) {
         d.addEventListener("click", function () { goCity(d.getAttribute("data-city")); });
+      });
+
+      /* ================= programs + trainings ================= */
+      var DATA = null;
+      var currentTraining = null;
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+      function firstSentence(s) {
+        var i = s.indexOf(". ");
+        return i > 40 ? s.slice(0, i + 1) : s;
+      }
+      function findIn(list, id) {
+        for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+        return null;
+      }
+
+      function renderCatalogs() {
+        var cat = document.getElementById("programCatalog");
+        cat.innerHTML = DATA.pillars.map(function (pl) {
+          var progs = DATA.programs.filter(function (p) { return p.pillar === pl.id; });
+          return '<div class="pillar-head"><h3>' + esc(pl.name) + "</h3><p>" + esc(pl.blurb) + "</p></div>" +
+            '<div class="cards">' + progs.map(function (p) {
+              return '<a class="card" href="#/program/' + p.id + '"><span class="num">' + esc(p.tag) + "</span>" +
+                "<h3>" + esc(p.name) + "</h3>" +
+                (p.stat ? '<p><span class="chip">' + esc(p.stat) + "</span></p>" : "") +
+                "<p>" + esc(firstSentence(p.body)) + "</p>" +
+                '<p class="go">The full story →</p></a>';
+            }).join("") + "</div>";
+        }).join("");
+
+        document.getElementById("trainingList").innerHTML = DATA.trainings.map(function (t) {
+          return '<div class="card"><span class="num">' + esc(t.format) + "</span>" +
+            "<h3>" + esc(t.name) + (t.urgent ? ' <span class="badge-urgent">Urgent help available</span>' : "") + "</h3>" +
+            "<p><strong>For:</strong> " + esc(t.audience) + "</p>" +
+            "<p>" + esc(firstSentence(t.body)) + "</p>" +
+            '<div class="cta-row"><a class="btn" href="#/apply/' + t.id + '">Apply now</a>' +
+            '<a class="btn btn--navy" href="#/training/' + t.id + '">Learn more</a></div></div>';
+        }).join("");
+      }
+
+      function renderProgram(id) {
+        if (!DATA) return false;
+        var p = findIn(DATA.programs, id);
+        if (!p) return false;
+        var pl = findIn(DATA.pillars, p.pillar);
+        document.getElementById("progKick").textContent = pl.name + " · " + p.tag;
+        document.getElementById("progName").textContent = p.name;
+        document.getElementById("progBody").textContent = p.body;
+        var extra = "";
+        if (p.stat) extra += '<div class="card"><span class="num">The record</span><h3>' + esc(p.stat) + "</h3></div>";
+        if (p.partners && p.partners.length) {
+          extra += '<div class="card"><span class="num">Delivered with</span><p>' +
+            p.partners.map(esc).join(" · ") + "</p></div>";
+        }
+        (p.trainings || []).forEach(function (tid) {
+          var t = findIn(DATA.trainings, tid);
+          if (!t) return;
+          extra += '<div class="card"><span class="num">Get involved</span><h3>' + esc(t.name) + "</h3>" +
+            "<p>" + esc(firstSentence(t.body)) + "</p>" +
+            '<div class="cta-row"><a class="btn" href="#/apply/' + t.id + '">Apply now</a>' +
+            '<a class="btn btn--navy" href="#/training/' + t.id + '">About this training</a></div></div>';
+        });
+        document.getElementById("progExtra").innerHTML = extra;
+        document.title = p.name + " — Freedom, Inc.";
+        if (current === "program") window.scrollTo(0, 0);
+        return true;
+      }
+
+      function renderTraining(id) {
+        if (!DATA) return false;
+        var t = findIn(DATA.trainings, id);
+        if (!t) return false;
+        document.getElementById("trKick").textContent = t.format;
+        document.getElementById("trName").textContent = t.name;
+        document.getElementById("trBody").textContent = t.body;
+        var extra = '<div class="card"><span class="num">Who this is for</span><p>' + esc(t.audience) + "</p></div>";
+        var p = findIn(DATA.programs, t.program);
+        if (p) {
+          extra += '<div class="card"><span class="num">Part of</span><h3>' + esc(p.name) + "</h3>" +
+            '<p class="go"><a href="#/program/' + p.id + '" style="color:var(--clay)">About the program →</a></p></div>';
+        }
+        if (t.urgent) {
+          extra += '<div class="card"><span class="num">Facing a deadline?</span>' +
+            "<p>If a sale date is scheduled or a notice has arrived, don't wait on a form — call " +
+            '<a href="tel:+12035498703" style="color:var(--clay); font-weight:700">(203) 549-8703</a> today.</p></div>';
+        }
+        document.getElementById("trExtra").innerHTML = extra;
+        document.getElementById("trApply").setAttribute("href", "#/apply/" + t.id);
+        document.title = t.name + " — Freedom, Inc.";
+        if (current === "training") window.scrollTo(0, 0);
+        return true;
+      }
+
+      /* ================= application form ================= */
+      var BASE_FIELDS = [
+        { id: "name", label: "Full name", t: "text", required: true },
+        { id: "email", label: "Email", t: "email", required: true },
+        { id: "phone", label: "Phone", t: "tel" },
+        { id: "city", label: "City or town", t: "select", options: CITIES.concat(["Somewhere else"]) },
+        { id: "org", label: "Congregation or organization (if any)", t: "text" }
+      ];
+
+      /* Field ids are prefixed per screen ("a" = apply, "p" = profile) — both
+         forms exist in the DOM at once, so unprefixed ids would collide. */
+      function fieldHtml(f, px) {
+        var fid = "f-" + px + "-" + f.id;
+        var req = f.required ? ' <span class="req">*</span>' : "";
+        var inner;
+        if (f.t === "select") {
+          inner = '<select id="' + fid + '"><option value="">Choose…</option>' +
+            f.options.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select>";
+        } else if (f.t === "long") {
+          inner = '<textarea id="' + fid + '"></textarea>';
+        } else {
+          inner = '<input id="' + fid + '" type="' + (f.t === "email" ? "email" : f.t === "tel" ? "tel" : "text") +
+            '" autocomplete="' + (f.id === "name" ? "name" : f.id === "email" ? "email" : f.id === "phone" ? "tel" : "off") + '">';
+        }
+        return '<div class="field"><label for="' + fid + '">' + esc(f.label) + req + "</label>" +
+          inner + '<p class="err">' + (f.t === "email" ? "Enter an email like name@example.com." : "This one's required.") + "</p></div>";
+      }
+      function fEl(px, id) { return document.getElementById("f-" + px + "-" + id); }
+
+      function prefill(fields, px) {
+        var prof = FreedomStore.getProfile() || {};
+        fields.forEach(function (f) {
+          var el = fEl(px, f.id);
+          if (el && prof[f.id]) el.value = prof[f.id];
+        });
+      }
+
+      function renderApply(id) {
+        if (!DATA) return false;
+        var t = findIn(DATA.trainings, id);
+        if (!t) return false;
+        currentTraining = t;
+        document.getElementById("applyTitle").textContent = t.name;
+        document.getElementById("applyBack").setAttribute("data-nav", "#/training/" + t.id);
+        var fields = BASE_FIELDS.concat(t.questions || [], [{ id: "notes", label: "Anything else we should know?", t: "long" }]);
+        document.getElementById("applyFields").innerHTML = fields.map(function (f) { return fieldHtml(f, "a"); }).join("");
+        prefill(fields, "a");
+        document.getElementById("applyConsent").checked = false;
+        document.getElementById("consentErr").style.display = "none";
+        document.getElementById("applyDoneWrap").hidden = true;
+        document.getElementById("applyFormWrap").hidden = false;
+        var btn = document.getElementById("applySubmit");
+        btn.disabled = false;
+        btn.textContent = "Submit application";
+        document.title = "Apply: " + t.name + " — Freedom, Inc.";
+        if (current === "apply") window.scrollTo(0, 0);
+        return true;
+      }
+
+      function validate(fields, px) {
+        var firstBad = null;
+        fields.forEach(function (f) {
+          var el = fEl(px, f.id);
+          var wrap = el && el.closest(".field");
+          if (!wrap || !el) return;
+          var v = el.value.trim();
+          var bad = (f.required && !v) || (f.t === "email" && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+          wrap.classList.toggle("bad", !!bad);
+          el.setAttribute("aria-invalid", bad ? "true" : "false");
+          if (bad && !firstBad) firstBad = el;
+        });
+        if (firstBad) { firstBad.focus(); firstBad.scrollIntoView({ block: "center" }); }
+        return !firstBad;
+      }
+
+      document.getElementById("applyForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!currentTraining) return;
+        var t = currentTraining;
+        var fields = BASE_FIELDS.concat(t.questions || [], [{ id: "notes", label: "notes", t: "long" }]);
+        if (!validate(fields, "a")) return;
+        var consent = document.getElementById("applyConsent").checked;
+        document.getElementById("consentErr").style.display = consent ? "none" : "block";
+        if (!consent) return;
+
+        var record = { training: t.id, trainingName: t.name, consent: true, answers: {} };
+        BASE_FIELDS.forEach(function (f) { record[f.id] = fEl("a", f.id).value.trim(); });
+        (t.questions || []).forEach(function (q) { record.answers[q.label] = fEl("a", q.id).value.trim(); });
+        record.notes = fEl("a", "notes").value.trim();
+
+        var btn = document.getElementById("applySubmit");
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+        var saves = [FreedomStore.submitApplication(record)];
+        if (document.getElementById("applySave").checked) {
+          var prof = Object.assign(FreedomStore.getProfile() || {}, {
+            name: record.name, email: record.email, phone: record.phone, city: record.city, org: record.org
+          });
+          saves.push(FreedomStore.saveProfile(prof));
+        }
+        Promise.all(saves).then(function (res) {
+          var app = res[0];
+          document.getElementById("doneRef").textContent = app.id;
+          document.getElementById("doneMsg").textContent = "Your application to " + t.name +
+            " is in. Keep this reference — it's also saved in your profile on this device.";
+          document.getElementById("applyFormWrap").hidden = true;
+          document.getElementById("applyDoneWrap").hidden = false;
+          window.scrollTo(0, 0);
+          say("Application received.");
+        }).catch(function () {
+          btn.disabled = false;
+          btn.textContent = "Submit application";
+          say("Couldn't send just now — check your connection and try again.");
+        });
+      });
+
+      /* ================= profile screen ================= */
+      var PROFILE_FIELDS = BASE_FIELDS.concat([{ id: "about", label: "About you (optional)", t: "long" }]);
+      var profileBuilt = false;
+
+      function renderProfileScreen() {
+        if (!profileBuilt) {
+          document.getElementById("profileFields").innerHTML =
+            PROFILE_FIELDS.map(function (f) { return fieldHtml(f, "p"); }).join("");
+          profileBuilt = true;
+        }
+        prefill(PROFILE_FIELDS, "p");
+        var apps = FreedomStore.myApplications();
+        var box = document.getElementById("myApps");
+        if (!apps.length) {
+          box.innerHTML = '<div class="card"><h3>Nothing yet</h3><p>When you apply to a training, ' +
+            "it shows up here with its status.</p>" +
+            '<div class="cta-row"><a class="btn btn--navy" href="#/trainings">See the trainings</a></div></div>';
+          return;
+        }
+        box.innerHTML = apps.map(function (a) {
+          var cls = a.status === "approved" ? "chip chip--approved" : a.status === "declined" ? "chip chip--declined" : "chip";
+          var label = a.status === "received" ? "Received" : a.status.charAt(0).toUpperCase() + a.status.slice(1);
+          var dt = new Date(a.submittedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+          return '<div class="card"><span class="num">' + esc(a.id) + " · " + dt + "</span>" +
+            "<h3>" + esc(a.trainingName) + "</h3>" +
+            '<p><span class="' + cls + '">' + label + "</span>" +
+            (a.note ? " — " + esc(a.note) : "") + "</p></div>";
+        }).join("");
+      }
+
+      document.getElementById("profileForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!validate(PROFILE_FIELDS, "p")) return;
+        var prof = Object.assign(FreedomStore.getProfile() || {}, {});
+        PROFILE_FIELDS.forEach(function (f) { prof[f.id] = fEl("p", f.id).value.trim(); });
+        FreedomStore.saveProfile(prof).then(function () { say("Profile saved."); });
       });
 
       /* ================= count-up + reveals ================= */
@@ -852,6 +1248,17 @@
 
       /* ================= go ================= */
       route();
+      Promise.all([
+        fetch("data/programs.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
+        fetch("data/trainings.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
+        FreedomStore.init()
+      ]).then(function (res) {
+        DATA = { pillars: res[0].pillars, programs: res[0].programs, trainings: res[1].trainings };
+        renderCatalogs();
+        route();
+      }).catch(function () {
+        say("Couldn't load the program catalog — check your connection and reload.");
+      });
     })();
   </script>
 </body>

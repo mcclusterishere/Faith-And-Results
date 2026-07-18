@@ -5,11 +5,14 @@
    forward on their next visit. */
 "use strict";
 
-var VERSION = "freedom-app-v1";
+var VERSION = "freedom-app-v2";
 
 var SHELL = [
   "./",
   "./index.html",
+  "./admin.html",
+  "./deck.html",
+  "./js/store.js",
   "./manifest.webmanifest",
   "./assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2",
   "./assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2",
@@ -20,7 +23,10 @@ var SHELL = [
   "./assets/icons/icon-maskable-512.png",
   "./assets/icons/apple-touch-icon.png",
   "./assets/freedom-inc.vcf",
-  "./data/news.json"
+  "./data/news.json",
+  "./data/programs.json",
+  "./data/trainings.json",
+  "./data/config.json"
 ];
 
 self.addEventListener("install", function (e) {
@@ -46,8 +52,9 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(req.url);
   if (url.origin !== location.origin) return;
 
-  /* News: network first, cached copy only when the network is gone. */
-  if (url.pathname.indexOf("/data/news.json") !== -1) {
+  /* Data files: network first, cached copy only when the network is gone —
+     program edits and config flips publish immediately. */
+  if (url.pathname.indexOf("/data/") !== -1) {
     e.respondWith(
       fetch(req).then(function (res) {
         var copy = res.clone();
@@ -58,15 +65,17 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
-  /* Navigations: serve the cached shell, refresh it in the background. */
+  /* Navigations: serve the cached copy of THAT page (admin.html must never
+     get the app shell), refresh in the background, fall back to the app
+     shell only when offline with nothing cached. */
   if (req.mode === "navigate") {
     e.respondWith(
-      caches.match("./index.html").then(function (hit) {
+      caches.match(req, { ignoreSearch: true }).then(function (hit) {
         var net = fetch(req).then(function (res) {
           var copy = res.clone();
-          caches.open(VERSION).then(function (c) { c.put("./index.html", copy); });
+          caches.open(VERSION).then(function (c) { c.put(req, copy); });
           return res;
-        }).catch(function () { return hit; });
+        }).catch(function () { return hit || caches.match("./index.html"); });
         return hit || net;
       })
     );

@@ -17,8 +17,9 @@
     { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
+    { "name": "Apply for training", "url": "./#/trainings", "description": "Trainings that take applications right in the app" },
     { "name": "Call Freedom, Inc.", "url": "./#/connect", "description": "Call (203) 549-8703 or email the team" },
     { "name": "The Cities", "url": "./#/cities", "description": "Seventeen American cities on one screen" },
-    { "name": "News & Events", "url": "./#/news", "description": "What's happening now" }
+    { "name": "My profile", "url": "./#/profile", "description": "Your details and application statuses" }
   ]
 }

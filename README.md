@@ -11,22 +11,40 @@ tap targets 48px and up — no fine print exists anywhere in the app.
 
 ## The app
 
-- **Five tabs** — Home, The Work, Cities, News, Connect — plus a Leadership detail screen.
-- **Installable** — Android/desktop get a one-tap install prompt; iPhone gets Share →
-  Add to Home Screen instructions. Opens full screen with its own icon.
-- **Works offline** — a service worker caches the whole shell; news stays network-first
-  so nothing stale is shown when a connection exists.
-- **Deep-linkable** — every screen and every city has a URL (`#/cities`, `#/city/bridgeport-ct`),
-  so any view can be texted to a partner.
+- **Five tabs** — Home, Programs, Trainings, Cities, Connect — plus Leadership, News,
+  program/training detail, application, and profile screens.
+- **Every program** from the original faithandresults.com, under its pillar — from
+  Homes Saved By Faith (100K+ served) to the MLK Corridors Initiative to Saving
+  America's Soul — each with partners, records, and ways in. All data-driven
+  (`data/programs.json`).
+- **Trainings that take applications** — five trainings with tailored questions;
+  people build a profile once and every application pre-fills. Statuses (received /
+  approved / declined) show in their profile.
+- **An admin backend** (`admin.html`) — dashboard, application review with
+  approve/decline + notes, people directory, CSV exports, automations panel.
+- **Automations to other providers** — every application, profile, and status change
+  can POST to a webhook (Zapier / Make / n8n → Mailchimp, Sheets, CRMs, Slack, SMS).
+  See `docs/BACKEND.md`.
+- **Demo mode by default, real database when ready** — flip `data/config.json` to
+  Supabase for real storage and real admin login (`docs/supabase-setup.sql`).
+- **Installable + offline** — one-tap install on Android/desktop, Share → Add to Home
+  Screen on iPhone; the whole shell works without a connection.
+- **Deep-linkable** — every screen has a URL (`#/training/foreclosure-help`,
+  `#/city/bridgeport-ct`), so any view can be texted to a partner.
 - **Self-expiring news** — anything older than 18 months hides itself automatically.
 
 ## Files
 
-- `index.html` — the entire app (shell, five screens, router, constellation)
+- `index.html` — the app (shell, screens, router, forms, constellation)
+- `admin.html` — the admin backend (review, exports, automations)
+- `js/store.js` — the shared data layer (demo / Supabase / webhook adapters)
+- `data/config.json` — backend mode, webhook URL, admin passcode
+- `data/programs.json` / `data/trainings.json` — the catalog (edit → app re-renders)
+- `data/news.json` — the news feed (edit this file to publish news)
+- `docs/BACKEND.md` / `docs/supabase-setup.sql` — go-live guide for storage + automations
 - `manifest.webmanifest` / `sw.js` — install metadata and the offline service worker
 - `assets/icons/` — home-screen icons (any + maskable + Apple touch)
 - `assets/freedom-inc.vcf` — the "Save our contact card" download
-- `data/news.json` — the news feed (edit this file to publish news)
 - `deck.html` / `Freedom-Inc-Pitch-Deck.pdf` — the 10-slide pitch, web and printable
 - `assets/fonts/` — self-hosted type (84 KB total, no CDN dependency)
 - `.github/workflows/fetch-assets.yml` — pulls the old site's images into `assets/scraped/`
