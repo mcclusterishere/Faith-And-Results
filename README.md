@@ -64,8 +64,8 @@ tap targets 48px and up — no fine print exists anywhere in the app.
 
 ## Go live
 
-1. **Settings → Pages** → Deploy from branch → `main` / root → Save.
-   Live at `https://mcclusterishere.github.io/faith-and-results/` in ~2 minutes.
+1. Already live — Pages deploys `main` on every push (branch deploy + `.github/workflows/deploy-pages.yml`).
+   The site is live at `https://mcclusterishere.github.io/Faith-And-Results/` (the URL is case-sensitive) and redeploys automatically on every push to `main`.
 2. Open that link on a phone → **Add to Home Screen** → it's an app.
 3. When the client signs: point `faithandresults.com` at Pages (custom domain + DNS),
    and their old hosting bill ends. (HTTPS is required for install + offline — Pages
