@@ -1,0 +1,24 @@
+{
+  "name": "Freedom, Inc. — Faith, Backed by Results",
+  "short_name": "Freedom, Inc.",
+  "description": "Economic development, education, housing, and sustainability — delivered with faith communities in seventeen American cities. FDIC · HUD · Federal Home Loan Bank · NeighborWorks America.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#101c2c",
+  "theme_color": "#101c2c",
+  "lang": "en",
+  "categories": ["business", "finance", "education"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Call Freedom, Inc.", "url": "./#/connect", "description": "Call (203) 549-8703 or email the team" },
+    { "name": "The Cities", "url": "./#/cities", "description": "Seventeen American cities on one screen" },
+    { "name": "News & Events", "url": "./#/news", "description": "What's happening now" }
+  ]
+}
