@@ -1,6 +1,12 @@
 {
-  "note": "News & Events. One entry = one object. The site AUTOMATICALLY hides anything older than 18 months — the 2020-events-still-live problem can never happen again. Add entries at the top.",
+  "note": "News & Events. One entry = one object. The app AUTOMATICALLY hides anything older than 18 months — the 2020-events-still-live problem can never happen again. Add entries at the top.",
   "items": [
+    {
+      "date": "2026-07-18",
+      "tag": "News",
+      "title": "Freedom, Inc. is now an app",
+      "body": "faithandresults.com now installs straight to your phone's home screen — it opens full screen, works offline, and puts the whole record one tap away. Look for “Add to Home Screen.”"
+    },
     {
       "date": "2026-07-09",
       "tag": "News",

@@ -1,0 +1,111 @@
+{
+  "note": "Every program from faithandresults.com, one object each. Edit here — the app renders this file. 'trainings' lists ids from trainings.json that let people apply into the program.",
+  "pillars": [
+    { "id": "economic", "name": "Economic Development", "blurb": "Financial empowerment with the institutions that move money." },
+    { "id": "education", "name": "Education & Training", "blurb": "Workforce and business training designed and delivered nationally." },
+    { "id": "housing", "name": "Housing", "blurb": "Homes saved and homes built." },
+    { "id": "sustainability", "name": "Sustainability", "blurb": "Congregations and organizations that outlast any single grant." }
+  ],
+  "programs": [
+    {
+      "id": "homes-saved-by-faith",
+      "pillar": "economic",
+      "name": "Homes Saved By Faith",
+      "tag": "Foreclosure prevention & intervention",
+      "stat": "100,000+ individuals serviced",
+      "body": "FREEDOM's flagship: foreclosure prevention and intervention delivered through the congregations families already trust, built with the FDIC, HUD, and the Federal Home Loan Banks of Atlanta, Boston, and San Francisco — plus state and municipal housing finance authorities.",
+      "partners": ["FDIC", "HUD", "Federal Home Loan Banks of Atlanta, Boston & San Francisco", "State & municipal housing finance authorities"],
+      "trainings": ["foreclosure-help"]
+    },
+    {
+      "id": "faith-empowerment-series",
+      "pillar": "economic",
+      "name": "Freddie Mac Faith Empowerment Series",
+      "tag": "Financial empowerment · Louisiana Statewide",
+      "body": "A statewide financial-empowerment series delivered across Louisiana with Freddie Mac — bringing credit, homeownership, and household-finance education into faith communities from New Orleans outward.",
+      "partners": ["Freddie Mac", "Louisiana faith communities"],
+      "trainings": ["financial-empowerment"]
+    },
+    {
+      "id": "mlk-corridors",
+      "pillar": "economic",
+      "name": "MLK Corridors Initiative",
+      "tag": "Community design & development",
+      "body": "Reimagining the streets that carry Dr. King's name — community-led design and development that turns symbolic corridors into engines of local economy.",
+      "partners": ["Municipalities", "Community economic development corporations"],
+      "trainings": ["capacity-building"]
+    },
+    {
+      "id": "workforce-readiness",
+      "pillar": "education",
+      "name": "Workforce Readiness Program",
+      "tag": "CT Faith Jobs Collaborative",
+      "body": "Training residents in the building trades and beyond — race and gender neutral by design — moving people into employment the economy actually hires for, through the congregations they already trust.",
+      "partners": ["The Connecticut Faith Jobs Collaborative", "Building-trade employers"],
+      "trainings": ["workforce-readiness"]
+    },
+    {
+      "id": "neighborworks-institutes",
+      "pillar": "education",
+      "name": "NeighborWorks America Training Institutes",
+      "tag": "National training delivery · Connecticut",
+      "body": "FREEDOM designs and delivers training for NeighborWorks America — the country's largest HUD housing intermediary — including Training Institutes hosted in Connecticut.",
+      "partners": ["NeighborWorks America", "HUD"],
+      "trainings": ["capacity-building"]
+    },
+    {
+      "id": "capacity-building",
+      "pillar": "education",
+      "name": "Capacity Building Training",
+      "tag": "Faith-based organization development",
+      "body": "FREEDOM is the creator, sponsor, and trainer of faith-based organizations nationwide — governance, program design, and revenue that renews itself, so the mission outlasts any single grant.",
+      "partners": ["Faith Community Development Corporation", "Houses of worship nationwide"],
+      "trainings": ["capacity-building"]
+    },
+    {
+      "id": "faith-cdc-collaborative",
+      "pillar": "housing",
+      "name": "FREEDOM–Faith CDC Collaborative",
+      "tag": "Faith-based housing development",
+      "body": "The housing development partnership: congregations and the Faith Community Development Corporation — the CDC chartered by Shiloh Baptist Church — building and preserving homes together, with finance authorities at the table from day one.",
+      "partners": ["Faith Community Development Corporation", "State & municipal housing finance authorities"],
+      "trainings": ["capacity-building"]
+    },
+    {
+      "id": "homebuyer-education",
+      "pillar": "housing",
+      "name": "Homebuyer Education & Counseling",
+      "tag": "From first conversation to keys",
+      "body": "Homebuyer education, housing counseling, and financial literacy that walk families from renting to owning — delivered city by city with trusted local partners.",
+      "partners": ["HomeFree USA", "The Home Ownership Training Center"],
+      "trainings": ["homebuyer-education"]
+    },
+    {
+      "id": "foreclosure-intervention-cleveland",
+      "pillar": "housing",
+      "name": "Foreclosure Intervention Initiative — Cleveland",
+      "tag": "Homebuyer education · financial literacy · intervention",
+      "body": "Cleveland's collaboration in action: homebuyer education and counseling, financial literacy, and foreclosure intervention and prevention support, delivered with HomeFree USA and the Home Ownership Training Center.",
+      "partners": ["HomeFree USA", "The Home Ownership Training Center"],
+      "trainings": ["foreclosure-help", "homebuyer-education"]
+    },
+    {
+      "id": "congregational-sustainability",
+      "pillar": "sustainability",
+      "name": "Congregational Sustainability & Solar",
+      "tag": "Proved at home",
+      "body": "Sustainability preached and practiced: under Rev. McCluster, Shiloh Baptist became the first African-American church in Connecticut to reach energy self-sufficiency through solar. FREEDOM brings that playbook — energy, capacity, governance — to congregations nationwide.",
+      "partners": ["Shiloh Baptist Church", "Congregations nationwide"],
+      "trainings": ["capacity-building"]
+    },
+    {
+      "id": "saving-americas-soul",
+      "pillar": "sustainability",
+      "name": "Saving America's Soul",
+      "tag": "The National Faith Leaders Collaborative",
+      "body": "The NFLC's national initiative: senior pastors across the country organized as one voice for community renewal — the moral case and the economic case, made together.",
+      "partners": ["The National Faith Leaders Collaborative", "The Connecticut Faith Leaders Collaborative"],
+      "trainings": []
+    }
+  ]
+}

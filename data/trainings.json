@@ -1,0 +1,68 @@
+{
+  "note": "Trainings people can apply to. 'questions' become extra fields on the application form: t=select needs options, t=text is a free line, t=long is a paragraph.",
+  "trainings": [
+    {
+      "id": "workforce-readiness",
+      "name": "Workforce Readiness Program",
+      "pillar": "education",
+      "format": "Cohort · in person",
+      "audience": "Residents seeking building-trade employment and training",
+      "body": "Hands-on preparation for the building trades and beyond — readiness, certification pathways, and connections to employers who are hiring. Race and gender neutral by design, delivered through congregations.",
+      "program": "workforce-readiness",
+      "questions": [
+        { "id": "employment", "label": "Current employment status", "t": "select", "options": ["Unemployed", "Part-time", "Full-time", "Student", "Retired"] },
+        { "id": "trade", "label": "Which trade interests you most?", "t": "select", "options": ["Construction", "Electrical", "Plumbing", "HVAC", "Solar installation", "Not sure yet"] }
+      ]
+    },
+    {
+      "id": "homebuyer-education",
+      "name": "Homebuyer Education & Counseling",
+      "pillar": "housing",
+      "format": "Workshops + one-on-one counseling",
+      "audience": "Renters and first-time buyers",
+      "body": "From first conversation to keys: homebuyer education, credit preparation, and one-on-one housing counseling that walks your family from renting to owning.",
+      "program": "homebuyer-education",
+      "questions": [
+        { "id": "stage", "label": "Where are you in the journey?", "t": "select", "options": ["Just curious", "Saving for a down payment", "Pre-approval in hand", "Actively house hunting"] }
+      ]
+    },
+    {
+      "id": "foreclosure-help",
+      "name": "Foreclosure Prevention & Intervention",
+      "pillar": "housing",
+      "format": "One-on-one counseling · urgent intake",
+      "audience": "Homeowners behind on payments or facing foreclosure",
+      "body": "Part of Homes Saved By Faith — more than 100,000 individuals serviced. Confidential help with your servicer, your options, and your next step. The earlier you reach out, the more doors are open.",
+      "program": "homes-saved-by-faith",
+      "urgent": true,
+      "questions": [
+        { "id": "stage", "label": "Your situation right now", "t": "select", "options": ["Current, but worried", "1–2 payments behind", "3+ payments behind", "Received a foreclosure notice", "Sale date scheduled"] }
+      ]
+    },
+    {
+      "id": "financial-empowerment",
+      "name": "Financial Empowerment Series",
+      "pillar": "economic",
+      "format": "Workshop series",
+      "audience": "Individuals and families",
+      "body": "The Faith Empowerment Series model: credit, budgeting, banking, and homeownership readiness — practical household finance, taught in the community, in plain English.",
+      "program": "faith-empowerment-series",
+      "questions": [
+        { "id": "topic", "label": "Which topic matters most to you?", "t": "select", "options": ["Credit repair", "Budgeting", "Banking & saving", "Path to homeownership"] }
+      ]
+    },
+    {
+      "id": "capacity-building",
+      "name": "Capacity Building for Faith-Based Organizations",
+      "pillar": "education",
+      "format": "Cohort · for organizations",
+      "audience": "Congregations, faith-based organizations, and CDCs",
+      "body": "For institutions, not individuals: form your CDC, seat your board, design your programs, and build revenue that renews itself. The same training FREEDOM delivers nationally — including for NeighborWorks America Training Institutes.",
+      "program": "capacity-building",
+      "questions": [
+        { "id": "orgtype", "label": "Your organization", "t": "select", "options": ["House of worship", "Faith-based nonprofit", "Community development corporation", "Municipality / agency", "Other"] },
+        { "id": "goal", "label": "What does your organization want to build?", "t": "long" }
+      ]
+    }
+  ]
+}
