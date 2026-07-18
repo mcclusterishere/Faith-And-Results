@@ -1,0 +1,118 @@
+name: "MLK corridor research"
+
+# The Claude research agent for the Corridors pipeline.
+# Run from the Actions tab with a city/state/org from a corridor application:
+# it researches whether the city has an MLK street, its condition, the right
+# officials (city hall, planning, economic development), and drafts outreach —
+# then commits the dossier to data/corridor-research/ where the admin panel
+# lists it. Outreach drafts are ALWAYS human-reviewed before anything sends.
+#
+# Requires repo secret ANTHROPIC_API_KEY
+# (Settings → Secrets and variables → Actions → New repository secret).
+
+on:
+  workflow_dispatch:
+    inputs:
+      city:
+        description: "City (e.g. Norwalk)"
+        required: true
+      state:
+        description: "State (e.g. CT)"
+        required: true
+      org:
+        description: "Applicant organization (from the corridor application)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Research the corridor with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CITY: ${{ inputs.city }}
+          STATE: ${{ inputs.state }}
+          ORG: ${{ inputs.org }}
+        run: |
+          set -euo pipefail
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set."
+            exit 1
+          fi
+
+          PROMPT=$(cat <<PROMPT_END
+          You are the research agent for Freedom, Inc.'s MLK Corridors Initiative
+          (faithandresults.com). An organization${ORG:+ (\"$ORG\")} in $CITY, $STATE
+          wants to bring the Corridors program to their city. Using web search,
+          produce a research dossier in markdown with these sections:
+
+          # MLK Corridor Dossier — $CITY, $STATE
+          ## 1. Does the city have an MLK street or corridor?
+          Name, extent, and neighborhoods it runs through. If none exists, say so
+          plainly and note nearby honorific sites (parks, schools).
+          ## 2. Corridor condition
+          What's known publicly: businesses, vacancies, recent investment or plans.
+          ## 3. Who to contact
+          Mayor's office, city planning/zoning, economic development office, and the
+          council member for the corridor's district — names, titles, and PUBLIC
+          contact channels (official webpages, office phone lines). Only public
+          government contact information.
+          ## 4. Funding landscape
+          State economic development agency and programs that could fund corridor work,
+          plus any active grants for commercial-corridor revitalization there.
+          ## 5. Draft outreach letter
+          A short, respectful letter to the planning office introducing the initiative,
+          citing the Connecticut precedent (corridors named in Norwalk, Middletown, and
+          New Britain; program outline submitted to CT DECD), and requesting a meeting.
+          Mark it clearly as a DRAFT for human review.
+          ## 6. What we couldn't verify
+          Be explicit about gaps rather than guessing.
+          PROMPT_END
+          )
+
+          jq -n --arg prompt "$PROMPT" '{
+            model: "claude-sonnet-5",
+            max_tokens: 6000,
+            tools: [{type: "web_search_20250305", name: "web_search", max_uses: 8}],
+            messages: [{role: "user", content: $prompt}]
+          }' > request.json
+
+          curl -sS https://api.anthropic.com/v1/messages \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "content-type: application/json" \
+            -d @request.json > response.json
+
+          if jq -e '.error' response.json > /dev/null; then
+            echo "::error::API error: $(jq -r '.error.message' response.json)"
+            exit 1
+          fi
+
+          SLUG=$(echo "$CITY-$STATE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]\+/-/g; s/^-\|-$//g')
+          mkdir -p data/corridor-research
+          jq -r '[.content[] | select(.type=="text") | .text] | join("\n")' response.json \
+            > "data/corridor-research/$SLUG.md"
+
+          DATE=$(date -u +%Y-%m-%d)
+          if [ ! -f data/corridor-research/index.json ]; then
+            echo '{"dossiers":[]}' > data/corridor-research/index.json
+          fi
+          jq --arg slug "$SLUG.md" --arg city "$CITY, $STATE" --arg org "$ORG" --arg date "$DATE" \
+            '.dossiers |= ([{file:$slug, city:$city, org:$org, date:$date}] + map(select(.file != $slug)))' \
+            data/corridor-research/index.json > index.tmp && mv index.tmp data/corridor-research/index.json
+
+          rm -f request.json response.json
+
+      - name: Commit the dossier
+        run: |
+          git config user.name "corridor-research-bot"
+          git config user.email "actions@github.com"
+          git add data/corridor-research/
+          git diff --cached --quiet || git commit -m "Corridor research dossier: ${{ inputs.city }}, ${{ inputs.state }}"
+          git push

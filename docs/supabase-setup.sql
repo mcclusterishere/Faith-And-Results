@@ -31,8 +31,29 @@ create table if not exists public.profiles (
   "updatedAt" timestamptz default now()
 );
 
+create table if not exists public.rsvps (
+  id            text primary key,
+  event         text not null,
+  "eventTitle"  text,
+  "eventDate"   text,
+  name          text,
+  email         text,
+  phone         text,
+  type          text default 'attend',
+  "submittedAt" timestamptz default now()
+);
+
 alter table public.applications enable row level security;
 alter table public.profiles     enable row level security;
+alter table public.rsvps        enable row level security;
+
+create policy "anyone can rsvp"
+  on public.rsvps for insert
+  to anon with check (true);
+
+create policy "admins read rsvps"
+  on public.rsvps for select
+  to authenticated using (true);
 
 -- The public app (anon key) may submit…
 create policy "anyone can apply"

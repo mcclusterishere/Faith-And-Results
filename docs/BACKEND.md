@@ -76,8 +76,22 @@ why step 2 is not optional.
 The catalog is data, not markup. Edit these and push — the app re-renders itself:
 
 - `data/programs.json` — every program, grouped by pillar
-- `data/trainings.json` — every training and its application questions
-- `data/news.json` — news & events (entries older than 18 months self-hide)
+- `data/trainings.json` — every training/intake and its application questions
+- `data/events.json` — the one events calendar (future events rise, past ones archive
+  themselves; Admin → Events can draft entries and download a merged copy to commit)
+- `data/jobs-partners.json` — CT Faith Jobs stakeholder employers, their programs,
+  tracking links, and the routing contact used by Admin's "Forward to partner"
+- `data/news.json` — news (entries older than 18 months self-hide)
+
+## The corridor research agent
+
+`.github/workflows/corridor-research.yml` is a Claude-powered research agent for the
+MLK Corridors pipeline. Add the `ANTHROPIC_API_KEY` repo secret, then run it from the
+Actions tab with a city/state/org from any corridor application. It web-searches
+whether the city has an MLK street, its condition, the right public officials (city
+hall, planning, economic development), the funding landscape, and drafts the outreach
+letter — then commits the dossier to `data/corridor-research/`, where **Admin →
+Research** lists it. Drafted outreach is always reviewed by a human before sending.
 
 ## Alternative: forms-only backend
 

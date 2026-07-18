@@ -1,0 +1,39 @@
+{
+  "note": "The CT Faith Jobs Collaborative's stakeholder employers. Each partner: its programs, a direct link, a tracking link (ask each partner to issue one so referrals credit the Collaborative), and the routing contact the admin panel uses for one-click forwarding. Add every stakeholder here — the app builds the application's pathway list from this file.",
+  "partners": [
+    {
+      "id": "hartford-healthcare",
+      "name": "Hartford HealthCare",
+      "contactName": "Deborah Lee",
+      "contactEmail": "deborah.lee@hhchealth.org",
+      "contactRole": "Head of hiring, Hartford HealthCare",
+      "programs": [
+        { "name": "Hartford HealthCare careers — clinical & support roles", "link": "https://hartfordhealthcare.org/careers", "trackingLink": "" },
+        { "name": "Hartford HealthCare community job fairs", "link": "", "trackingLink": "" }
+      ],
+      "notes": "Client to confirm program links; ask HHC for a tagged tracking link so Collaborative referrals are credited."
+    },
+    {
+      "id": "faith-cdc",
+      "name": "Faith Community Development Corporation",
+      "contactName": "",
+      "contactEmail": "info@faithandresults.com",
+      "contactRole": "Job fair host & referral partner",
+      "programs": [
+        { "name": "CT Faith Leaders Jobs Collaborative fairs & referrals", "link": "https://www.faithcdc.org", "trackingLink": "" }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "building-trades",
+      "name": "Building-trade employers (via Workforce Readiness)",
+      "contactName": "",
+      "contactEmail": "info@faithandresults.com",
+      "contactRole": "Routed by the Collaborative",
+      "programs": [
+        { "name": "Construction, electrical, plumbing, HVAC, solar pathways", "link": "", "trackingLink": "" }
+      ],
+      "notes": "Add each trade employer as its own partner entry as agreements land."
+    }
+  ]
+}

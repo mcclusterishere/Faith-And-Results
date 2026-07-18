@@ -117,7 +117,9 @@
       <nav id="nav">
         <button data-pane="dash" aria-current="true">Dashboard</button>
         <button data-pane="apps">Applications</button>
+        <button data-pane="events">Events</button>
         <button data-pane="people">People</button>
+        <button data-pane="research">Research</button>
         <button data-pane="auto">Automations</button>
       </nav>
       <button class="out" id="signOut" type="button">Sign out</button>
@@ -156,6 +158,35 @@
         <div id="appList"></div>
       </section>
 
+      <!-- events -->
+      <section class="pane" id="pane-events">
+        <h2>Events &amp; RSVPs</h2>
+        <p class="note" style="margin-bottom:1rem">Draft events here (stored in this browser), then
+          <b>Download events.json</b> and commit it to publish — the app sorts future/past automatically,
+          so the calendar never goes stale. Each event shows its RSVP roster with one-tap email and text
+          blasts.</p>
+        <div class="tools">
+          <button class="btn" id="evtNew" type="button">+ New event</button>
+          <button class="btn btn--navy" id="evtDownload" type="button">Download events.json</button>
+          <button class="btn btn--line" id="exportRsvps" type="button">Export RSVPs CSV</button>
+        </div>
+        <form id="evtForm" class="kv" hidden style="grid-template-columns:1fr">
+          <label>Title <input id="evTitle" required style="width:100%"></label>
+          <label>Date <input id="evDate" type="date" required></label>
+          <label>Time (e.g. 6:00 PM) <input id="evTime"></label>
+          <label>Location <input id="evLoc"></label>
+          <label>Category
+            <select id="evCat"><option>Conference</option><option>Jobs</option><option>Corridors</option>
+              <option>Training</option><option>Community</option></select></label>
+          <label>Description <textarea id="evBody" rows="3" style="width:100%"></textarea></label>
+          <label><input id="evRsvp" type="checkbox" checked> Takes RSVPs</label>
+          <label><input id="evSponsor" type="checkbox"> Sponsorships open</label>
+          <div class="tools"><button class="btn" type="submit">Save event</button>
+            <button class="btn btn--line" type="button" id="evtCancel">Cancel</button></div>
+        </form>
+        <div id="evtAdminList"></div>
+      </section>
+
       <!-- people -->
       <section class="pane" id="pane-people">
         <h2>People</h2>
@@ -166,6 +197,26 @@
           <button class="btn btn--navy" id="exportPeople" type="button">Export CSV</button>
         </div>
         <div id="peopleList"></div>
+      </section>
+
+      <!-- research -->
+      <section class="pane" id="pane-research">
+        <h2>Corridor research</h2>
+        <p class="note" style="margin-bottom:1rem">The Claude research agent builds a dossier per city:
+          does the city have an MLK street, its condition, the right officials at city hall / planning /
+          economic development, and drafted outreach. Dossiers are committed to
+          <code>data/corridor-research/</code> and appear here. Outreach is always human-reviewed before
+          anything sends.</p>
+        <div class="kv">
+          <dt>Run it</dt>
+          <dd><a href="https://github.com/mcclusterishere/Faith-And-Results/actions/workflows/corridor-research.yml">
+            Actions → "MLK corridor research"</a> → Run workflow → enter the city, state, and
+            organization from the application.</dd>
+          <dt>Requires</dt>
+          <dd>Repo secret <code>ANTHROPIC_API_KEY</code> (Settings → Secrets and variables → Actions).</dd>
+        </div>
+        <div id="dossierList"></div>
+        <pre id="dossierView" hidden style="background:#fffdf7;border:3px solid var(--navy);border-radius:16px;padding:1.1rem;white-space:pre-wrap;font-size:0.92rem"></pre>
       </section>
 
       <!-- automations -->
@@ -190,6 +241,16 @@
       var config = null;
       var APPS = [];
       var PEOPLE = [];
+      var RSVPS = [];
+      var PUBLISHED_EVENTS = [];
+      var PARTNERS = [];
+
+      /* Pipeline stages per intake type; last stage = done (no aging nag). */
+      var STAGES = {
+        "workforce-readiness": ["Submitted", "Forwarded to partner", "Interview", "Placed"],
+        "corridor-join": ["Received", "Research", "Outreach", "Proposal", "Funded"]
+      };
+      var AGING_DAYS = 7;
 
       function esc(s) {
         return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -263,12 +324,23 @@
 
       /* ---------------- data ---------------- */
       function refresh() {
-        Promise.all([FreedomStore.listApplications(), FreedomStore.listProfiles()]).then(function (res) {
+        Promise.all([
+          FreedomStore.listApplications(),
+          FreedomStore.listProfiles(),
+          FreedomStore.listRsvps(),
+          fetch("data/events.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return { events: [] }; }),
+          fetch("data/jobs-partners.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return { partners: [] }; })
+        ]).then(function (res) {
           APPS = res[0] || [];
           PEOPLE = res[1] || [];
+          RSVPS = res[2] || [];
+          PUBLISHED_EVENTS = res[3].events || [];
+          PARTNERS = res[4].partners || [];
           renderDash();
           renderApps();
+          renderEventsAdmin();
           renderPeople();
+          renderResearch();
           renderAuto();
         }).catch(function (e) {
           document.getElementById("tiles").innerHTML =
@@ -279,10 +351,17 @@
       function renderDash() {
         var by = { received: 0, approved: 0, declined: 0 };
         APPS.forEach(function (a) { by[a.status] = (by[a.status] || 0) + 1; });
+        var stale = APPS.filter(function (a) {
+          var stages = STAGES[a.training];
+          if (!stages) return false;
+          var cur = a.stage || stages[0];
+          return cur !== stages[stages.length - 1] && daysSince(a.reviewedAt || a.submittedAt) >= AGING_DAYS;
+        }).length;
         document.getElementById("tiles").innerHTML =
           '<div class="tile"><b>' + APPS.length + "</b><span>Applications</span></div>" +
           '<div class="tile"><b>' + (by.received || 0) + "</b><span>Waiting for review</span></div>" +
-          '<div class="tile"><b>' + (by.approved || 0) + "</b><span>Approved</span></div>" +
+          '<div class="tile"><b>' + stale + "</b><span>Need a follow-up (" + AGING_DAYS + "+ days)</span></div>" +
+          '<div class="tile"><b>' + RSVPS.length + "</b><span>RSVPs</span></div>" +
           '<div class="tile"><b>' + PEOPLE.length + "</b><span>Profiles</span></div>";
         var latest = APPS.slice(0, 5);
         document.getElementById("latest").innerHTML = latest.length
@@ -291,6 +370,42 @@
       }
 
       /* ---------------- applications ---------------- */
+      function daysSince(iso) {
+        return iso ? Math.floor((Date.now() - new Date(iso).getTime()) / 864e5) : 0;
+      }
+      function stageControls(a) {
+        var stages = STAGES[a.training];
+        if (!stages) return "";
+        var cur = a.stage || stages[0];
+        var opts = stages.map(function (s) {
+          return '<option' + (s === cur ? " selected" : "") + ">" + esc(s) + "</option>";
+        }).join("");
+        var age = daysSince(a.reviewedAt || a.submittedAt);
+        var stale = cur !== stages[stages.length - 1] && age >= AGING_DAYS;
+        return '<div class="acts"><label style="font-weight:700">Pipeline stage ' +
+          '<select data-stage style="margin-left:0.4rem; font-family:inherit; font-size:0.95rem; border:3px solid var(--navy); border-radius:10px; padding:0.3rem 0.5rem">' +
+          opts + "</select></label>" +
+          '<span class="chip' + (stale ? " chip--declined" : "") + '">' + age + " day" + (age === 1 ? "" : "s") +
+          " in stage" + (stale ? " — needs a follow-up" : "") + "</span></div>";
+      }
+      function forwardControls(a) {
+        if (a.training !== "workforce-readiness" || !PARTNERS.length) return "";
+        var pathway = (a.answers && a.answers["Which pathway interests you?"]) || "";
+        var match = null;
+        PARTNERS.forEach(function (p) { if (pathway.indexOf(p.name) === 0) match = p; });
+        var target = match || PARTNERS[0];
+        if (!target.contactEmail) return "";
+        var body = "Referral from the CT Faith Jobs Collaborative (faithandresults.com)%0D%0A%0D%0A" +
+          encodeURIComponent("Applicant: " + (a.name || "") + "\nEmail: " + (a.email || "") +
+            "\nPhone: " + (a.phone || "") + "\nCity: " + (a.city || "") +
+            "\nPathway: " + pathway + "\nReference: " + a.id +
+            "\n\nPlease confirm receipt and a tracking link so we can follow this application.");
+        return '<div class="acts"><a class="btn" href="mailto:' + esc(target.contactEmail) +
+          "?subject=" + encodeURIComponent("Jobs Collaborative referral " + a.id + (a.name ? " — " + a.name : "")) +
+          "&body=" + body + '">Forward to ' + esc(target.contactName || target.name) + "</a>" +
+          '<span class="chip">' + esc(target.name) + "</span></div>";
+      }
+
       function appCard(a) {
         var answers = "";
         Object.keys(a.answers || {}).forEach(function (k) {
@@ -298,7 +413,8 @@
         });
         return '<details class="apprec" data-id="' + esc(a.id) + '">' +
           "<summary><b>" + esc(a.name || "—") + '</b><span class="who">' + esc(a.trainingName) + "</span>" +
-          chip(a.status) + '<span class="when">' + fmtDate(a.submittedAt) + "</span></summary>" +
+          chip(a.status) + (a.stage ? '<span class="chip">' + esc(a.stage) + "</span>" : "") +
+          '<span class="when">' + fmtDate(a.submittedAt) + "</span></summary>" +
           '<div class="appbody"><dl>' +
           "<dt>Reference</dt><dd>" + esc(a.id) + "</dd>" +
           "<dt>Email</dt><dd>" + esc(a.email || "—") + "</dd>" +
@@ -315,6 +431,8 @@
           '<button class="btn btn--clay" data-act="declined" type="button">Decline</button>' +
           '<button class="btn btn--line" data-act="received" type="button">Back to received</button>' +
           "</div>" +
+          stageControls(a) +
+          forwardControls(a) +
           (a.email ? '<div class="acts"><a class="btn btn--navy" href="mailto:' + esc(a.email) +
             "?subject=" + encodeURIComponent("Your Freedom, Inc. application " + a.id) + '">Email ' + esc(a.name || "applicant") + "</a></div>" : "") +
           "</div></details>";
@@ -368,6 +486,138 @@
           b.disabled = false;
           alert("Couldn't update: " + err.message);
         });
+      });
+
+      /* pipeline stage changes */
+      document.addEventListener("change", function (e) {
+        var sel = e.target.closest("select[data-stage]");
+        if (!sel) return;
+        var id = sel.closest(".apprec").getAttribute("data-id");
+        FreedomStore.updateApplication(id, { stage: sel.value }).then(refresh)
+          .catch(function (err) { alert("Couldn't update stage: " + err.message); });
+      });
+
+      /* ---------------- events + RSVPs ---------------- */
+      function allEvents() {
+        return PUBLISHED_EVENTS.map(function (e) { return Object.assign({ _src: "published" }, e); })
+          .concat(FreedomStore.getLocalEvents().map(function (e) { return Object.assign({ _src: "local" }, e); }));
+      }
+      function renderEventsAdmin() {
+        var evs = allEvents().sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+        document.getElementById("evtAdminList").innerHTML = evs.length ? evs.map(function (ev) {
+          var roster = RSVPS.filter(function (r) { return r.event === ev.id; });
+          var emails = roster.map(function (r) { return r.email; }).filter(Boolean);
+          var phones = roster.map(function (r) { return (r.phone || "").replace(/[^\d+]/g, ""); }).filter(Boolean);
+          var sponsors = roster.filter(function (r) { return r.type === "sponsor"; }).length;
+          var blast = "";
+          if (emails.length) {
+            blast += '<a class="btn btn--navy" href="mailto:?bcc=' + emails.join(",") +
+              "&subject=" + encodeURIComponent(ev.title) + '">Email all (' + emails.length + ")</a>";
+          }
+          if (phones.length) {
+            blast += '<a class="btn btn--line" href="sms:' + phones.join(",") + '">Text all (' + phones.length + ")</a>";
+          }
+          return '<details class="apprec"><summary><b>' + esc(ev.title) + "</b>" +
+            '<span class="who">' + esc(ev.date) + (ev.location ? " · " + esc(ev.location) : "") + "</span>" +
+            '<span class="chip">' + roster.length + " RSVP" + (roster.length === 1 ? "" : "s") +
+            (sponsors ? " · " + sponsors + " sponsor" : "") + "</span>" +
+            '<span class="chip' + (ev._src === "local" ? " chip--declined" : "") + '">' +
+            (ev._src === "local" ? "draft — publish via download" : "published") + "</span></summary>" +
+            '<div class="appbody">' +
+            "<p>" + esc(ev.body || "") + "</p>" +
+            (roster.length ? "<dl>" + roster.map(function (r) {
+              return "<dt>" + esc(r.name) + (r.type === "sponsor" ? " ★" : "") + "</dt><dd>" +
+                esc(r.email || "") + (r.phone ? " · " + esc(r.phone) : "") + "</dd>";
+            }).join("") + "</dl>" : '<p class="note">No RSVPs yet.</p>') +
+            '<div class="acts">' + blast +
+            (ev._src === "local" ? '<button class="btn btn--clay" data-evdel="' + esc(ev.id) + '" type="button">Delete draft</button>' : "") +
+            "</div></div></details>";
+        }).join("") : '<div class="empty">No events yet — draft one above.</div>';
+      }
+      document.getElementById("evtNew").addEventListener("click", function () {
+        document.getElementById("evtForm").hidden = false;
+      });
+      document.getElementById("evtCancel").addEventListener("click", function () {
+        document.getElementById("evtForm").hidden = true;
+      });
+      document.getElementById("evtForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var title = document.getElementById("evTitle").value.trim();
+        var date = document.getElementById("evDate").value;
+        if (!title || !date) return;
+        var list = FreedomStore.getLocalEvents();
+        list.push({
+          id: title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "-" + date,
+          title: title, date: date,
+          time: document.getElementById("evTime").value.trim(),
+          location: document.getElementById("evLoc").value.trim(),
+          category: document.getElementById("evCat").value,
+          body: document.getElementById("evBody").value.trim(),
+          rsvp: document.getElementById("evRsvp").checked,
+          sponsor: document.getElementById("evSponsor").checked
+        });
+        FreedomStore.saveLocalEvents(list);
+        document.getElementById("evtForm").hidden = true;
+        e.target.reset();
+        renderEventsAdmin();
+      });
+      document.addEventListener("click", function (e) {
+        var d = e.target.closest("button[data-evdel]");
+        if (!d) return;
+        FreedomStore.saveLocalEvents(FreedomStore.getLocalEvents().filter(function (ev) {
+          return ev.id !== d.getAttribute("data-evdel");
+        }));
+        renderEventsAdmin();
+      });
+      document.getElementById("evtDownload").addEventListener("click", function () {
+        var merged = {
+          note: "The one events file. The app sorts future events to the top and archives past ones automatically. Commit this file to data/events.json to publish.",
+          events: allEvents().map(function (ev) {
+            var c = Object.assign({}, ev);
+            delete c._src;
+            return c;
+          })
+        };
+        var blob = new Blob([JSON.stringify(merged, null, 2)], { type: "application/json" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "events.json";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+      document.getElementById("exportRsvps").addEventListener("click", function () {
+        FreedomStore.downloadCsv(RSVPS, "freedom-rsvps.csv");
+      });
+
+      /* ---------------- research dossiers ---------------- */
+      function renderResearch() {
+        fetch("data/corridor-research/index.json", { cache: "no-cache" })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (d) {
+            var list = d.dossiers || [];
+            document.getElementById("dossierList").innerHTML = list.length ? list.map(function (x) {
+              return '<details class="apprec"><summary><b>' + esc(x.city) + "</b>" +
+                '<span class="who">' + esc(x.org || "") + '</span><span class="when">' + esc(x.date || "") + "</span></summary>" +
+                '<div class="appbody"><div class="acts"><button class="btn btn--navy" data-dossier="' +
+                esc(x.file) + '" type="button">Read the dossier</button></div></div></details>';
+            }).join("") : '<div class="empty">No dossiers yet — run the workflow for the first city.</div>';
+          })
+          .catch(function () {
+            document.getElementById("dossierList").innerHTML =
+              '<div class="empty">No dossiers yet — run the workflow for the first city.</div>';
+          });
+      }
+      document.addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-dossier]");
+        if (!b) return;
+        fetch("data/corridor-research/" + b.getAttribute("data-dossier"), { cache: "no-cache" })
+          .then(function (r) { return r.text(); })
+          .then(function (t) {
+            var v = document.getElementById("dossierView");
+            v.textContent = t;
+            v.hidden = false;
+            v.scrollIntoView({ block: "start" });
+          });
       });
 
       /* ---------------- people ---------------- */

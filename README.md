@@ -20,8 +20,20 @@ tap targets 48px and up — no fine print exists anywhere in the app.
 - **Trainings that take applications** — five trainings with tailored questions;
   people build a profile once and every application pre-fills. Statuses (received /
   approved / declined) show in their profile.
+- **One events calendar, never stale** — future events rise, past ones archive
+  themselves; RSVP or sponsor in-app; .ics downloads; Admin drafts events and blasts
+  RSVP lists by email or text.
+- **The MLK Corridors pipeline** — the Connecticut record (Norwalk, Middletown,
+  New Britain; DECD program outline) told in full, plus a join-from-anywhere intake,
+  research starters, a pre-filled funding-proposal draft, and a Claude research agent
+  (`.github/workflows/corridor-research.yml`) that builds per-city dossiers.
+- **Jobs routing with stakeholders** — pathways come from `data/jobs-partners.json`
+  (Hartford HealthCare and more); Admin forwards applications to the right hiring
+  contact in one click and tracks stages (Submitted → Forwarded → Interview → Placed)
+  with follow-up aging.
 - **An admin backend** (`admin.html`) — dashboard, application review with
-  approve/decline + notes, people directory, CSV exports, automations panel.
+  approve/decline + notes, pipeline stages, events & RSVPs, people directory,
+  research dossiers, CSV exports, automations panel.
 - **Automations to other providers** — every application, profile, and status change
   can POST to a webhook (Zapier / Make / n8n → Mailchimp, Sheets, CRMs, Slack, SMS).
   See `docs/BACKEND.md`.

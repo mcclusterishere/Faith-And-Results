@@ -31,9 +31,11 @@
       "pillar": "economic",
       "name": "MLK Corridors Initiative",
       "tag": "Community design & development",
-      "body": "Reimagining the streets that carry Dr. King's name — community-led design and development that turns symbolic corridors into engines of local economy.",
-      "partners": ["Municipalities", "Community economic development corporations"],
-      "trainings": ["capacity-building"]
+      "screen": "#/corridor",
+      "stat": "3 corridor communities named in Connecticut",
+      "body": "Reimagining the streets that carry Dr. King's name — community-led design and development that turns symbolic corridors into engines of local economy. Announced by the Black Ministers Alliance of New Britain with a statewide coalition, with corridor communities named in Norwalk, Middletown, and New Britain and a program outline submitted to Connecticut's Department of Economic and Community Development.",
+      "partners": ["Black Ministers Alliance of New Britain", "The Connecticut Faith Leaders Collaborative", "Municipalities", "CT Department of Economic and Community Development"],
+      "trainings": ["corridor-join"]
     },
     {
       "id": "workforce-readiness",

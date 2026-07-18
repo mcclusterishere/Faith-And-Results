@@ -1,0 +1,41 @@
+{
+  "note": "The one events file. The app sorts future events to the top and moves past ones into the archive automatically — this page can never go stale. Admin > Events can draft entries and download a merged copy of this file to publish. Entries with sample:true render with a SAMPLE chip; replace them with real dates.",
+  "events": [
+    {
+      "id": "fcdc-conference-2026",
+      "sample": true,
+      "title": "FCDC Faith & Community Development Conference",
+      "date": "2026-10-15",
+      "time": "9:00 AM – 4:00 PM",
+      "location": "Hartford, CT",
+      "category": "Conference",
+      "rsvp": true,
+      "sponsor": true,
+      "body": "The Faith Community Development Corporation's annual gathering: congregations, municipalities, and funders in one room. Organizations may register to attend or join as a paid sponsor — sponsors get the stage, the program book, and the room."
+    },
+    {
+      "id": "hhc-job-fair-2026",
+      "sample": true,
+      "title": "Hartford HealthCare Community Job Fair",
+      "date": "2026-08-20",
+      "time": "10:00 AM – 2:00 PM",
+      "location": "New Britain, CT",
+      "category": "Jobs",
+      "rsvp": true,
+      "sponsor": false,
+      "body": "The CT Faith Jobs Collaborative and Hartford HealthCare bring hiring managers to the community — bring your resume, leave with next steps. Apply through the Trainings tab to get matched before the fair."
+    },
+    {
+      "id": "mlk-corridors-briefing-2026",
+      "sample": true,
+      "title": "MLK Corridors Initiative — City Briefing",
+      "date": "2026-06-11",
+      "time": "6:00 PM",
+      "location": "New Britain, CT",
+      "category": "Corridors",
+      "rsvp": true,
+      "sponsor": false,
+      "body": "A look back at the corridor work in Norwalk, Middletown, and New Britain — and the playbook for bringing the corridor to the next city."
+    }
+  ]
+}

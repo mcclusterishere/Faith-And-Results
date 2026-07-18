@@ -52,6 +52,27 @@
       ]
     },
     {
+      "id": "corridor-join",
+      "kind": "intake",
+      "name": "Bring the MLK Corridor to your city",
+      "pillar": "economic",
+      "format": "Program intake · for organizations",
+      "audience": "Congregations, community organizations, and municipalities anywhere in America",
+      "body": "Tell us about your organization and your city, and the Corridors pipeline starts: we confirm whether your city has a street named for Dr. King, research the right officials, and build the outreach and funding proposal with you.",
+      "program": "mlk-corridors",
+      "questions": [
+        { "id": "cityState", "label": "Your city and state", "t": "text", "required": true },
+        { "id": "hasMlk", "label": "Does your city have a street or corridor named for Dr. King?", "t": "select", "options": ["Yes", "No", "Not sure — please check for me"] },
+        { "id": "condition", "label": "If yes — the corridor today is…", "t": "select", "options": ["Thriving but could do more", "Struggling — disinvested", "Mostly symbolic, little activity", "I don't know yet"] },
+        { "id": "orgType", "label": "Your organization", "t": "select", "options": ["House of worship", "Faith-based nonprofit", "Community development corporation", "Ministerial alliance", "Municipality / agency", "Business", "Other"] },
+        { "id": "orgSize", "label": "Organization size", "t": "select", "options": ["Under 50 people", "50–200", "200–1,000", "1,000+"] },
+        { "id": "role", "label": "Your role in the organization", "t": "text" },
+        { "id": "partners", "label": "Local partners already at the table (if any)", "t": "text" },
+        { "id": "vision", "label": "What should your corridor become?", "t": "long", "required": true },
+        { "id": "funding", "label": "Financial support you expect to seek", "t": "select", "options": ["State economic development funds", "Municipal funds", "Foundation grants", "Corporate sponsorship", "Not sure yet"] }
+      ]
+    },
+    {
       "id": "capacity-building",
       "name": "Capacity Building for Faith-Based Organizations",
       "pillar": "education",

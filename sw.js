@@ -26,6 +26,8 @@ var SHELL = [
   "./data/news.json",
   "./data/programs.json",
   "./data/trainings.json",
+  "./data/events.json",
+  "./data/jobs-partners.json",
   "./data/config.json"
 ];
 

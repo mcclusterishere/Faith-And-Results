@@ -23,6 +23,8 @@ window.FreedomStore = (function () {
     apps: "freedom.applications",
     profiles: "freedom.profiles",
     mine: "freedom.myApplications",
+    rsvps: "freedom.rsvps",
+    localEvents: "freedom.localEvents",
     session: "freedom.adminSession"
   };
 
@@ -123,6 +125,29 @@ window.FreedomStore = (function () {
     return read(LS.apps, []).filter(function (a) { return mine.indexOf(a.id) !== -1; });
   }
 
+  /* ---------------- events + RSVPs ---------------- */
+  function submitRsvp(r) {
+    r.id = uid();
+    r.submittedAt = new Date().toISOString();
+    var all = read(LS.rsvps, []);
+    all.unshift(r);
+    write(LS.rsvps, all);
+    var pushes = [fireWebhook("rsvp", r)];
+    if (config.mode === "supabase" && config.supabaseUrl) {
+      pushes.push(sb("/rest/v1/rsvps", { method: "POST", body: r }));
+    }
+    return Promise.all(pushes).then(function () { return r; });
+  }
+  function listRsvps() {
+    if (config.mode === "supabase" && config.supabaseUrl) {
+      return sb("/rest/v1/rsvps?select=*&order=submittedAt.desc", { token: adminToken() });
+    }
+    return Promise.resolve(read(LS.rsvps, []));
+  }
+  /* Admin-drafted events live locally until published into data/events.json. */
+  function getLocalEvents() { return read(LS.localEvents, []); }
+  function saveLocalEvents(list) { write(LS.localEvents, list); }
+
   /* ---------------- admin ---------------- */
   function adminSignIn(email, password) {
     if (config.mode !== "supabase") {
@@ -197,6 +222,10 @@ window.FreedomStore = (function () {
     saveProfile: saveProfile,
     submitApplication: submitApplication,
     myApplications: myApplications,
+    submitRsvp: submitRsvp,
+    listRsvps: listRsvps,
+    getLocalEvents: getLocalEvents,
+    saveLocalEvents: saveLocalEvents,
     adminSignIn: adminSignIn,
     adminSignOut: adminSignOut,
     isAdminSignedIn: function () { return config.mode !== "supabase" || !!adminToken(); },

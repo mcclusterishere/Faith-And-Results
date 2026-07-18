@@ -258,6 +258,24 @@
     .pillar-head h3 { font-size: 1.35rem; color: var(--clay); }
     .pillar-head p { font-size: 1rem; }
 
+    /* ---- events calendar ---- */
+    .cal { background: var(--navy); border-radius: 20px; padding: 1rem; margin-top: 1.4rem; color: var(--cream); }
+    .cal .calhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+    .cal .calhead b { font-family: "BitterSlab", Georgia, serif; font-size: 1.2rem; color: var(--cream); }
+    .cal .calhead button { background: none; border: 2px solid var(--gold); color: var(--gold); border-radius: 100px;
+      font-weight: 700; font-size: 1rem; padding: 0.25em 0.9em; cursor: pointer; }
+    .cal table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .cal th { font-size: 0.85rem; font-weight: 700; color: var(--gold); padding-bottom: 0.4rem; }
+    .cal td { text-align: center; padding: 0.28rem 0; font-size: 1rem; font-weight: 700; border-radius: 10px; }
+    .cal td.evt { background: rgba(201, 154, 46, 0.25); outline: 2px solid var(--gold); cursor: pointer; }
+    .cal td.today { color: var(--gold); text-decoration: underline; }
+    .cal td.dim { color: rgba(247, 241, 227, 0.35); font-weight: 400; }
+    .evtcard summary { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: baseline; cursor: pointer; list-style: none; }
+    .evtcard summary::-webkit-details-marker { display: none; }
+    .evtcard .when { font-family: "BitterSlab", Georgia, serif; font-weight: 900; color: var(--clay); font-size: 1.05rem; }
+    .rsvpform { margin-top: 0.8rem; border-top: 3px solid var(--cream-2); padding-top: 0.4rem; }
+    .chip--sample { background: rgba(156, 61, 34, 0.12); border-color: var(--clay); color: var(--clay); }
+
     /* ---- account button ---- */
     .appbar .account { background: none; border: 0; cursor: pointer; padding: 0.2rem; display: flex; }
     .appbar .account svg { width: 30px; height: 30px; stroke: var(--cream); fill: none; stroke-width: 2.3; stroke-linecap: round; }
@@ -350,6 +368,11 @@
             <h3>Seventeen cities</h3>
             <p>From Bridgeport to Oakland — tap any city on the constellation and see the work there.</p>
             <p class="go">Open the map →</p></a>
+          <a class="card" href="#/corridor"><span class="num">MLK Corridors</span>
+            <h3>Bring it to your city</h3>
+            <p>Norwalk, Middletown, and New Britain were first. The pipeline — research, outreach,
+              proposal — starts with one form.</p>
+            <p class="go">See the initiative →</p></a>
           <a class="card" href="#/news"><span class="num">News &amp; events</span>
             <h3>Happening now</h3>
             <p>The latest from all seventeen cities — nothing stale is ever shown.</p>
@@ -655,7 +678,7 @@
         <div id="applyDoneWrap" hidden>
           <p class="kick">Application received</p>
           <h2 tabindex="-1">It's in. We'll take it from here.</h2>
-          <div class="cards">
+          <div class="cards" id="doneCards">
             <div class="card"><span class="num">Reference</span>
               <h3 id="doneRef"></h3>
               <p id="doneMsg"></p></div>
@@ -667,6 +690,109 @@
             <a class="btn btn--navy" href="#/profile">See my applications</a>
             <a class="btn btn--line" style="color:var(--navy); border-color:var(--navy)" href="#/trainings">Back to trainings</a>
           </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= EVENTS ================= -->
+  <div class="screen" id="scr-events" role="region" aria-label="Events">
+    <section>
+      <div class="wrap">
+        <p class="kick">Events</p>
+        <h2 tabindex="-1" data-title="Events — Freedom, Inc.">One calendar. Never stale.</h2>
+        <p class="sub">Every gathering, conference, fair, and briefing — future events rise to the top on
+          their own, past events file themselves into the archive. RSVP or sponsor right here.</p>
+        <div class="cal" aria-label="Calendar">
+          <div class="calhead">
+            <button type="button" id="calPrev" aria-label="Previous month">←</button>
+            <b id="calTitle"></b>
+            <button type="button" id="calNext" aria-label="Next month">→</button>
+          </div>
+          <table aria-hidden="true"><thead><tr>
+            <th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th>
+          </tr></thead><tbody id="calBody"></tbody></table>
+        </div>
+        <div class="cta-row" style="margin-top:1rem">
+          <button class="btn btn--navy" type="button" id="icsAll">Add our calendar to yours (.ics)</button>
+        </div>
+        <div class="pillar-head"><h3>Coming up</h3></div>
+        <div class="cards" id="evtFuture"></div>
+        <div class="pillar-head"><h3>The archive</h3>
+          <p>What already happened — the record stays, the clutter doesn't.</p></div>
+        <div class="cards" id="evtPast"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= MLK CORRIDOR ================= -->
+  <div class="screen" id="scr-corridor" role="region" aria-label="MLK Corridors Initiative">
+    <section class="hero dark" style="padding-top:2rem">
+      <div class="wrap">
+        <button class="back" type="button" data-nav="#/programs" style="color:var(--gold)">← All programs</button>
+        <p class="kick">MLK Corridors Initiative</p>
+        <h1 tabindex="-1" data-title="MLK Corridors — Freedom, Inc." style="font-size:clamp(2.2rem,9vw,3.6rem)">The street that
+          carries his name should carry the neighborhood.</h1>
+        <p class="sub">More than 900 American streets bear Dr. King's name. Too many are symbols without
+          investment. The Corridors Initiative changes that — city by city, congregation by congregation.</p>
+        <div class="cta-row">
+          <a class="btn" href="#/apply/corridor-join">Bring it to your city</a>
+        </div>
+      </div>
+    </section>
+    <section class="rv">
+      <div class="wrap">
+        <p class="kick">The record in Connecticut</p>
+        <h2>What happened, and who made it happen.</h2>
+        <div class="cards">
+          <div class="card"><span class="num">What happened</span>
+            <h3>Three corridors, named and organized.</h3>
+            <p>The Black Ministers Alliance of New Britain, with a statewide coalition of faith,
+              community, and municipal partners, launched the Martin Luther King, Jr. Corridors
+              Initiative — naming corridor communities in <strong>Norwalk, Middletown, and New
+              Britain</strong> as epicenters for renewed economic activity.</p></div>
+          <div class="card"><span class="num">Who was involved</span>
+            <h3>Pulpits, city halls, and the state.</h3>
+            <p>Bishop Dale Shaw and the Black Ministers Alliance of New Britain; the Connecticut Faith
+              Leaders Collaborative; Freedom, Inc. under Rev. Carl McCluster; municipal partners
+              including the City of New Britain under Mayor Erin Stewart; and Connecticut's Department
+              of Economic and Community Development (DECD), which received the initiative's program
+              outline in 2019.</p></div>
+          <div class="card"><span class="num">Why</span>
+            <h3>Symbols don't hire. Corridors do.</h3>
+            <p>Corridors carrying Dr. King's name sit at the heart of the very neighborhoods facing
+              chronic disinvestment. Organizing them as economic corridors turns honorary geography
+              into storefronts, jobs, safety, and pride — for residents, and for the municipalities
+              that serve them.</p></div>
+          <div class="card"><span class="num">Cost &amp; effects</span>
+            <h3>The numbers publish here.</h3>
+            <p><em>Investment figures and measured outcomes for the Connecticut corridors publish in
+              this card as the client supplies them — dollars sought from DECD, dollars landed,
+              storefronts opened, jobs created. The framework is built; the numbers drop in.</em></p></div>
+        </div>
+      </div>
+    </section>
+    <section class="collab rv" style="background:var(--cream-2)">
+      <div class="wrap">
+        <p class="kick">The pipeline</p>
+        <h2>From "we want this" to funded — five stages.</h2>
+        <div class="cards">
+          <div class="card"><span class="num">1 · Join</span><p><strong>Tell us about your organization and city</strong> —
+            the form asks for everything the pipeline needs, wherever you live.</p></div>
+          <div class="card"><span class="num">2 · Research</span><p><strong>We confirm your corridor.</strong> Does your city
+            have a street named for Dr. King? What condition is it in? Our research automation builds
+            the dossier — including the right officials to contact.</p></div>
+          <div class="card"><span class="num">3 · Outreach</span><p><strong>City hall hears from us together.</strong> Drafted
+            letters to the mayor's office, planning department, and economic development office — reviewed
+            by a human, sent with your name beside ours.</p></div>
+          <div class="card"><span class="num">4 · Proposal</span><p><strong>The funding ask.</strong> A financial-support
+            proposal modeled on the Connecticut playbook — the same kind of program outline that went
+            to DECD — tailored to your city and funders.</p></div>
+          <div class="card"><span class="num">5 · Corridor</span><p><strong>Your city joins the map.</strong> Norwalk,
+            Middletown, and New Britain were first. Your corridor is next.</p></div>
+        </div>
+        <div class="cta-row" style="margin-top:1.5rem">
+          <a class="btn btn--navy" href="#/apply/corridor-join">Start the pipeline →</a>
         </div>
       </div>
     </section>
@@ -715,9 +841,9 @@
     <a class="tab" href="#/trainings" data-tab="trainings">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 5 25 10.2 14 15.4 3 10.2Z"/><path d="M8.2 12.9v4.9c0 2.4 11.6 2.4 11.6 0v-4.9M25 10.2v5.6"/></svg>
       Trainings</a>
-    <a class="tab" href="#/cities" data-tab="cities">
-      <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3.5 17 10.2l7.3.7-5.5 4.9 1.6 7.2L14 19.2 7.6 23l1.6-7.2-5.5-4.9 7.3-.7Z"/></svg>
-      Cities</a>
+    <a class="tab" href="#/events" data-tab="events">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="6.5" width="20" height="17" rx="2.5"/><path d="M4 11.5h20M9.5 4v4M18.5 4v4"/></svg>
+      Events</a>
     <a class="tab" href="#/connect" data-tab="connect">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6.2 4.8c-1 0-1.7.8-1.6 1.7C5.5 15.7 12.3 22.5 21.5 23.4c.9.1 1.7-.6 1.7-1.6v-3.4c0-.8-.5-1.4-1.3-1.6l-3.5-.9c-.7-.2-1.4.1-1.8.7l-.9 1.3c-2.8-1.4-4.6-3.2-6-6l1.3-.9c.6-.4.9-1.1.7-1.8l-.9-3.5c-.2-.8-.8-1.3-1.6-1.3Z"/></svg>
       Connect</a>
@@ -769,8 +895,8 @@
       CITIES.forEach(function (c) { BY_SLUG[slug(c)] = c; });
 
       /* ================= router ================= */
-      var TABS = ["home", "programs", "trainings", "cities", "connect"];
-      var SCREENS = TABS.concat(["news", "about", "program", "training", "apply", "profile"]);
+      var TABS = ["home", "programs", "trainings", "events", "connect"];
+      var SCREENS = TABS.concat(["cities", "news", "about", "program", "training", "apply", "profile", "corridor"]);
       var current = "";
       var sheetOpenedFromApp = false;
 
@@ -915,7 +1041,7 @@
           var progs = DATA.programs.filter(function (p) { return p.pillar === pl.id; });
           return '<div class="pillar-head"><h3>' + esc(pl.name) + "</h3><p>" + esc(pl.blurb) + "</p></div>" +
             '<div class="cards">' + progs.map(function (p) {
-              return '<a class="card" href="#/program/' + p.id + '"><span class="num">' + esc(p.tag) + "</span>" +
+              return '<a class="card" href="' + (p.screen || "#/program/" + p.id) + '"><span class="num">' + esc(p.tag) + "</span>" +
                 "<h3>" + esc(p.name) + "</h3>" +
                 (p.stat ? '<p><span class="chip">' + esc(p.stat) + "</span></p>" : "") +
                 "<p>" + esc(firstSentence(p.body)) + "</p>" +
@@ -923,7 +1049,9 @@
             }).join("") + "</div>";
         }).join("");
 
-        document.getElementById("trainingList").innerHTML = DATA.trainings.map(function (t) {
+        document.getElementById("trainingList").innerHTML = DATA.trainings.filter(function (t) {
+          return t.kind !== "intake";
+        }).map(function (t) {
           return '<div class="card"><span class="num">' + esc(t.format) + "</span>" +
             "<h3>" + esc(t.name) + (t.urgent ? ' <span class="badge-urgent">Urgent help available</span>' : "") + "</h3>" +
             "<p><strong>For:</strong> " + esc(t.audience) + "</p>" +
@@ -1030,7 +1158,19 @@
         currentTraining = t;
         document.getElementById("applyTitle").textContent = t.name;
         document.getElementById("applyBack").setAttribute("data-nav", "#/training/" + t.id);
-        var fields = BASE_FIELDS.concat(t.questions || [], [{ id: "notes", label: "Anything else we should know?", t: "long" }]);
+        var extraQs = (t.questions || []).slice();
+        /* Jobs routing: the pathway list comes from the stakeholder partners file,
+           so every partner program is applyable and trackable by name. */
+        if (t.id === "workforce-readiness" && DATA.partners) {
+          var opts = [];
+          DATA.partners.forEach(function (pt) {
+            (pt.programs || []).forEach(function (pr) { opts.push(pt.name + " — " + pr.name); });
+          });
+          opts.push("Not sure yet — match me");
+          extraQs.push({ id: "pathway", label: "Which pathway interests you?", t: "select", options: opts });
+        }
+        var fields = BASE_FIELDS.concat(extraQs, [{ id: "notes", label: "Anything else we should know?", t: "long" }]);
+        currentTraining._fields = fields;
         document.getElementById("applyFields").innerHTML = fields.map(function (f) { return fieldHtml(f, "a"); }).join("");
         prefill(fields, "a");
         document.getElementById("applyConsent").checked = false;
@@ -1065,7 +1205,7 @@
         e.preventDefault();
         if (!currentTraining) return;
         var t = currentTraining;
-        var fields = BASE_FIELDS.concat(t.questions || [], [{ id: "notes", label: "notes", t: "long" }]);
+        var fields = t._fields || BASE_FIELDS.concat(t.questions || [], [{ id: "notes", label: "notes", t: "long" }]);
         if (!validate(fields, "a")) return;
         var consent = document.getElementById("applyConsent").checked;
         document.getElementById("consentErr").style.display = consent ? "none" : "block";
@@ -1073,7 +1213,11 @@
 
         var record = { training: t.id, trainingName: t.name, consent: true, answers: {} };
         BASE_FIELDS.forEach(function (f) { record[f.id] = fEl("a", f.id).value.trim(); });
-        (t.questions || []).forEach(function (q) { record.answers[q.label] = fEl("a", q.id).value.trim(); });
+        fields.forEach(function (q) {
+          if (q.id === "notes") return;
+          var isBase = BASE_FIELDS.some(function (b) { return b.id === q.id; });
+          if (!isBase) record.answers[q.label] = fEl("a", q.id).value.trim();
+        });
         record.notes = fEl("a", "notes").value.trim();
 
         var btn = document.getElementById("applySubmit");
@@ -1091,6 +1235,7 @@
           document.getElementById("doneRef").textContent = app.id;
           document.getElementById("doneMsg").textContent = "Your application to " + t.name +
             " is in. Keep this reference — it's also saved in your profile on this device.";
+          renderDoneExtras(t, app);
           document.getElementById("applyFormWrap").hidden = true;
           document.getElementById("applyDoneWrap").hidden = false;
           window.scrollTo(0, 0);
@@ -1101,6 +1246,82 @@
           say("Couldn't send just now — check your connection and try again.");
         });
       });
+
+      /* ================= corridor confirmation extras ================= */
+      function renderDoneExtras(t, app) {
+        var box = document.getElementById("doneCards");
+        box.querySelectorAll(".extra-done").forEach(function (n) { n.remove(); });
+        if (t.id !== "corridor-join") return;
+        var city = (app.answers && app.answers["Your city and state"]) || app.city || "your city";
+        var q = encodeURIComponent(city);
+        var links = [
+          ["Find the MLK street on the map", "https://www.google.com/maps/search/" + encodeURIComponent("Martin Luther King near " + city)],
+          ["City hall — contact page", "https://www.google.com/search?q=" + q + encodeURIComponent(" city hall contact")],
+          ["Planning & zoning department", "https://www.google.com/search?q=" + q + encodeURIComponent(" planning and zoning department contact")],
+          ["Economic development office", "https://www.google.com/search?q=" + q + encodeURIComponent(" economic development office contact")]
+        ];
+        var card = document.createElement("div");
+        card.className = "card extra-done";
+        card.innerHTML = '<span class="num">Research starters — ' + esc(city) + "</span>" +
+          "<h3>The pipeline is already moving.</h3>" +
+          "<p>Our team runs the full research dossier next. If you want to look now, these are the doors:</p>" +
+          "<p>" + links.map(function (l) {
+            return '<a href="' + l[1] + '" target="_blank" rel="noopener" style="color:var(--clay); font-weight:700">' + esc(l[0]) + " →</a>";
+          }).join("<br>") + "</p>";
+        box.appendChild(card);
+        var prop = document.createElement("div");
+        prop.className = "card extra-done";
+        prop.innerHTML = '<span class="num">The funding ask</span><h3>Your proposal draft, started.</h3>' +
+          "<p>A financial-support proposal modeled on the Connecticut playbook, pre-filled with your answers — open it, print it, or save it as PDF. The team refines it with you before anything is sent.</p>";
+        var btn = document.createElement("button");
+        btn.className = "btn btn--navy";
+        btn.type = "button";
+        btn.textContent = "Open my proposal draft";
+        btn.addEventListener("click", function () { openProposal(app); });
+        prop.appendChild(btn);
+        box.appendChild(prop);
+      }
+
+      function openProposal(app) {
+        var a = app.answers || {};
+        var city = a["Your city and state"] || app.city || "[CITY, STATE]";
+        var w = window.open("", "_blank");
+        if (!w) { say("Allow pop-ups to open the proposal draft."); return; }
+        var d = w.document;
+        d.title = "MLK Corridor Proposal Draft — " + city;
+        var body =
+          "<h1>Martin Luther King, Jr. Corridor Initiative<br>" + esc(city) + "</h1>" +
+          "<p class='draft'>DRAFT — prepared with Freedom, Inc. (faithandresults.com) · " +
+          new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) + "</p>" +
+          "<h2>Submitted by</h2><p>" + esc(app.org || "[ORGANIZATION]") + " — " + esc(a["Your organization"] || "") +
+          (a["Organization size"] ? ", " + esc(a["Organization size"]) : "") + "<br>Contact: " + esc(app.name || "") +
+          (a["Your role in the organization"] ? ", " + esc(a["Your role in the organization"]) : "") +
+          " · " + esc(app.email || "") + (app.phone ? " · " + esc(app.phone) : "") + "</p>" +
+          "<h2>The request</h2><p>We respectfully request financial support — anticipated source: <strong>" +
+          esc(a["Financial support you expect to seek"] || "[FUNDING SOURCE]") + "</strong> — to organize, plan, and " +
+          "activate the corridor named for Dr. Martin Luther King, Jr. in " + esc(city) + ".</p>" +
+          "<h2>The corridor today</h2><p>" +
+          esc(a["Does your city have a street or corridor named for Dr. King?"] === "Yes"
+            ? "Our city's MLK corridor exists today: " + (a["If yes — the corridor today is…"] || "[CONDITION]") + "."
+            : "Corridor identification in progress — Freedom, Inc.'s research confirms the street, its condition, and its stakeholders.") +
+          "</p>" +
+          "<h2>Our vision</h2><p>" + esc(a["What should your corridor become?"] || "[VISION]") + "</p>" +
+          (a["Local partners already at the table (if any)"] ? "<h2>Partners at the table</h2><p>" +
+            esc(a["Local partners already at the table (if any)"]) + "</p>" : "") +
+          "<h2>The precedent</h2><p>This proposal follows the Connecticut playbook: the Martin Luther King, Jr. " +
+          "Corridors Initiative organized by the Black Ministers Alliance of New Britain with a statewide coalition, " +
+          "which named corridor communities in Norwalk, Middletown, and New Britain and submitted its program " +
+          "outline to the Connecticut Department of Economic and Community Development.</p>" +
+          "<h2>Budget</h2><p>[BUDGET TABLE — completed with Freedom, Inc. during proposal review]</p>" +
+          "<p class='draft'>Reference " + esc(app.id) + " · This draft is a starting point; Freedom, Inc. reviews and " +
+          "finalizes every proposal with the applicant before submission.</p>";
+        d.body.innerHTML = body;
+        var st = d.createElement("style");
+        st.textContent = "body{font-family:Georgia,serif;max-width:44rem;margin:2rem auto;padding:0 1.5rem;line-height:1.6;color:#14100c}" +
+          "h1{font-size:1.7rem;line-height:1.2}h2{font-size:1.15rem;margin-top:1.4rem;color:#101c2c}" +
+          ".draft{color:#9c3d22;font-weight:bold;font-size:0.9rem}";
+        d.head.appendChild(st);
+      }
 
       /* ================= profile screen ================= */
       var PROFILE_FIELDS = BASE_FIELDS.concat([{ id: "about", label: "About you (optional)", t: "long" }]);
@@ -1138,6 +1359,154 @@
         var prof = Object.assign(FreedomStore.getProfile() || {}, {});
         PROFILE_FIELDS.forEach(function (f) { prof[f.id] = fEl("p", f.id).value.trim(); });
         FreedomStore.saveProfile(prof).then(function () { say("Profile saved."); });
+      });
+
+      /* ================= events: one calendar, never stale ================= */
+      var EVENTS = [];
+      var calCursor = new Date();
+      calCursor.setDate(1);
+
+      function evDate(ev) { return new Date(ev.date + "T12:00:00"); }
+
+      function renderCalendar() {
+        var y = calCursor.getFullYear(), mo = calCursor.getMonth();
+        document.getElementById("calTitle").textContent =
+          calCursor.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+        var first = new Date(y, mo, 1).getDay();
+        var days = new Date(y, mo + 1, 0).getDate();
+        var today = new Date();
+        var byDay = {};
+        EVENTS.forEach(function (ev) {
+          var d = evDate(ev);
+          if (d.getFullYear() === y && d.getMonth() === mo) byDay[d.getDate()] = ev;
+        });
+        var html = "<tr>", cell = 0;
+        for (var i = 0; i < first; i++) { html += "<td class='dim'></td>"; cell++; }
+        for (var day = 1; day <= days; day++) {
+          var cls = [];
+          if (byDay[day]) cls.push("evt");
+          if (today.getFullYear() === y && today.getMonth() === mo && today.getDate() === day) cls.push("today");
+          html += "<td" + (cls.length ? ' class="' + cls.join(" ") + '"' : "") +
+            (byDay[day] ? ' data-ev="' + byDay[day].id + '"' : "") + ">" + day + "</td>";
+          cell++;
+          if (cell % 7 === 0 && day < days) html += "</tr><tr>";
+        }
+        while (cell % 7 !== 0) { html += "<td class='dim'></td>"; cell++; }
+        html += "</tr>";
+        document.getElementById("calBody").innerHTML = html;
+      }
+      document.getElementById("calPrev").addEventListener("click", function () {
+        calCursor.setMonth(calCursor.getMonth() - 1); renderCalendar();
+      });
+      document.getElementById("calNext").addEventListener("click", function () {
+        calCursor.setMonth(calCursor.getMonth() + 1); renderCalendar();
+      });
+      document.getElementById("calBody").addEventListener("click", function (e) {
+        var td = e.target.closest("td[data-ev]");
+        if (!td) return;
+        var card = document.querySelector('.evtcard[data-ev="' + td.getAttribute("data-ev") + '"]');
+        if (card) { card.open = true; card.scrollIntoView({ block: "center" }); }
+      });
+
+      function evtCard(ev, past) {
+        var when = evDate(ev).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+        var acts = "";
+        if (!past && ev.rsvp) {
+          acts = '<div class="rsvpform"><p style="font-weight:700; color:var(--navy)">RSVP</p>' +
+            '<div class="field"><label for="rn-' + ev.id + '">Full name</label><input id="rn-' + ev.id + '" type="text"></div>' +
+            '<div class="field"><label for="re-' + ev.id + '">Email</label><input id="re-' + ev.id + '" type="email"></div>' +
+            '<div class="field"><label for="rp-' + ev.id + '">Mobile (for text reminders)</label><input id="rp-' + ev.id + '" type="tel"></div>' +
+            (ev.sponsor ? '<div class="field"><label for="rt-' + ev.id + '">I want to…</label><select id="rt-' + ev.id + '">' +
+              "<option>Attend</option><option>Sponsor — send me the sponsorship package</option></select></div>" : "") +
+            '<div class="cta-row" style="margin-top:0.9rem"><button class="btn" type="button" data-rsvp="' + ev.id + '">Count me in</button>' +
+            '<button class="btn btn--navy" type="button" data-ics="' + ev.id + '">Add to my calendar</button></div></div>';
+        } else if (past) {
+          acts = '<p class="go" style="margin-top:0.5rem">This one’s history — the record stays here.</p>';
+        }
+        return '<details class="card evtcard rv in" data-ev="' + ev.id + '"><summary>' +
+          '<span class="when">' + when + "</span>" +
+          "<h3 style='width:100%'>" + esc(ev.title) + "</h3>" +
+          '<span class="chip">' + esc(ev.category || "Event") + "</span>" +
+          (ev.sponsor && !past ? '<span class="chip">Sponsorships open</span>' : "") +
+          (ev.sample ? '<span class="chip chip--sample">Sample — set real date</span>' : "") +
+          "</summary>" +
+          "<p style='margin-top:0.6rem'><strong>" + esc(ev.time || "") + (ev.time && ev.location ? " · " : "") + esc(ev.location || "") + "</strong></p>" +
+          "<p>" + esc(ev.body || "") + "</p>" + acts + "</details>";
+      }
+
+      function renderEvents() {
+        var now = new Date();
+        now.setHours(0, 0, 0, 0);
+        var future = EVENTS.filter(function (e) { return evDate(e) >= now; })
+          .sort(function (a, b) { return evDate(a) - evDate(b); });
+        var past = EVENTS.filter(function (e) { return evDate(e) < now; })
+          .sort(function (a, b) { return evDate(b) - evDate(a); });
+        document.getElementById("evtFuture").innerHTML = future.length
+          ? future.map(function (e) { return evtCard(e, false); }).join("")
+          : '<div class="card"><h3>New dates landing soon</h3><p>The next season of gatherings publishes here. Want the first word? RSVP lists get it — leave your details on any event, or write <a href="mailto:info@faithandresults.com" style="color:var(--clay)">info@faithandresults.com</a>.</p></div>';
+        document.getElementById("evtPast").innerHTML = past.length
+          ? past.map(function (e) { return evtCard(e, true); }).join("")
+          : '<div class="card"><p>Nothing archived yet.</p></div>';
+        renderCalendar();
+      }
+
+      document.getElementById("scr-events").addEventListener("click", function (e) {
+        var r = e.target.closest("button[data-rsvp]");
+        if (r) {
+          var id = r.getAttribute("data-rsvp");
+          var ev = null;
+          EVENTS.forEach(function (x) { if (x.id === id) ev = x; });
+          var name = document.getElementById("rn-" + id).value.trim();
+          var email = document.getElementById("re-" + id).value.trim();
+          if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            say("RSVP needs your name and a working email."); return;
+          }
+          var typeEl = document.getElementById("rt-" + id);
+          r.disabled = true;
+          FreedomStore.submitRsvp({
+            event: id, eventTitle: ev ? ev.title : id, eventDate: ev ? ev.date : "",
+            name: name, email: email,
+            phone: document.getElementById("rp-" + id).value.trim(),
+            type: typeEl && typeEl.value.indexOf("Sponsor") === 0 ? "sponsor" : "attend"
+          }).then(function () {
+            r.textContent = "You're on the list ✓";
+            say(typeEl && typeEl.value.indexOf("Sponsor") === 0
+              ? "Got it — the sponsorship package is on its way." : "RSVP received — see you there.");
+          }).catch(function () { r.disabled = false; say("Couldn't send the RSVP — try again."); });
+          return;
+        }
+        var icsBtn = e.target.closest("button[data-ics]");
+        if (icsBtn) {
+          var one = EVENTS.filter(function (x) { return x.id === icsBtn.getAttribute("data-ics"); });
+          downloadIcs(one, one[0].id + ".ics");
+        }
+      });
+
+      function icsStamp(ev) {
+        return ev.date.replace(/-/g, "");
+      }
+      function downloadIcs(list, filename) {
+        var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Freedom Inc//faithandresults//EN"];
+        list.forEach(function (ev) {
+          lines.push("BEGIN:VEVENT", "UID:" + ev.id + "@faithandresults.com",
+            "DTSTART;VALUE=DATE:" + icsStamp(ev),
+            "SUMMARY:" + (ev.title || "").replace(/[,;]/g, " "),
+            "LOCATION:" + (ev.location || "").replace(/[,;]/g, " "),
+            "DESCRIPTION:" + (ev.body || "").replace(/[\r\n,;]/g, " "),
+            "END:VEVENT");
+        });
+        lines.push("END:VCALENDAR");
+        var blob = new Blob([lines.join("\r\n")], { type: "text/calendar" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+      document.getElementById("icsAll").addEventListener("click", function () {
+        var now = new Date(); now.setHours(0, 0, 0, 0);
+        var future = EVENTS.filter(function (e) { return evDate(e) >= now; });
+        downloadIcs(future.length ? future : EVENTS, "freedom-inc-events.ics");
       });
 
       /* ================= count-up + reveals ================= */
@@ -1251,10 +1620,15 @@
       Promise.all([
         fetch("data/programs.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
         fetch("data/trainings.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
+        fetch("data/events.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
+        fetch("data/jobs-partners.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
         FreedomStore.init()
       ]).then(function (res) {
-        DATA = { pillars: res[0].pillars, programs: res[0].programs, trainings: res[1].trainings };
+        DATA = { pillars: res[0].pillars, programs: res[0].programs, trainings: res[1].trainings,
+          partners: res[3].partners };
+        EVENTS = (res[2].events || []).concat(FreedomStore.getLocalEvents());
         renderCatalogs();
+        renderEvents();
         route();
       }).catch(function () {
         say("Couldn't load the program catalog — check your connection and reload.");
