@@ -1453,7 +1453,9 @@
             '<div class="cta-row" style="margin-top:0.9rem"><button class="btn" type="button" data-rsvp="' + ev.id + '">Count me in</button>' +
             '<button class="btn btn--navy" type="button" data-ics="' + ev.id + '">Add to my calendar</button></div></div>';
         } else if (past) {
-          acts = '<p class="go" style="margin-top:0.5rem">This one’s history — the record stays here.</p>';
+          acts = (ev.link ? '<p style="margin-top:0.6rem"><a href="' + esc(ev.link) +
+            '" target="_blank" rel="noopener" style="color:var(--clay); font-weight:700">▶ Watch the full event →</a></p>' : "") +
+            '<p class="go" style="margin-top:0.5rem">This one’s history — the record stays here.</p>';
         }
         return '<details class="card evtcard rv in" data-ev="' + ev.id + '"><summary>' +
           '<span class="when">' + when + "</span>" +
