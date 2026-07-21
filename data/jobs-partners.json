@@ -22,7 +22,20 @@
       "programs": [
         { "name": "CT Faith Leaders Jobs Collaborative fairs & referrals", "link": "https://www.faithcdc.org", "trackingLink": "" }
       ],
-      "notes": ""
+      "notes": "Precedent: the Hartford HealthCare / St. Vincent's Opportunity Fair, March 2022, old Bridgeport City Hall."
+    },
+    {
+      "id": "cfjc-collaborators",
+      "name": "CFJC collaborating agencies",
+      "contactName": "",
+      "contactEmail": "info@faithandresults.com",
+      "contactRole": "Routed by the Collaborative",
+      "programs": [
+        { "name": "CT municipal housing authorities — apprenticeship placements", "link": "", "trackingLink": "" },
+        { "name": "Bridgeport Landing Development — building trades", "link": "", "trackingLink": "" },
+        { "name": "Corves Development — construction pathways", "link": "", "trackingLink": "" }
+      ],
+      "notes": "From the Collaborative's agency list; add named contacts per agency as agreements land. Clergy partners: CT Black Clergy Coalition, CT Hispanic Clergy Association, CFLC."
     },
     {
       "id": "building-trades",

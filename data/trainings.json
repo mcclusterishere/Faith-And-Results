@@ -3,15 +3,15 @@
   "trainings": [
     {
       "id": "workforce-readiness",
-      "name": "Workforce Readiness Program",
+      "name": "CFJC Workforce Readiness Program",
       "pillar": "education",
-      "format": "Cohort · in person",
-      "audience": "Residents seeking building-trade employment and training",
-      "body": "Hands-on preparation for the building trades and beyond — readiness, certification pathways, and connections to employers who are hiring. Race and gender neutral by design, delivered through congregations.",
+      "format": "4-week apprenticeship cohort · in person",
+      "audience": "Connecticut residents ready to train into a hired trade",
+      "body": "Four-week pre-employment apprenticeship training timed to employers' hiring schedules — certified instructors, DOL-compliant, with comprehensive life-skills training, application counseling, and mock interviews. Employers get pre-screened, well-prepared candidates; the program can graduate 125 residents a year.",
       "program": "workforce-readiness",
       "questions": [
         { "id": "employment", "label": "Current employment status", "t": "select", "options": ["Unemployed", "Part-time", "Full-time", "Student", "Retired"] },
-        { "id": "trade", "label": "Which trade interests you most?", "t": "select", "options": ["Construction", "Electrical", "Plumbing", "HVAC", "Solar installation", "Not sure yet"] }
+        { "id": "trade", "label": "Which training area interests you most?", "t": "select", "options": ["Advanced manufacturing", "Building trades / construction", "Medical", "Clerical & administrative", "Customer service", "Cyber-tech / IT", "Insurance", "Banking & finance", "Bio-tech", "Not sure yet"] }
       ]
     },
     {

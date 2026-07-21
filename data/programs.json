@@ -1,29 +1,67 @@
 {
-  "note": "Every program from faithandresults.com, one object each. Edit here — the app renders this file. 'trainings' lists ids from trainings.json that let people apply into the program.",
+  "note": "Every program from faithandresults.com, one object each, enriched from the WordPress export. Edit here — the app renders this file. 'trainings' lists ids from trainings.json that let people apply into the program.",
   "pillars": [
     { "id": "economic", "name": "Economic Development", "blurb": "Financial empowerment with the institutions that move money." },
     { "id": "education", "name": "Education & Training", "blurb": "Workforce and business training designed and delivered nationally." },
-    { "id": "housing", "name": "Housing", "blurb": "Homes saved and homes built." },
-    { "id": "sustainability", "name": "Sustainability", "blurb": "Congregations and organizations that outlast any single grant." }
+    { "id": "housing", "name": "Housing", "blurb": "Homes saved, homes built, and pathways to ownership." },
+    { "id": "sustainability", "name": "Sustainability", "blurb": "Energy, capacity, and communities that renew themselves." },
+    { "id": "community", "name": "Community & Health", "blurb": "The pro bono work: health, healing, justice, and standing with neighbors." }
   ],
   "programs": [
     {
       "id": "homes-saved-by-faith",
-      "pillar": "economic",
+      "pillar": "housing",
       "name": "Homes Saved By Faith",
       "tag": "Foreclosure prevention & intervention",
-      "stat": "100,000+ individuals serviced",
-      "body": "FREEDOM's flagship: foreclosure prevention and intervention delivered through the congregations families already trust, built with the FDIC, HUD, and the Federal Home Loan Banks of Atlanta, Boston, and San Francisco — plus state and municipal housing finance authorities.",
-      "partners": ["FDIC", "HUD", "Federal Home Loan Banks of Atlanta, Boston & San Francisco", "State & municipal housing finance authorities"],
+      "stat": "100,000+ families served",
+      "body": "An amalgam of faith-based organizations joined together to stem the tide of foreclosures — across denominational, ethnic, cultural, and religious lines. Workshops, direct intervention for delinquent homeowners, credit rebuilding, and trusted alternatives to foreclosure, delivered with the CT Department of Banking, the CT Fair Housing Center, the FDIC, and the Federal Home Loan Bank.",
+      "partners": ["FDIC", "Federal Home Loan Bank", "HUD Certified Counseling Agencies", "CT Department of Banking", "CT Fair Housing Center", "State housing finance authorities", "State & municipal governments"],
       "trainings": ["foreclosure-help"]
+    },
+    {
+      "id": "get-home-now",
+      "pillar": "housing",
+      "name": "Get Home Now!",
+      "tag": "Rehab lending · vacant homes to owned homes",
+      "body": "A flexible package of mortgage products and development oversight that encourages rehabilitation of vacant, affordable homes — letting buyers and existing residents borrow up to 110 percent of home value to finance repairs, renovation, and acquisition, raising the whole community's housing stock.",
+      "partners": ["APD Solutions", "Certified Realtists and Realtors", "First Guarantee Mortgage", "GNMA", "Home Depot Corporation", "HUD Certified Counseling Agencies"],
+      "trainings": ["homebuyer-education"]
+    },
+    {
+      "id": "homebuyer-education",
+      "pillar": "housing",
+      "name": "Homebuyer Education & Counseling",
+      "tag": "Home Ownership Made Easy",
+      "body": "From first conversation to keys: homebuyer education, credit preparation, and one-on-one counseling — the pathway programs FREEDOM has run city by city with Freddie Mac, HomeFree USA, the Home Ownership Training Center, and church networks from Bridgeport to Oakland.",
+      "partners": ["Freddie Mac", "HomeFree USA", "The Home Ownership Training Center", "National, regional & local lenders"],
+      "trainings": ["homebuyer-education"]
+    },
+    {
+      "id": "shiloh-bethel-centre",
+      "pillar": "housing",
+      "name": "The Shiloh Bethel Centre",
+      "tag": "Mixed-use development · Bridgeport, CT",
+      "stat": "66 units · live/work · retail",
+      "body": "A 66-unit mixed-use apartment development in Bridgeport: four floors over a podium, studios through two-bedrooms with balconies, six live/work units, roughly 4,000 square feet of commercial and retail space, conference space, and covered parking — faith-anchored development at neighborhood scale.",
+      "partners": ["Shiloh Baptist Church", "Faith Community Development Corporation"],
+      "trainings": []
+    },
+    {
+      "id": "financial-freedom",
+      "pillar": "economic",
+      "name": "Financial FREEDOM",
+      "tag": "Financial education & credit power",
+      "body": "Financial empowerment for individuals, families, and organizations: workshops and trainings presented with FDIC and HUD certified counselors in local venues — credit utilization, credit scores, and the tools of household wealth.",
+      "partners": ["FDIC", "Foundation for Financial Planning", "HUD Certified Counseling Agencies", "Money Concepts", "Moneywise — Kelvin Boston", "National, regional & local financial institutions"],
+      "trainings": ["financial-empowerment"]
     },
     {
       "id": "faith-empowerment-series",
       "pillar": "economic",
       "name": "Freddie Mac Faith Empowerment Series",
-      "tag": "Financial empowerment · Louisiana Statewide",
-      "body": "A statewide financial-empowerment series delivered across Louisiana with Freddie Mac — bringing credit, homeownership, and household-finance education into faith communities from New Orleans outward.",
-      "partners": ["Freddie Mac", "Louisiana faith communities"],
+      "tag": "Louisiana Statewide · Lease Purchase Plus",
+      "body": "Statewide financial empowerment with Freddie Mac — anchored by the LouLease Lease Purchase Plus program, managed by FREEDOM affiliate Vision Financial Services and sponsored by the Louisiana Public Facilities Authority, serving credit-impaired and down-payment-constrained families a market-rate path to ownership.",
+      "partners": ["Freddie Mac", "Louisiana Public Facilities Authority", "Vision Financial Services"],
       "trainings": ["financial-empowerment"]
     },
     {
@@ -33,25 +71,35 @@
       "tag": "Community design & development",
       "screen": "#/corridor",
       "stat": "3 corridor communities named in Connecticut",
-      "body": "Reimagining the streets that carry Dr. King's name — community-led design and development that turns symbolic corridors into engines of local economy. Announced by the Black Ministers Alliance of New Britain with a statewide coalition, with corridor communities named in Norwalk, Middletown, and New Britain and a program outline submitted to Connecticut's Department of Economic and Community Development.",
-      "partners": ["Black Ministers Alliance of New Britain", "The Connecticut Faith Leaders Collaborative", "Municipalities", "CT Department of Economic and Community Development"],
+      "body": "A response to adverse conditions in neighborhoods whose streets carry Dr. King's name: an intentionally inclusive planning process focused on economic development, education, housing, and workforce development. Corridor communities named in Norwalk, Middletown, and New Britain — launched January 18, 2019 at Spear Park in Middletown, in collaboration with the office of the Governor and the CT Department of Banking.",
+      "partners": ["Black Ministers Alliance of New Britain", "Office of the Governor of Connecticut", "CT Department of Banking", "The Connecticut Faith Leaders Collaborative", "Municipalities of Norwalk, Middletown & New Britain"],
       "trainings": ["corridor-join"]
+    },
+    {
+      "id": "health-wealth-legacy",
+      "pillar": "economic",
+      "name": "Health, Wealth, Legacy",
+      "tag": "The FREEDOM Health platform",
+      "body": "Affordable health and wellness insurance solutions for congregations, organizations, and businesses — the FREEDOM Health platform accesses a national healthcare network so members and employees can find coverage that matches their needs and their budgets.",
+      "partners": ["Faith-based leaders & organizations", "National insurance carriers", "NW Financial Corporation", "Participating pharmacies"],
+      "trainings": []
     },
     {
       "id": "workforce-readiness",
       "pillar": "education",
-      "name": "Workforce Readiness Program",
+      "name": "CFJC Workforce Readiness Program",
       "tag": "CT Faith Jobs Collaborative",
-      "body": "Training residents in the building trades and beyond — race and gender neutral by design — moving people into employment the economy actually hires for, through the congregations they already trust.",
-      "partners": ["The Connecticut Faith Jobs Collaborative", "Building-trade employers"],
+      "stat": "125 graduates per year capacity",
+      "body": "Four-week pre-employment apprenticeship training matched to employers' hiring schedules — advanced manufacturing, building trades, medical, clerical, customer service, high tech, insurance, banking & finance, and bio-tech — with recruitment, screening, life-skills training, mock interviews, and DOL-compliant certified instruction.",
+      "partners": ["The Connecticut Faith Jobs Collaborative", "CT municipal housing authorities", "Bridgeport Landing Development", "Corves Development", "CT Black Clergy Coalition", "CT Hispanic Clergy Association"],
       "trainings": ["workforce-readiness"]
     },
     {
       "id": "neighborworks-institutes",
       "pillar": "education",
       "name": "NeighborWorks America Training Institutes",
-      "tag": "National training delivery · Connecticut",
-      "body": "FREEDOM designs and delivers training for NeighborWorks America — the country's largest HUD housing intermediary — including Training Institutes hosted in Connecticut.",
+      "tag": "National training delivery · 11 cities",
+      "body": "Pastor McCluster trains for NeighborWorks America — the country's largest HUD housing intermediary — with Training Institutes delivered in Chicago, Louisville, New York, Sacramento, Providence, Atlanta, Portland, New Orleans, Boston, Washington D.C., and Cleveland.",
       "partners": ["NeighborWorks America", "HUD"],
       "trainings": ["capacity-building"]
     },
@@ -60,53 +108,54 @@
       "pillar": "education",
       "name": "Capacity Building Training",
       "tag": "Faith-based organization development",
-      "body": "FREEDOM is the creator, sponsor, and trainer of faith-based organizations nationwide — governance, program design, and revenue that renews itself, so the mission outlasts any single grant.",
+      "body": "FREEDOM is the creator, sponsor, and trainer of faith-based organizations nationwide — governance, program design, and revenue that renews itself, so the mission outlasts any single grant. Delivered through the Faith Community Development Corporation, chartered by Shiloh Baptist Church.",
       "partners": ["Faith Community Development Corporation", "Houses of worship nationwide"],
       "trainings": ["capacity-building"]
-    },
-    {
-      "id": "faith-cdc-collaborative",
-      "pillar": "housing",
-      "name": "FREEDOM–Faith CDC Collaborative",
-      "tag": "Faith-based housing development",
-      "body": "The housing development partnership: congregations and the Faith Community Development Corporation — the CDC chartered by Shiloh Baptist Church — building and preserving homes together, with finance authorities at the table from day one.",
-      "partners": ["Faith Community Development Corporation", "State & municipal housing finance authorities"],
-      "trainings": ["capacity-building"]
-    },
-    {
-      "id": "homebuyer-education",
-      "pillar": "housing",
-      "name": "Homebuyer Education & Counseling",
-      "tag": "From first conversation to keys",
-      "body": "Homebuyer education, housing counseling, and financial literacy that walk families from renting to owning — delivered city by city with trusted local partners.",
-      "partners": ["HomeFree USA", "The Home Ownership Training Center"],
-      "trainings": ["homebuyer-education"]
-    },
-    {
-      "id": "foreclosure-intervention-cleveland",
-      "pillar": "housing",
-      "name": "Foreclosure Intervention Initiative — Cleveland",
-      "tag": "Homebuyer education · financial literacy · intervention",
-      "body": "Cleveland's collaboration in action: homebuyer education and counseling, financial literacy, and foreclosure intervention and prevention support, delivered with HomeFree USA and the Home Ownership Training Center.",
-      "partners": ["HomeFree USA", "The Home Ownership Training Center"],
-      "trainings": ["foreclosure-help", "homebuyer-education"]
     },
     {
       "id": "congregational-sustainability",
       "pillar": "sustainability",
       "name": "Congregational Sustainability & Solar",
-      "tag": "Proved at home",
-      "body": "Sustainability preached and practiced: under Rev. McCluster, Shiloh Baptist became the first African-American church in Connecticut to reach energy self-sufficiency through solar. FREEDOM brings that playbook — energy, capacity, governance — to congregations nationwide.",
-      "partners": ["Shiloh Baptist Church", "Congregations nationwide"],
+      "tag": "Proved at home, expanded nationally",
+      "stat": "Hundreds of homes & businesses impacted",
+      "body": "FREEDOM partnered with Shiloh Baptist Church to make it the first African-American house of worship in Connecticut completely powered by solar energy — then expanded: supporting Energize CT to lower energy costs, partnering with the Connecticut Green Bank and municipalities, and working with Posigen and other solar organizations in California, Georgia, Louisiana, Maryland, Massachusetts, and Rhode Island.",
+      "partners": ["Shiloh Baptist Church", "Connecticut Green Bank", "Energize CT", "Posigen", "Municipalities across Connecticut"],
       "trainings": ["capacity-building"]
     },
     {
-      "id": "saving-americas-soul",
+      "id": "net-zero-communities",
       "pillar": "sustainability",
+      "name": "Net Zero Communities & Tiny Homes",
+      "tag": "Development concepts in motion",
+      "body": "The next chapter of FREEDOM's development work: Tiny Homes initiatives, urban in-fill housing development, and Net Zero Communities — self-sufficient, off-the-grid neighborhoods composed entirely of homes with zero carbon-footprint impact.",
+      "partners": ["Faith Community Development Corporation", "Development partners"],
+      "trainings": []
+    },
+    {
+      "id": "saving-americas-soul",
+      "pillar": "community",
       "name": "Saving America's Soul",
       "tag": "The National Faith Leaders Collaborative",
-      "body": "The NFLC's national initiative: senior pastors across the country organized as one voice for community renewal — the moral case and the economic case, made together.",
-      "partners": ["The National Faith Leaders Collaborative", "The Connecticut Faith Leaders Collaborative"],
+      "body": "Taking up the Southern Christian Leadership Conference's 1957 founding motto — \"to save the soul of America\" — the NFLC convenes faith, community, education, business, and elected leaders to facilitate national healing and reconciliation, with supporting organizations from the SCLC and National Baptist Convention U.S.A. to the RAC of Reform Judaism and Indiaspora.",
+      "partners": ["National Faith Leaders Collaborative", "Southern Christian Leadership Conference", "Connecticut Faith Leaders Collaborative", "Interfaith partners nationwide"],
+      "trainings": []
+    },
+    {
+      "id": "fighting-fear",
+      "pillar": "community",
+      "name": "Fighting Fear with Faith and Facts™",
+      "tag": "National faith-based health partnership",
+      "body": "The COVID-era vaccination partnership launched in Connecticut with Hartford HealthCare, taking trusted health information through pulpits instead of press releases — Phase 1 cities: Atlanta, Chicago, Colorado, Connecticut, New Orleans, New York, the San Francisco Bay Area, and Washington D.C.",
+      "partners": ["Hartford HealthCare", "Faith communities in 8 Phase-1 markets"],
+      "trainings": []
+    },
+    {
+      "id": "community-engagement",
+      "pillar": "community",
+      "name": "Community, Law Enforcement & Global Response",
+      "tag": "Summits, solidarity & pro bono engagement",
+      "body": "The standing pro bono work: the annual Connecticut Statewide Community and Law Enforcement Engagement Summits, youth mentoring, community health and wellness, and global solidarity — including 2022's \"United We Stand\" month for the people of Ukraine, organized with the mayors of Hartford, New Haven, Stamford, and Westport.",
+      "partners": ["CT Black & Latino Legislative Caucus", "NAACP & Urban League", "Municipal & state leaders", "Connecticut congregations"],
       "trainings": []
     }
   ]

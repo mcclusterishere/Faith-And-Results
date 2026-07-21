@@ -1,41 +1,107 @@
 {
-  "note": "The one events file. The app sorts future events to the top and moves past ones into the archive automatically — this page can never go stale. Admin > Events can draft entries and download a merged copy of this file to publish. Entries with sample:true render with a SAMPLE chip; replace them with real dates.",
+  "note": "The one events file. The app sorts future events to the top and moves past ones into the archive automatically — this page can never go stale. Admin > Events can draft entries and download a merged copy of this file to publish. The archive below is real history imported from the WordPress export.",
   "events": [
     {
-      "id": "fcdc-conference-2026",
+      "id": "fcdc-conference-next",
       "sample": true,
-      "title": "FCDC Faith & Community Development Conference",
+      "title": "FCDC Annual Meeting & Conference — Next Edition",
       "date": "2026-10-15",
-      "time": "9:00 AM – 4:00 PM",
-      "location": "Hartford, CT",
+      "time": "8:30 AM – 4:30 PM",
+      "location": "Bridgeport, CT",
       "category": "Conference",
       "rsvp": true,
       "sponsor": true,
-      "body": "The Faith Community Development Corporation's annual gathering: congregations, municipalities, and funders in one room. Organizations may register to attend or join as a paid sponsor — sponsors get the stage, the program book, and the room."
+      "body": "The Faith Community Development Corporation's annual gathering of congregations, municipalities, and funders. Organizations may register to attend or join as a paid sponsor — sponsors get the stage, the program book, and the room. (Sample date — set the real one in data/events.json.)"
     },
     {
-      "id": "hhc-job-fair-2026",
-      "sample": true,
-      "title": "Hartford HealthCare Community Job Fair",
-      "date": "2026-08-20",
-      "time": "10:00 AM – 2:00 PM",
-      "location": "New Britain, CT",
+      "id": "fcdc-conference-2023",
+      "title": "FCDC Annual Meeting & Conference — \"Defining Light in This Present Darkness of Gun Violence\"",
+      "date": "2023-08-16",
+      "time": "8:30 AM – 4:30 PM",
+      "location": "Bridgeport, CT",
+      "category": "Conference",
+      "rsvp": false,
+      "body": "Faith CDC's annual meeting and conference workshops — empowering, educating, and equipping people and communities in response to gun violence."
+    },
+    {
+      "id": "ukraine-2022",
+      "title": "\"United We Stand\" — Connecticut for the People of Ukraine",
+      "date": "2022-06-23",
+      "time": "June 23 – July 23, 2022",
+      "location": "Statewide, CT",
+      "category": "Community",
+      "rsvp": false,
+      "body": "Praying, marching, standing, giving: a month of statewide solidarity sponsored with the mayors of Hartford, New Haven, Stamford, and Westport."
+    },
+    {
+      "id": "stop-the-violence-2022",
+      "title": "Praying Together to \"Stop the Violence\"",
+      "date": "2022-03-20",
+      "time": "2:00 – 3:30 PM",
+      "location": "Calvary Baptist Church, Norwalk, CT",
+      "category": "Community",
+      "rsvp": false,
+      "body": "The National Faith Leaders Collaborative praying together — part of Connecticut's Season of Peace, Healing and Reconciliation."
+    },
+    {
+      "id": "hhc-opportunity-fair-2022",
+      "title": "Hartford HealthCare / St. Vincent's Opportunity Fair",
+      "date": "2022-03-19",
+      "time": "8 AM – 2 PM",
+      "location": "45 Lyon Terrace, Bridgeport, CT",
       "category": "Jobs",
-      "rsvp": true,
-      "sponsor": false,
-      "body": "The CT Faith Jobs Collaborative and Hartford HealthCare bring hiring managers to the community — bring your resume, leave with next steps. Apply through the Trainings tab to get matched before the fair."
+      "rsvp": false,
+      "body": "Let's put people to work: the CT Faith Jobs Collaborative and Hartford HealthCare brought hiring to old Bridgeport City Hall — the model for the jobs pipeline this app now runs year-round."
     },
     {
-      "id": "mlk-corridors-briefing-2026",
-      "sample": true,
-      "title": "MLK Corridors Initiative — City Briefing",
-      "date": "2026-06-11",
-      "time": "6:00 PM",
-      "location": "New Britain, CT",
+      "id": "shared-legacies-2022",
+      "title": "\"Shared Legacies\" Screening with Senator Richard Blumenthal",
+      "date": "2022-03-09",
+      "time": "6:00 – 8:30 PM",
+      "location": "Klein Auditorium, Bridgeport, CT",
+      "category": "Community",
+      "rsvp": false,
+      "body": "Christian, Jewish, and ecumenical leaders hosted a screening on the history of civil-rights collaboration — part of the Season of Peace featuring SCLC President Dr. Charles Steele, Jr."
+    },
+    {
+      "id": "mlk-corridors-launch-2019",
+      "title": "Martin Luther King, Jr. Corridors — Connecticut Launch",
+      "date": "2019-01-18",
+      "time": "2:00 PM",
+      "location": "Spear Park, corner of MLK & Main Street, Middletown, CT",
       "category": "Corridors",
-      "rsvp": true,
-      "sponsor": false,
-      "body": "A look back at the corridor work in Norwalk, Middletown, and New Britain — and the playbook for bringing the corridor to the next city."
+      "rsvp": false,
+      "body": "The public launch of the MLK Corridors Initiative — Norwalk, Middletown, and New Britain named as Connecticut's corridor communities."
+    },
+    {
+      "id": "law-enforcement-summit-2018",
+      "title": "2nd Annual CT Community & Law Enforcement Engagement Summit",
+      "date": "2018-07-23",
+      "time": "1:00 – 3:30 PM",
+      "location": "Victory Cathedral, Hartford, CT",
+      "category": "Community",
+      "rsvp": false,
+      "body": "\"Come, Let Us Reason… Together\" — with the Black & Latino Caucus, the Governor, Senator Blumenthal, police chiefs, mayors, the NAACP, the Urban League, and congregations statewide."
+    },
+    {
+      "id": "housing-summit-2018",
+      "title": "Southern Connecticut Housing and Development Summit",
+      "date": "2018-05-31",
+      "time": "12:30 – 7:00 PM",
+      "location": "Margaret Morton Government Center, Bridgeport, CT",
+      "category": "Conference",
+      "rsvp": false,
+      "body": "With FHLB–San Francisco, HUD's regional director, and Bridgeport's planning office — plus the introduction of \"FREEDOM to Work,\" a new jobs program for Bridgeport residents."
+    },
+    {
+      "id": "sustainability-summit-2018",
+      "title": "7th Annual Bridgeport Regional Sustainability Summit",
+      "date": "2018-02-13",
+      "time": "8:30 AM – 7:30 PM",
+      "location": "University of Bridgeport & Shiloh Baptist Church",
+      "category": "Community",
+      "rsvp": false,
+      "body": "\"Learning to breathe easier and build better\" — a full day of community training, a clergy luncheon, and an evening community conversation."
     }
   ]
 }

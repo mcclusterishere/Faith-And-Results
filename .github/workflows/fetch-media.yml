@@ -1,0 +1,50 @@
+name: "Fetch full media library"
+
+# Downloads every file in data/media-manifest.json (extracted from the
+# WordPress export) into assets/media/ — full-resolution originals for
+# the premium pass. Trigger from the Actions tab.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download the library
+        run: |
+          node - << 'EOF'
+          const fs = require("fs");
+          const UA = { "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36" };
+          (async () => {
+            const { urls } = JSON.parse(fs.readFileSync("data/media-manifest.json", "utf8"));
+            fs.mkdirSync("assets/media", { recursive: true });
+            let ok = 0, fail = 0;
+            for (const u of urls) {
+              try {
+                const name = decodeURIComponent(u.split("/").pop()).replace(/[^A-Za-z0-9._-]/g, "_").slice(-90);
+                const dest = "assets/media/" + name;
+                if (fs.existsSync(dest)) { ok++; continue; }
+                const r = await fetch(u, { headers: UA });
+                if (!r.ok) { console.log("skip", r.status, u); fail++; continue; }
+                fs.writeFileSync(dest, Buffer.from(await r.arrayBuffer()));
+                ok++;
+              } catch (e) { console.log("✗", u, String(e).slice(0, 80)); fail++; }
+            }
+            console.log(`done: ${ok} fetched, ${fail} failed of ${urls.length}`);
+          })();
+          EOF
+      - name: Commit the library
+        run: |
+          git config user.name "media-fetch-bot"
+          git config user.email "actions@github.com"
+          git add assets/media data/media-manifest.json
+          git diff --cached --quiet || git commit -m "Full media library from the WordPress export"
+          git push
