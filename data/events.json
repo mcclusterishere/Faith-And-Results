@@ -14,6 +14,16 @@
       "body": "The Faith Community Development Corporation's annual gathering of congregations, municipalities, and funders. Organizations may register to attend or join as a paid sponsor — sponsors get the stage, the program book, and the room. (Sample date — set the real one in data/events.json.)"
     },
     {
+      "id": "equity-uprise-summit-2025",
+      "title": "Equity Uprise Summit",
+      "date": "2025-10-15",
+      "time": "October 2025 — exact date being confirmed",
+      "location": "",
+      "category": "Conference",
+      "rsvp": false,
+      "body": "The Equity Uprise Summit. This card completes as the client supplies the record — host, venue, speakers, partners, and outcomes."
+    },
+    {
       "id": "fcdc-conference-2023",
       "title": "FCDC Annual Meeting & Conference — \"Defining Light in This Present Darkness of Gun Violence\"",
       "date": "2023-08-16",
