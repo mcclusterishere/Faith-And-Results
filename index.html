@@ -76,7 +76,11 @@
 
     /* ---- app bar ---- */
     .appbar { position: fixed; inset: 0 0 auto 0; z-index: 50; background: var(--navy);
-      padding: calc(var(--sat) + 0.55rem) 1rem 0.55rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+      padding: calc(var(--sat) + 0.55rem) 1rem 0.55rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+      transition: box-shadow 0.25s ease; }
+    .appbar.lift { box-shadow: 0 4px 18px rgba(16, 28, 44, 0.45); }
+    .appbar .brand { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; }
+    .appbar .brand img { height: 34px; width: auto; display: block; }
     .appbar b { color: var(--cream); font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.01em; }
     .appbar b span { color: var(--gold); }
     .appbar .get { display: none; background: var(--gold); color: var(--navy); border: 0; border-radius: 100px;
@@ -88,11 +92,67 @@
     .screen { display: none; }
     .screen.active { display: block; }
     @media (prefers-reduced-motion: no-preference) {
-      .screen.active { animation: rise 0.28s ease both; }
-      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .screen.active { animation: rise 0.32s cubic-bezier(0.16, 1, 0.3, 1) both; }
+      @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
       .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
       .rv.in { opacity: 1; transform: none; }
+
+      /* staggered card reveals inside each revealed section */
+      .rv .card, .rv .roomc { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .rv.in .card, .rv.in .roomc { opacity: 1; transform: none; }
+      .rv.in .cards > :nth-child(2) { transition-delay: 0.09s; }
+      .rv.in .cards > :nth-child(3) { transition-delay: 0.18s; }
+      .rv.in .cards > :nth-child(4) { transition-delay: 0.27s; }
+      .rv.in .cards > :nth-child(5) { transition-delay: 0.36s; }
+      .rv.in .cards > :nth-child(n+6) { transition-delay: 0.45s; }
+
+      /* hero: staggered entrance, replayed on every homecoming */
+      .hero .wrap > * { opacity: 0; transform: translateY(20px); animation: heroIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .hero .wrap > :nth-child(1) { animation-delay: 0.05s; }
+      .hero .wrap > :nth-child(2) { animation-delay: 0.16s; }
+      .hero .wrap > :nth-child(3) { animation-delay: 0.3s; }
+      .hero .wrap > :nth-child(4) { animation-delay: 0.44s; }
+      .hero .wrap > :nth-child(5) { animation-delay: 0.56s; }
+      @keyframes heroIn { to { opacity: 1; transform: none; } }
+      .hero-mark { animation: markIn 1.4s ease both 0.2s; }
+      @keyframes markIn { from { opacity: 0; transform: translateX(30px) rotate(3deg); } to { opacity: 0.13; transform: none; } }
+
+      /* gold sheen sweeping across primary buttons on hover */
+      .btn { position: relative; overflow: hidden; }
+      .btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%;
+        background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transform: skewX(-18deg); transition: left 0.5s ease; }
+      .btn:hover::after { left: 135%; }
+
+      /* the constellation twinkles */
+      .sky .dot { transform-box: fill-box; transform-origin: center; animation: tw 3s ease-in-out infinite; }
+      .sky .dot:nth-of-type(3n) { animation-delay: 1s; }
+      .sky .dot:nth-of-type(3n+1) { animation-delay: 2s; }
+      @keyframes tw { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+      /* active tab icon pops */
+      .tab[aria-current="page"] svg { animation: pop 0.35s ease; }
+      @keyframes pop { 40% { transform: scale(1.28); } }
     }
+
+    /* ---- partner logo marquee ---- */
+    .logos { background: #fffdf7; border-top: 3px solid var(--gold); border-bottom: 3px solid var(--gold);
+      padding: 1.5rem 0; overflow: hidden; }
+    .logos .track { display: flex; align-items: center; gap: 2.6rem; width: max-content; padding: 0 1.3rem; }
+    .logos img { height: 46px; width: auto; border-radius: 8px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .logos .track { animation: slide 36s linear infinite; }
+      .logos:hover .track { animation-play-state: paused; }
+      @keyframes slide { to { transform: translateX(-50%); } }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .logos .track { flex-wrap: wrap; width: auto; justify-content: center; }
+      .logos .track img:nth-child(n+15) { display: none; }
+    }
+
+    /* ---- leadership portraits ---- */
+    .face { float: right; width: 92px; height: 92px; object-fit: cover; border-radius: 50%;
+      border: 3px solid var(--gold); margin: 0 0 0.6rem 0.9rem; }
     section { padding: clamp(2rem, 5vh, 3.2rem) clamp(1.1rem, 4vw, 2.4rem); }
     .wrap { max-width: 46rem; margin: 0 auto; }
     .kick { font-weight: 700; font-size: 1rem; color: var(--clay); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -101,7 +161,13 @@
     .sub { font-size: 1.12rem; max-width: 40rem; }
 
     /* ---- hero ---- */
-    .hero { background: var(--navy); color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem); }
+    .hero { background: var(--navy); color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem);
+      position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(60% 55% at 78% 12%, rgba(201, 154, 46, 0.22), transparent 70%); }
+    .hero-mark { position: absolute; right: -14%; top: 2%; width: min(26rem, 78vw); opacity: 0.13;
+      pointer-events: none; filter: saturate(1.1); }
+    .hero .wrap { position: relative; }
     .hero h1 { color: var(--cream); font-size: clamp(2.7rem, 11vw, 4.6rem); margin: 0.55rem 0 1rem; }
     .hero .sub { color: var(--cream); font-size: 1.2rem; }
     .seals { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
@@ -307,8 +373,10 @@
 <body>
   <a class="skip" href="#view">Skip to the content</a>
 
-  <header class="appbar">
-    <b>FREEDOM<span>,</span> INC.</b>
+  <header class="appbar" id="appbar">
+    <a class="brand" href="#/home" aria-label="Freedom, Inc. — Home">
+      <img src="assets/scraped/freedom-logo-300px.png" alt="Freedom, Inc.">
+    </a>
     <div class="side">
       <button class="get" id="barInstall" type="button">Get the app</button>
       <button class="account" type="button" data-nav="#/profile" aria-label="My profile">
@@ -322,6 +390,7 @@
   <!-- ================= HOME ================= -->
   <div class="screen" id="scr-home" role="region" aria-label="Home">
     <section class="hero dark">
+      <img class="hero-mark" src="assets/scraped/freedom-logo-300px.png" alt="" aria-hidden="true">
       <div class="wrap">
         <p class="kick">Freedom, Inc. · Faith Restoration Empowerment &amp; Economic Development Outreach Ministries</p>
         <h1 tabindex="-1" data-title="Freedom, Inc. — Faith, Backed by Results">Faith, backed<br>by results.</h1>
@@ -346,6 +415,13 @@
         <div><b data-count="100">0</b><span>Thousand families served</span></div>
         <div><b data-count="5">0</b><span>Pillars of work</span></div>
         <div><b data-count="1">0</b><span>Mission</span></div>
+      </div>
+    </div>
+
+    <div class="logos" aria-label="Partner institutions">
+      <div class="track">
+        <img src="assets/scraped/fdic.jpg" alt="FDIC"><img src="assets/scraped/freddiemac.jpg" alt="Freddie Mac"><img src="assets/scraped/fanniemae.jpg" alt="Fannie Mae"><img src="assets/scraped/neighborworks-america-logo.jpg" alt="NeighborWorks America"><img src="assets/scraped/wellsfargo.jpg" alt="Wells Fargo"><img src="assets/scraped/chase-logo.jpg" alt="Chase"><img src="assets/scraped/bankofamerica.jpg" alt="Bank of America"><img src="assets/scraped/citibank-logo.jpg" alt="Citibank"><img src="assets/scraped/fhlatl.jpg" alt="Federal Home Loan Bank of Atlanta"><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt="Federal Home Loan Bank of San Francisco"><img src="assets/scraped/greenbank.jpg" alt="Connecticut Green Bank"><img src="assets/scraped/homefree.jpg" alt="HomeFree USA"><img src="assets/scraped/energize-ct-logo.jpg" alt="Energize CT"><img src="assets/scraped/faithcdc.jpg" alt="Faith CDC">
+        <img src="assets/scraped/fdic.jpg" alt=""><img src="assets/scraped/freddiemac.jpg" alt=""><img src="assets/scraped/fanniemae.jpg" alt=""><img src="assets/scraped/neighborworks-america-logo.jpg" alt=""><img src="assets/scraped/wellsfargo.jpg" alt=""><img src="assets/scraped/chase-logo.jpg" alt=""><img src="assets/scraped/bankofamerica.jpg" alt=""><img src="assets/scraped/citibank-logo.jpg" alt=""><img src="assets/scraped/fhlatl.jpg" alt=""><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt=""><img src="assets/scraped/greenbank.jpg" alt=""><img src="assets/scraped/homefree.jpg" alt=""><img src="assets/scraped/energize-ct-logo.jpg" alt=""><img src="assets/scraped/faithcdc.jpg" alt="">
       </div>
     </div>
 
@@ -571,6 +647,7 @@
           “Initiate and nurture renewal and restoration for our communities — in faith, with results.”</p>
         <div class="cards">
           <div class="card">
+            <img class="face" src="assets/scraped/mccluster.jpg" alt="Rev. Carl McCluster">
             <h3>Rev. Carl McCluster</h3>
             <p>Senior Pastor of Shiloh Baptist Church in Bridgeport, Connecticut — a pulpit he has held
               for more than two decades — and Managing Director of FREEDOM. Founder of the Faith
@@ -588,6 +665,7 @@
                 to become energy self-sufficient through solar.</p></details>
           </div>
           <div class="card">
+            <img class="face" src="assets/scraped/callion.jpg" alt="Deacon William S. Callion">
             <h3>Remembering Deacon William S. Callion</h3>
             <p>A tribute to one of FREEDOM's founders — the organization carries his name forward in
               every city it serves.</p>
@@ -1590,6 +1668,12 @@
         document.getElementById("newsList").innerHTML =
           '<div class="card"><h3>News is offline</h3><p>Reconnect to load the latest — or call (203) 549-8703 for what’s next.</p></div>';
       });
+
+      /* ================= app bar lift on scroll ================= */
+      var bar = document.getElementById("appbar");
+      window.addEventListener("scroll", function () {
+        bar.classList.toggle("lift", window.scrollY > 8);
+      }, { passive: true });
 
       /* ================= toast ================= */
       var toast = document.getElementById("toast");

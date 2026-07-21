@@ -5,7 +5,7 @@
    forward on their next visit. */
 "use strict";
 
-var VERSION = "freedom-app-v4";
+var VERSION = "freedom-app-v5";
 
 var SHELL = [
   "./",
@@ -23,6 +23,23 @@ var SHELL = [
   "./assets/icons/icon-maskable-512.png",
   "./assets/icons/apple-touch-icon.png",
   "./assets/freedom-inc.vcf",
+  "./assets/scraped/freedom-logo-300px.png",
+  "./assets/scraped/mccluster.jpg",
+  "./assets/scraped/callion.jpg",
+  "./assets/scraped/fdic.jpg",
+  "./assets/scraped/freddiemac.jpg",
+  "./assets/scraped/fanniemae.jpg",
+  "./assets/scraped/neighborworks-america-logo.jpg",
+  "./assets/scraped/wellsfargo.jpg",
+  "./assets/scraped/chase-logo.jpg",
+  "./assets/scraped/bankofamerica.jpg",
+  "./assets/scraped/citibank-logo.jpg",
+  "./assets/scraped/fhlatl.jpg",
+  "./assets/scraped/fhl-bank-sf-logo.jpg",
+  "./assets/scraped/greenbank.jpg",
+  "./assets/scraped/homefree.jpg",
+  "./assets/scraped/energize-ct-logo.jpg",
+  "./assets/scraped/faithcdc.jpg",
   "./data/news.json",
   "./data/programs.json",
   "./data/trainings.json",
