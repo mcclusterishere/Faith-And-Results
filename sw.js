@@ -5,7 +5,7 @@
    forward on their next visit. */
 "use strict";
 
-var VERSION = "freedom-app-v9";
+var VERSION = "freedom-app-v10";
 
 var SHELL = [
   "./",
@@ -44,6 +44,11 @@ var SHELL = [
   "./assets/scraped/housing.jpg",
   "./assets/media/events-summits-bg.jpg",
   "./assets/media/vision-left.jpg",
+  "./assets/media/education-training-slider.jpg",
+  "./assets/media/freedom-main-slide.jpg",
+  "./assets/media/mlk-corridor-header-e1558703350169.jpg",
+  "./assets/media/summits-bg.jpg",
+  "./data/visuals.json",
   "./data/news.json",
   "./data/programs.json",
   "./data/trainings.json",

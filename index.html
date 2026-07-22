@@ -79,8 +79,9 @@
       font-weight: 700; font-size: 1.1rem; padding: 0.8em 1.4em; border-radius: 0 0 12px 0; }
     .skip:focus { left: 0; }
 
-    /* ---- app bar ---- */
-    .appbar { position: fixed; inset: 0 0 auto 0; z-index: 50; background: var(--navy);
+    /* ---- app bar: frosted glass ---- */
+    .appbar { position: fixed; inset: 0 0 auto 0; z-index: 50; background: rgba(14, 27, 44, 0.82);
+      backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
       padding: calc(var(--sat) + 0.55rem) 1rem 0.55rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
       transition: box-shadow 0.25s ease; }
     .appbar.lift { box-shadow: 0 4px 18px rgba(16, 28, 44, 0.45); }
@@ -122,6 +123,13 @@
       .hero-mark { animation: markIn 1.4s ease both 0.2s; }
       @keyframes markIn { from { opacity: 0; transform: translateX(30px) rotate(3deg); } to { opacity: 0.13; transform: none; } }
 
+      /* light sweeps across the headline every few seconds */
+      .hero h1 { background: linear-gradient(110deg, #fff 42%, #a9cdf5 50%, #fff 58%);
+        background-size: 240% 100%; -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; animation: heroIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        shine 6s ease-in-out 1.2s infinite; }
+      @keyframes shine { 0%, 100% { background-position: 100% 0; } 40%, 60% { background-position: 0% 0; } }
+
       /* gold sheen sweeping across primary buttons on hover */
       .btn { position: relative; overflow: hidden; }
       .btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%;
@@ -155,6 +163,25 @@
       .logos .track img:nth-child(n+15) { display: none; }
     }
 
+    /* ---- tactile press + glow system ---- */
+    a.card, .btn, .city, .door, .bigact, .tab { transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    a.card:active, .btn:active, .city:active, .door:active, .bigact:active { transform: scale(0.97); }
+    .btn:hover { box-shadow: 0 0 26px rgba(96, 150, 220, 0.45); }
+    .dark .btn:hover, .connect-block .btn:hover, .bigact:hover { box-shadow: 0 0 30px rgba(255, 255, 255, 0.35); }
+    .band b { background: linear-gradient(115deg, #fff 55%, #8ab6ea); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* ---- photos in cards: full-bleed header images ---- */
+    .cardimg { display: block; width: calc(100% + 2.6rem); margin: -1.4rem -1.3rem 1rem; height: 10rem;
+      object-fit: cover; border-radius: 16px 16px 0 0; }
+    .sheetimg { display: block; width: calc(100% + 2.6rem); margin: -0.9rem -1.3rem 1rem; height: 11rem; object-fit: cover; }
+
+    /* ---- swipeable photo gallery (scroll-snap, mobile first) ---- */
+    .gallery { display: flex; gap: 0.8rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.4rem 1.3rem 1rem;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .gallery::-webkit-scrollbar { display: none; }
+    .gallery img { scroll-snap-align: center; height: 15rem; width: auto; max-width: 86vw; object-fit: cover;
+      border-radius: 16px; box-shadow: 0 6px 20px rgba(14, 27, 44, 0.18); flex: none; }
+
     /* ---- photo bands: full-bleed photography between sections ---- */
     .photoband { position: relative; background: var(--navy) center / cover no-repeat; color: #fff;
       padding: clamp(3.4rem, 10vh, 5.5rem) clamp(1.3rem, 4vw, 2.1rem); }
@@ -166,6 +193,8 @@
     .photoband .kick { color: var(--gold); }
     .pb-vision { background-image: url("assets/media/vision-left.jpg"); }
     .pb-summit { background-image: url("assets/media/events-summits-bg.jpg"); }
+    .pb-training { background-image: url("assets/media/education-training-slider.jpg"); }
+    .pb-family { background-image: url("assets/media/freedom-main-slide.jpg"); background-position: center 20%; }
 
     /* ---- leadership portraits ---- */
     .face { float: right; width: 92px; height: 92px; object-fit: cover; border-radius: 50%;
@@ -184,6 +213,9 @@
 
     /* ---- hero ---- */
     .hero { background: var(--navy) url("assets/media/events-summits-bg.jpg") center 30% / cover no-repeat;
+      color: var(--cream); }
+    .hero--mlk { background-image: url("assets/media/mlk-corridor-header-e1558703350169.jpg"); background-position: center 25%; }
+    .hero {
       color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem); position: relative; overflow: hidden; }
     .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(168deg, rgba(14, 27, 44, 0.92) 30%, rgba(14, 27, 44, 0.62)),
@@ -236,7 +268,8 @@
     .roomc p { font-size: 1.03rem; }
 
     /* ---- founder quote ---- */
-    .quote { background: var(--navy); color: var(--cream); text-align: center; }
+    .quote { background: linear-gradient(rgba(14, 27, 44, 0.72), rgba(14, 27, 44, 0.85)),
+      var(--navy) url("assets/media/summits-bg.jpg") center / cover no-repeat; color: #fff; text-align: center; }
     .quote blockquote { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: clamp(1.6rem, 6vw, 2.4rem);
       line-height: 1.25; max-width: 40rem; margin: 0 auto; }
     .quote blockquote::before { content: "\201C"; color: var(--gold); font-size: 1.4em; display: block; line-height: 0.6; margin-bottom: 0.2em; }
@@ -322,14 +355,17 @@
     .connect-block .foot, .connect-block .foot small { color: var(--cream); }
 
     /* ---- tab bar ---- */
-    .tabbar { position: fixed; inset: auto 0 0 0; z-index: 60; display: flex; background: var(--navy);
+    .tabbar { position: fixed; inset: auto 0 0 0; z-index: 60; display: flex; background: rgba(14, 27, 44, 0.85);
+      backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
       border-top: 1px solid var(--line-dark); padding-bottom: var(--sab); }
     .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem;
-      min-height: var(--tab-h); background: none; border: 0; cursor: pointer; text-decoration: none;
-      color: var(--cream); font-weight: 700; font-size: 0.86rem; user-select: none; -webkit-user-select: none; }
+      min-height: var(--tab-h); background: none; border: 0; cursor: pointer; text-decoration: none; position: relative;
+      color: rgba(255, 255, 255, 0.82); font-weight: 700; font-size: 0.86rem; user-select: none; -webkit-user-select: none; }
     .tab svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
     .tab[aria-current="page"] { color: var(--gold); }
-    .tab[aria-current="page"] svg { stroke-width: 2.9; }
+    .tab[aria-current="page"] svg { stroke-width: 2.9; filter: drop-shadow(0 0 8px rgba(138, 182, 234, 0.9)); }
+    .tab[aria-current="page"]::before { content: ""; position: absolute; top: 6px; width: 3rem; height: 2.1rem;
+      border-radius: 100px; background: rgba(138, 182, 234, 0.16); }
 
     /* ---- forms (elder-first: big fields, visible labels, plain errors) ---- */
     .field { margin-top: 1.05rem; }
@@ -508,6 +544,24 @@
       <blockquote>Change the course of our state, our nation, and of the world.</blockquote>
       <cite>Rev. Carl McCluster · Shiloh Baptist Church, Bridgeport</cite>
     </section>
+
+    <div class="rv" hidden>
+      <div class="wrap" style="padding-top:2.1rem">
+        <p class="kick" style="padding:0 0 0.3rem">The record in pictures</p>
+        <h2 style="margin-bottom:0.3rem">Swipe through the work.</h2>
+      </div>
+      <div class="gallery" id="homeGallery"></div>
+    </div>
+
+    <div class="photoband pb-family rv">
+      <div class="wrap">
+        <p class="kick">The vision</p>
+        <h2>A family on its own front porch.</h2>
+        <p>That is the whole mission in one picture. More than one hundred thousand families
+          served, and the next one is always the point.</p>
+        <div class="cta-row"><a class="btn" style="background:#fff; border-color:#fff; color:var(--navy)" href="#/apply/homebuyer-education">Start your path home</a></div>
+      </div>
+    </div>
 
     <section class="rv" id="homeInstallWrap">
       <div class="wrap">
@@ -747,7 +801,7 @@
 
   <!-- ================= TRAININGS ================= -->
   <div class="screen" id="scr-trainings" role="region" aria-label="Trainings">
-    <div class="photoband pb-vision">
+    <div class="photoband pb-training">
       <div class="wrap">
         <p class="kick">CT Faith Jobs Collaborative</p>
         <h2>The next class is forming now.</h2>
@@ -876,7 +930,7 @@
 
   <!-- ================= MLK CORRIDOR ================= -->
   <div class="screen" id="scr-corridor" role="region" aria-label="MLK Corridors Initiative">
-    <section class="hero dark" style="padding-top:2rem">
+    <section class="hero hero--mlk dark" style="padding-top:2rem">
       <div class="wrap">
         <button class="back" type="button" data-nav="#/programs" style="color:var(--gold)">← All programs</button>
         <p class="kick">MLK Corridors Initiative</p>
@@ -1101,6 +1155,16 @@
       var lastFocus = null;
 
       function openSheet(city) {
+        var ci = DATA && (DATA.visuals.cityImgs || {})[city];
+        var old = document.querySelector("#sheet .sheetimg");
+        if (old) old.remove();
+        if (ci) {
+          var im = document.createElement("img");
+          im.className = "sheetimg";
+          im.src = ci;
+          im.alt = "";
+          sheet.insertBefore(im, document.getElementById("sheetCity"));
+        }
         document.getElementById("sheetCity").textContent = city;
         document.getElementById("sheetBody").innerHTML = KNOWN[city] ||
           "Projects and affiliates active here. Each city's projects, partners, and wins publish on this screen as the client supplies them.";
@@ -1200,7 +1264,10 @@
           var progs = DATA.programs.filter(function (p) { return p.pillar === pl.id; });
           return '<div class="pillar-head"><h3>' + esc(pl.name) + "</h3><p>" + esc(pl.blurb) + "</p></div>" +
             '<div class="cards">' + progs.map(function (p) {
-              return '<a class="card" href="' + (p.screen || "#/program/" + p.id) + '"><span class="num">' + esc(p.tag) + "</span>" +
+              var vi = (DATA.visuals.programImgs || {})[p.id];
+              return '<a class="card" href="' + (p.screen || "#/program/" + p.id) + '">' +
+                (vi ? '<img class="cardimg" src="' + esc(vi) + '" alt="" loading="lazy">' : "") +
+                '<span class="num">' + esc(p.tag) + "</span>" +
                 "<h3>" + esc(p.name) + "</h3>" +
                 (p.stat ? '<p><span class="chip">' + esc(p.stat) + "</span></p>" : "") +
                 "<p>" + esc(firstSentence(p.body)) + "</p>" +
@@ -1211,7 +1278,10 @@
         document.getElementById("trainingList").innerHTML = DATA.trainings.filter(function (t) {
           return t.kind !== "intake";
         }).map(function (t) {
-          return '<div class="card"><span class="num">' + esc(t.format) + "</span>" +
+          var ti = (DATA.visuals.trainingImgs || {})[t.id];
+          return '<div class="card">' +
+            (ti ? '<img class="cardimg" src="' + esc(ti) + '" alt="" loading="lazy">' : "") +
+            '<span class="num">' + esc(t.format) + "</span>" +
             "<h3>" + esc(t.name) + (t.urgent ? ' <span class="badge-urgent">Urgent help available</span>' : "") + "</h3>" +
             "<p><strong>For:</strong> " + esc(t.audience) + "</p>" +
             "<p>" + esc(firstSentence(t.body)) + "</p>" +
@@ -1405,6 +1475,17 @@
           say("Couldn't send just now. Check your connection and try again.");
         });
       });
+
+      /* ================= photo gallery ================= */
+      function renderGallery() {
+        var g = DATA.visuals.gallery || [];
+        var box = document.getElementById("homeGallery");
+        if (!box || !g.length) return;
+        box.innerHTML = g.map(function (src) {
+          return '<img src="' + esc(src) + '" alt="Freedom, Inc. at work" loading="lazy">';
+        }).join("");
+        box.parentElement.hidden = false;
+      }
 
       /* ================= corridor confirmation extras ================= */
       function renderDoneExtras(t, app) {
@@ -1701,7 +1782,7 @@
             else e.target.classList.add("in");
             seen.unobserve(e.target);
           });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.04 });
         document.querySelectorAll("[data-count], .rv").forEach(function (el) { seen.observe(el); });
       } else {
         document.querySelectorAll("[data-count]").forEach(function (el) { el.textContent = el.getAttribute("data-count"); });
@@ -1807,10 +1888,12 @@
         fetch("data/trainings.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
         fetch("data/events.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
         fetch("data/jobs-partners.json", { cache: "no-cache" }).then(function (r) { return r.json(); }),
-        FreedomStore.init()
+        FreedomStore.init(),
+        fetch("data/visuals.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return {}; })
       ]).then(function (res) {
         DATA = { pillars: res[0].pillars, programs: res[0].programs, trainings: res[1].trainings,
-          partners: res[3].partners };
+          partners: res[3].partners, visuals: res[5] || {} };
+        renderGallery();
         EVENTS = (res[2].events || []).concat(FreedomStore.getLocalEvents());
         renderCatalogs();
         renderEvents();

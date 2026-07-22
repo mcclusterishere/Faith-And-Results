@@ -1,0 +1,61 @@
+{
+  "note": "The photo map, curated from a full review of all 253 media files. gallery renders as the swipeable strip on Home; programImgs/trainingImgs put header photos on cards by id; cityImgs put photos atop city sheets by exact city name.",
+  "gallery": [
+    "assets/media/1234-1.jpg",
+    "assets/media/1024x1024-1-1.jpg",
+    "assets/media/920x920-1.jpg",
+    "assets/media/920x920-2-e1568129718198.jpg",
+    "assets/media/920x920-3.jpg",
+    "assets/media/920x920-4.jpg",
+    "assets/media/1.jpg",
+    "assets/media/123.jpg",
+    "assets/media/IMG_20190523_163536-e1569945976711.jpg",
+    "assets/media/1024x1024-1.jpg",
+    "assets/media/1024x1024-2.jpg",
+    "assets/media/3987856887562105002-e1568301092799.jpg"
+  ],
+  "programImgs": {
+    "homes-saved-by-faith": "assets/media/homes-saved-header.jpg",
+    "get-home-now": "assets/media/freedom-fb-1.jpg",
+    "homebuyer-education": "assets/media/program-goals-bg-full.jpg",
+    "shiloh-bethel-centre": "assets/media/economic-dev.jpg",
+    "financial-freedom": "assets/media/history-econ-dev-bg.jpg",
+    "faith-empowerment-series": "assets/media/core-beliefs-bg.jpg",
+    "mlk-corridors": "assets/media/IMG_20191002_175014-e1570463876113.jpg",
+    "health-wealth-legacy": "assets/media/freedom-vision.jpg",
+    "workforce-readiness": "assets/media/education-training-slider.jpg",
+    "neighborworks-institutes": "assets/media/special.jpg",
+    "capacity-building": "assets/media/program-goals-bg-2.jpg",
+    "congregational-sustainability": "assets/media/sustainability-slider-bg.jpg",
+    "net-zero-communities": "assets/media/sustainability-bg-2.jpg",
+    "saving-americas-soul": "assets/media/IMG_6104.jpg",
+    "fighting-fear": "assets/media/Picture1.jpg",
+    "community-engagement": "assets/media/1024x1024.jpg"
+  },
+  "trainingImgs": {
+    "workforce-readiness": "assets/media/ecnonomic-development-slide.jpg",
+    "homebuyer-education": "assets/media/history-education-bg.jpg",
+    "foreclosure-help": "assets/media/history-mobile.jpg",
+    "financial-empowerment": "assets/media/econ-dev-bg.jpg",
+    "capacity-building": "assets/media/program-goals-bg-3.jpg"
+  },
+  "cityImgs": {
+    "Bridgeport, CT": "assets/media/Bridgeport.jpg",
+    "New Britain, CT": "assets/media/mlkcorridorcochairnb-e1558547605133.jpg",
+    "Atlanta, GA": "assets/media/Atlanta.jpg",
+    "Decatur, GA": "assets/media/Decatur.jpg",
+    "Cleveland, OH": "assets/media/Cleveland.jpg",
+    "Denver, CO": "assets/media/Denver.jpg",
+    "Orlando, FL": "assets/media/orlando_feature.jpg",
+    "Tulsa, OK": "assets/media/Tulsa_Skyline-CC-BY-SA-2.5-Caleb-Long-mini-e1592448818374.jpg",
+    "Providence, RI": "assets/media/Providence-e1592449474190.jpg",
+    "Oakland, CA": "assets/media/OAKLAND-e1592449904137.jpg",
+    "San Antonio, TX": "assets/media/sanantonio-thumb-480x300-1.jpg",
+    "Everett, MA": "assets/media/everett-banner-e1592495264330.jpg"
+  },
+  "bands": [
+    "assets/media/freedom-housing-bg.jpg",
+    "assets/media/core-beliefs-bg-2.jpg",
+    "assets/media/Providence-banner-e1592494082500.jpg"
+  ]
+}
