@@ -419,6 +419,33 @@
     .appbar .account:hover svg, .appbar .account:focus svg { stroke: var(--gold); }
     .appbar .side { display: flex; align-items: center; gap: 0.7rem; }
 
+    /* ---- signature details: the custom layer ---- */
+    ::selection { background: var(--clay); color: #fff; }
+    h1, h2 { letter-spacing: -0.015em; }
+    .kick::before { content: "✦ "; color: inherit; opacity: 0.7; }
+    .swash { position: relative; white-space: nowrap; -webkit-text-fill-color: #fff; }
+    .swash svg { position: absolute; left: 0; right: 0; bottom: -0.1em; width: 100%; height: 0.24em; overflow: visible; }
+    .swash path { fill: none; stroke: #c9a24b; stroke-width: 5.5; stroke-linecap: round; }
+    .scrollprog { position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--clay)); }
+    .logos img { filter: grayscale(1) opacity(0.72); transition: filter 0.3s ease; }
+    .logos img:hover { filter: none; }
+    .gallery { padding-bottom: 2.1rem; }
+    .gallery img:nth-child(even) { transform: translateY(1.05rem); }
+    a.card { position: relative; }
+    a.card::after { content: ""; position: absolute; top: 10px; right: 10px; width: 13px; height: 13px;
+      border-top: 2px solid #bcd3ec; border-right: 2px solid #bcd3ec; border-radius: 0 4px 0 0;
+      transition: border-color 0.2s ease; }
+    a.card:hover::after { border-color: var(--clay); }
+    .cardimg, .gallery img, .sheetimg { filter: contrast(1.04) saturate(0.92); }
+    @media (prefers-reduced-motion: no-preference) {
+      .swash path { stroke-dasharray: 330; stroke-dashoffset: 330; animation: draw 0.9s ease 1.1s forwards; }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      .chatfab { animation: fabPulse 6s ease-in-out infinite; }
+      @keyframes fabPulse { 0%, 100% { box-shadow: 0 4px 16px rgba(14, 27, 44, 0.35), 0 0 24px rgba(96, 150, 220, 0.45); }
+        50% { box-shadow: 0 4px 16px rgba(14, 27, 44, 0.3), 0 0 38px rgba(96, 150, 220, 0.75); } }
+    }
+
     /* ---- pillar accordion: the whole catalog, one viewport ---- */
     .pillrow { border-bottom: 1px solid var(--line); }
     .pillrow summary { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0.2rem; cursor: pointer;
@@ -514,6 +541,7 @@
     </a>
     <div class="side">
       <button class="get" id="barInstall" type="button">Get the app</button>
+      <i class="scrollprog" id="scrollProg" aria-hidden="true"></i>
       <button class="account" type="button" data-nav="#/profile" aria-label="My profile">
         <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="10" r="4.4"/><path d="M5.2 23.2c0-5 17.6-5 17.6 0"/></svg>
       </button>
@@ -528,7 +556,7 @@
       <img class="hero-mark" src="assets/scraped/freedom-logo-300px.png" alt="" aria-hidden="true">
       <div class="wrap">
         <p class="kick">Freedom, Inc.</p>
-        <h1 tabindex="-1" data-title="Freedom, Inc. · Faith, Backed by Results">Faith, backed<br>by results.</h1>
+        <h1 tabindex="-1" data-title="Freedom, Inc. · Faith, Backed by Results">Faith, backed<br>by <span class="swash">results.<svg viewBox="0 0 320 20" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 Q 160 3 314 11"/></svg></span></h1>
         <p class="sub">Economic development, education, housing, and sustainability, delivered with faith communities in <strong>nineteen American cities</strong>.</p>
         <div class="seals" aria-label="Consulting credentials">
           <span class="seal">FDIC</span>
@@ -1808,8 +1836,11 @@
 
       /* ================= app bar lift on scroll ================= */
       var bar = document.getElementById("appbar");
+      var prog = document.getElementById("scrollProg");
       window.addEventListener("scroll", function () {
         bar.classList.toggle("lift", window.scrollY > 8);
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        if (prog && max > 0) prog.style.width = Math.min(100, (window.scrollY / max) * 100) + "%";
       }, { passive: true });
 
       /* ================= toast ================= */
