@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin · Freedom, Inc.</title>
   <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23101c2c%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c99a2e%22>★</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23101c2c%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%238ab6ea%22>★</text></svg>">
   <style>
     @font-face { font-family: "Atkinson"; src: url("assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Atkinson"; src: url("assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
     @font-face { font-family: "BitterSlab"; src: url("assets/fonts/bitter-latin-900-normal.woff2") format("woff2"); font-weight: 900; font-display: swap; }
 
-    :root { --navy: #101c2c; --navy-2: #1a2b42; --cream: #f7f1e3; --gold: #c99a2e; --clay: #9c3d22; --ink: #14100c; --ok: #2e7d4f; }
+    :root { --navy: #0e1b2c; --navy-2: #16283f; --cream: #f4f7fa; --gold: #8ab6ea; --clay: #1f5d99; --ink: #17202b; --ok: #2e7d4f; --line: #dfe7f0; --danger: #b3261e; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { font-size: 17px; color-scheme: light; }
     body { background: var(--cream); color: var(--ink); font-family: "Atkinson", Verdana, sans-serif; line-height: 1.6; }
@@ -23,7 +23,7 @@
     .bar { background: var(--navy); color: var(--cream); padding: 0.7rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .bar b { font-family: "BitterSlab", Georgia, serif; font-size: 1.15rem; }
     .bar b span { color: var(--gold); }
-    .bar .tag { background: var(--gold); color: var(--navy); font-weight: 700; border-radius: 100px; padding: 0.15em 0.9em; font-size: 0.9rem; }
+    .bar .tag { background: #fff; color: var(--navy); font-weight: 700; border-radius: 100px; padding: 0.15em 0.9em; font-size: 0.9rem; }
     .bar nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
     .bar nav button { background: none; border: 2px solid transparent; color: var(--cream); font-weight: 700; font-size: 0.95rem;
       border-radius: 100px; padding: 0.35em 1em; }
@@ -31,7 +31,7 @@
     .bar .out { background: none; border: 2px solid var(--cream); color: var(--cream); font-weight: 700; border-radius: 100px; padding: 0.3em 1em; font-size: 0.9rem; }
 
     main { max-width: 68rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
-    .banner { border: 3px dashed var(--gold); background: rgba(201, 154, 46, 0.12); border-radius: 14px; padding: 0.9rem 1.1rem;
+    .banner { border: 1px solid #cddcee; background: #f0f6fd; border-radius: 14px; padding: 0.9rem 1.1rem;
       font-size: 0.98rem; margin-bottom: 1.4rem; }
     .pane { display: none; }
     .pane.on { display: block; }
@@ -39,39 +39,39 @@
 
     .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr)); gap: 1rem; margin-bottom: 1.6rem; }
     .tile { background: var(--navy); color: var(--cream); border-radius: 16px; padding: 1.1rem 1.2rem; }
-    .tile b { font-family: "BitterSlab", Georgia, serif; font-size: 2.4rem; color: var(--gold); display: block; line-height: 1.05; }
+    .tile b { font-family: "BitterSlab", Georgia, serif; font-size: 2.4rem; color: #fff; display: block; line-height: 1.05; }
     .tile span { font-weight: 700; font-size: 0.95rem; }
 
     .tools { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1.1rem; align-items: center; }
-    .tools select, .tools input { font-family: inherit; font-size: 1rem; border: 3px solid var(--navy); border-radius: 12px;
-      padding: 0.45rem 0.7rem; background: #fffdf7; color: var(--ink); }
+    .tools select, .tools input { font-family: inherit; font-size: 1rem; border: 1px solid #c7d3e4; border-radius: 12px;
+      padding: 0.45rem 0.7rem; background: #fff; color: var(--ink); }
     .tools input { flex: 1; min-width: 12rem; }
-    .btn { display: inline-block; background: var(--gold); border: 3px solid var(--gold); color: var(--navy); font-weight: 700;
+    .btn { display: inline-block; background: var(--navy); border: 2px solid var(--navy); color: #fff; font-weight: 700;
       font-size: 0.98rem; border-radius: 100px; padding: 0.45em 1.3em; text-decoration: none; }
     .btn--navy { background: var(--navy); border-color: var(--navy); color: var(--cream); }
     .btn--line { background: none; color: var(--navy); border-color: var(--navy); }
     .btn--ok { background: var(--ok); border-color: var(--ok); color: #fff; }
-    .btn--clay { background: var(--clay); border-color: var(--clay); color: #fff; }
+    .btn--clay { background: var(--danger); border-color: var(--danger); color: #fff; }
     .btn[disabled] { opacity: 0.5; cursor: default; }
 
-    .apprec { background: #fffdf7; border: 3px solid var(--navy); border-radius: 16px; margin-bottom: 0.9rem; overflow: hidden; }
+    .apprec { background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 1px 3px rgba(14,27,44,0.05); margin-bottom: 0.9rem; overflow: hidden; }
     .apprec summary { list-style: none; cursor: pointer; display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; padding: 0.9rem 1.1rem; }
     .apprec summary::-webkit-details-marker { display: none; }
     .apprec summary b { font-size: 1.08rem; color: var(--navy); }
     .apprec summary .who { flex: 1; min-width: 10rem; }
     .apprec summary .when { font-size: 0.9rem; color: rgba(20, 16, 12, 0.65); }
     .chip { display: inline-block; font-weight: 700; font-size: 0.88rem; border-radius: 100px; padding: 0.15em 0.9em;
-      background: rgba(201, 154, 46, 0.2); border: 2px solid var(--gold); color: var(--navy); }
+      background: #eaf1fb; border: 1px solid #bcd3ec; color: #1c4368; }
     .chip--approved { background: rgba(46, 125, 79, 0.14); border-color: var(--ok); color: #1d5437; }
-    .chip--declined { background: rgba(156, 61, 34, 0.12); border-color: var(--clay); color: var(--clay); }
-    .appbody { border-top: 3px solid var(--navy); padding: 1rem 1.1rem; display: grid; gap: 0.5rem; }
+    .chip--declined { background: #faeceb; border-color: #dba39f; color: var(--danger); }
+    .appbody { border-top: 1px solid var(--line); padding: 1rem 1.1rem; display: grid; gap: 0.5rem; }
     .appbody dl { display: grid; grid-template-columns: minmax(8rem, 14rem) 1fr; gap: 0.3rem 1rem; }
     .appbody dt { font-weight: 700; color: var(--navy); }
     .appbody dd { overflow-wrap: anywhere; }
     .acts { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.7rem; align-items: center; }
-    .acts input { flex: 1; min-width: 10rem; font-family: inherit; font-size: 0.98rem; border: 3px solid var(--navy); border-radius: 12px; padding: 0.4rem 0.7rem; background: #fff; }
+    .acts input { flex: 1; min-width: 10rem; font-family: inherit; font-size: 0.98rem; border: 1px solid #c7d3e4; border-radius: 12px; padding: 0.4rem 0.7rem; background: #fff; }
 
-    .empty { background: #fffdf7; border: 3px dashed var(--navy); border-radius: 16px; padding: 1.6rem; text-align: center; font-weight: 700; color: var(--navy); }
+    .empty { background: #fff; border: 1px dashed #b9c8d8; border-radius: 16px; padding: 1.6rem; text-align: center; font-weight: 700; color: var(--navy); }
     .note { font-size: 0.95rem; color: rgba(20, 16, 12, 0.7); margin-top: 0.5rem; }
 
     /* gate */
@@ -80,11 +80,11 @@
     .gatecard h1 { font-size: 1.7rem; margin-bottom: 0.3rem; }
     .gatecard p { font-size: 0.98rem; margin-bottom: 1rem; }
     .gatecard label { display: block; font-weight: 700; margin: 0.8rem 0 0.25rem; color: var(--navy); }
-    .gatecard input { width: 100%; font-family: inherit; font-size: 1.05rem; border: 3px solid var(--navy); border-radius: 12px; padding: 0.6rem 0.8rem; background: #fffdf7; }
+    .gatecard input { width: 100%; font-family: inherit; font-size: 1.05rem; border: 1px solid #c7d3e4; border-radius: 12px; padding: 0.6rem 0.8rem; background: #fff; }
     .gatecard .btn { width: 100%; text-align: center; margin-top: 1.2rem; padding: 0.7em; font-size: 1.05rem; }
-    .gatecard .err { color: var(--clay); font-weight: 700; display: none; margin-top: 0.6rem; }
+    .gatecard .err { color: var(--danger); font-weight: 700; display: none; margin-top: 0.6rem; }
 
-    .kv { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: 0.4rem 1rem; background: #fffdf7; border: 3px solid var(--navy); border-radius: 16px; padding: 1.1rem 1.2rem; margin-bottom: 1rem; }
+    .kv { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: 0.4rem 1rem; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.2rem; margin-bottom: 1rem; }
     .kv dt { font-weight: 700; color: var(--navy); }
     [hidden] { display: none !important; }
   </style>
@@ -214,7 +214,7 @@
           <dd>Repo secret <code>ANTHROPIC_API_KEY</code> (Settings → Secrets and variables → Actions).</dd>
         </div>
         <div id="dossierList"></div>
-        <pre id="dossierView" hidden style="background:#fffdf7;border:3px solid var(--navy);border-radius:16px;padding:1.1rem;white-space:pre-wrap;font-size:0.92rem"></pre>
+        <pre id="dossierView" hidden style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem;white-space:pre-wrap;font-size:0.92rem"></pre>
       </section>
 
       <!-- automations -->
