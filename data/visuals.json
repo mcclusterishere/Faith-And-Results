@@ -1,7 +1,7 @@
 {
  "note": "The photo map, curated from a full review of all 253 media files. gallery renders as the swipeable strip on Home (each entry: src, t title, s sentence, href tap target); pillarImgs shade the Home pillar rows; pillarCards wash into the Programs accordion; programImgs/trainingImgs put header photos on cards by id; cityImgs put photos atop city sheets by exact city name.",
  "gallery": [
-  { "src": "assets/media/1234-1.jpg", "t": "The Norwalk launch", "s": "Rev. McCluster at the podium with the mayor and the congressman as Norwalk joins the corridor map.", "href": "#/corridor" },
+  { "src": "assets/media/1234-1.jpg", "t": "The Norwalk launch", "s": "At the podium with the mayor and the congressman as Norwalk joins the corridor map.", "href": "#/corridor" },
   { "src": "assets/media/1024x1024-1-1.jpg", "t": "The voice of the work", "s": "Rev. Carl McCluster, taking the mission to the microphone.", "href": "#/about" },
   { "src": "assets/media/920x920-1.jpg", "t": "The state's microphone", "s": "Faith leaders stand with state officials as the case is made on the record.", "href": "#/corridor" },
   { "src": "assets/media/920x920-2-e1568129718198.jpg", "t": "City hall, together", "s": "Norwalk's leadership and the collaborative, shoulder to shoulder.", "href": "#/corridor" },
