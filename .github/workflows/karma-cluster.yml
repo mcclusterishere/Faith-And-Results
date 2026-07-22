@@ -1,0 +1,42 @@
+name: "Karma Cluster"
+
+# The heartbeat of Freedom, Inc.'s autonomous operations agent.
+# Every Monday morning (and on demand) it wakes, researches, grows the
+# prospect pipeline, drafts what needs drafting, writes the weekly brief,
+# and commits its work. Its whole world is the data files in this repo:
+# it cannot send email, spend money, or touch code. Humans approve every
+# outbound contact in Admin > Karma. Constitution: data/karma/charter.json.
+#
+# Requires repo secret ANTHROPIC_API_KEY.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: karma-cluster
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Think and act
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node agent/karma.js
+      - name: Commit the run
+        run: |
+          git config user.name "karma-cluster"
+          git config user.email "actions@github.com"
+          git add data/karma data/news.json
+          git diff --cached --quiet || git commit -m "Karma Cluster: weekly run $(date -u +%Y-%m-%d)"
+          git push
