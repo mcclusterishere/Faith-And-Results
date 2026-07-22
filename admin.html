@@ -120,7 +120,7 @@
         <button data-pane="events">Events</button>
         <button data-pane="people">People</button>
         <button data-pane="research">Research</button>
-        <button data-pane="karma">Karma</button>
+        <button data-pane="mccluster">McCluster</button>
         <button data-pane="auto">Automations</button>
       </nav>
       <button class="out" id="signOut" type="button">Sign out</button>
@@ -218,20 +218,20 @@
         <pre id="dossierView" hidden style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem;white-space:pre-wrap;font-size:0.92rem"></pre>
       </section>
 
-      <!-- karma cluster -->
-      <section class="pane" id="pane-karma">
-        <h2>Karma Cluster</h2>
+      <!-- mccluster os -->
+      <section class="pane" id="pane-mccluster">
+        <h2>McCluster OS</h2>
         <p class="note" style="margin-bottom:1rem">The autonomous operations agent. It researches,
           scores prospects, and drafts outreach on its own every Monday; nothing leaves the building
-          until you approve it here. Its constitution lives in <code>data/karma/charter.json</code>.</p>
-        <div class="tiles" id="karmaTiles"></div>
+          until you approve it here. Its constitution lives in <code>data/mccluster/charter.json</code>.</p>
+        <div class="tiles" id="mcTiles"></div>
         <h3 style="margin:0 0 0.7rem">Latest brief</h3>
-        <pre id="karmaBrief" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem;white-space:pre-wrap;font-size:0.95rem">No runs yet. Add the ANTHROPIC_API_KEY secret, then trigger
-Actions → "Karma Cluster" → Run workflow (or wait for Monday).</pre>
+        <pre id="mcBrief" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem;white-space:pre-wrap;font-size:0.95rem">No runs yet. Add the ANTHROPIC_API_KEY secret, then trigger
+Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
         <h3 style="margin:1.4rem 0 0.7rem">Partnership pipeline</h3>
-        <div id="karmaProspects"></div>
+        <div id="mcProspects"></div>
         <h3 style="margin:1.4rem 0 0.7rem">Event drafts awaiting publish</h3>
-        <div id="karmaDrafts"></div>
+        <div id="mcDrafts"></div>
       </section>
 
       <!-- automations -->
@@ -355,7 +355,7 @@ Actions → "Karma Cluster" → Run workflow (or wait for Monday).</pre>
           renderEventsAdmin();
           renderPeople();
           renderResearch();
-          renderKarma();
+          renderMcCluster();
           renderAuto();
         }).catch(function (e) {
           document.getElementById("tiles").innerHTML =
@@ -660,25 +660,25 @@ Actions → "Karma Cluster" → Run workflow (or wait for Monday).</pre>
         FreedomStore.downloadCsv(PEOPLE, "freedom-profiles.csv");
       });
 
-      /* ---------------- karma cluster ---------------- */
-      function renderKarma() {
+      /* ---------------- mccluster os ---------------- */
+      function renderMcCluster() {
         Promise.all([
-          fetch("data/karma/state.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
-          fetch("data/karma/prospects.json", { cache: "no-cache" }).then(r => r.json()).catch(() => ({ prospects: [] })),
-          fetch("data/karma/event-drafts.json", { cache: "no-cache" }).then(r => r.json()).catch(() => ({ drafts: [] }))
+          fetch("data/mccluster/state.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
+          fetch("data/mccluster/prospects.json", { cache: "no-cache" }).then(r => r.json()).catch(() => ({ prospects: [] })),
+          fetch("data/mccluster/event-drafts.json", { cache: "no-cache" }).then(r => r.json()).catch(() => ({ drafts: [] }))
         ]).then(function (res) {
           var st = res[0], pr = (res[1].prospects || []), dr = (res[2].drafts || []);
           var drafted = pr.filter(function (p) { return p.status === "drafted"; }).length;
-          document.getElementById("karmaTiles").innerHTML =
+          document.getElementById("mcTiles").innerHTML =
             '<div class="tile"><b>' + (st ? st.runs : 0) + "</b><span>Runs completed</span></div>" +
             '<div class="tile"><b>' + pr.length + "</b><span>Prospects in pipeline</span></div>" +
             '<div class="tile"><b>' + drafted + "</b><span>Outreach awaiting your yes</span></div>" +
             '<div class="tile"><b>' + dr.length + "</b><span>Event drafts</span></div>";
           if (st && st.lastBrief) {
-            document.getElementById("karmaBrief").textContent =
+            document.getElementById("mcBrief").textContent =
               "Run #" + st.runs + " · " + (st.lastRun || "").slice(0, 10) + "\n\n" + st.lastBrief;
           }
-          document.getElementById("karmaProspects").innerHTML = pr.length ? pr.map(function (p) {
+          document.getElementById("mcProspects").innerHTML = pr.length ? pr.map(function (p) {
             var mail = "";
             if (p.draftEmail && /@/.test(p.contactChannel || "")) {
               mail = '<a class="btn" href="mailto:' + esc(p.contactChannel) + "?subject=" +
@@ -698,11 +698,11 @@ Actions → "Karma Cluster" → Run workflow (or wait for Monday).</pre>
                 '<p class="note">Contact channel is a page, not an email. Open it, find the right person, and use the draft.</p>') +
               "</div></details>";
           }).join("") : '<div class="empty">Pipeline is empty. It fills itself after the first run.</div>';
-          document.getElementById("karmaDrafts").innerHTML = dr.length ? dr.map(function (ev) {
+          document.getElementById("mcDrafts").innerHTML = dr.length ? dr.map(function (ev) {
             return '<details class="apprec"><summary><b>' + esc(ev.title) + '</b><span class="who">' +
               esc(ev.date || "") + (ev.location ? " · " + esc(ev.location) : "") + "</span></summary>" +
               '<div class="appbody"><p>' + esc(ev.body || "") + "</p>" +
-              '<p class="note">To publish: copy this entry from data/karma/event-drafts.json into data/events.json and commit, or recreate it in the Events pane.</p></div></details>';
+              '<p class="note">To publish: copy this entry from data/mccluster/event-drafts.json into data/events.json and commit, or recreate it in the Events pane.</p></div></details>';
           }).join("") : '<div class="empty">No event drafts waiting.</div>';
         });
       }

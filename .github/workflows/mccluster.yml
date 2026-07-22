@@ -1,11 +1,11 @@
-name: "Karma Cluster"
+name: "McCluster OS"
 
-# The heartbeat of Freedom, Inc.'s autonomous operations agent.
+# The heartbeat of McCluster OS, Freedom, Inc.'s operations engine.
 # Every Monday morning (and on demand) it wakes, researches, grows the
 # prospect pipeline, drafts what needs drafting, writes the weekly brief,
 # and commits its work. Its whole world is the data files in this repo:
 # it cannot send email, spend money, or touch code. Humans approve every
-# outbound contact in Admin > Karma. Constitution: data/karma/charter.json.
+# outbound contact in Admin > McCluster. Constitution: data/mccluster/charter.json.
 #
 # Requires repo secret ANTHROPIC_API_KEY.
 
@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: karma-cluster
+  group: mccluster
   cancel-in-progress: false
 
 jobs:
@@ -32,11 +32,11 @@ jobs:
       - name: Think and act
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node agent/karma.js
+        run: node agent/mccluster.js
       - name: Commit the run
         run: |
-          git config user.name "karma-cluster"
+          git config user.name "mccluster-os"
           git config user.email "actions@github.com"
-          git add data/karma data/news.json
-          git diff --cached --quiet || git commit -m "Karma Cluster: weekly run $(date -u +%Y-%m-%d)"
+          git add data/mccluster data/news.json
+          git diff --cached --quiet || git commit -m "McCluster OS: weekly run $(date -u +%Y-%m-%d)"
           git push

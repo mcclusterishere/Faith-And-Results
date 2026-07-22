@@ -419,6 +419,39 @@
     .appbar .account:hover svg, .appbar .account:focus svg { stroke: var(--gold); }
     .appbar .side { display: flex; align-items: center; gap: 0.7rem; }
 
+    /* ---- Ask McCluster: the concierge ---- */
+    .chatfab { position: fixed; right: 1rem; bottom: calc(var(--tab-h) + var(--sab) + 1rem); z-index: 65;
+      width: 3.6rem; height: 3.6rem; border-radius: 50%; border: 0; cursor: pointer;
+      background: linear-gradient(135deg, var(--navy) 40%, #24466e); color: #fff; font-size: 1.5rem;
+      box-shadow: 0 4px 16px rgba(14, 27, 44, 0.35), 0 0 24px rgba(96, 150, 220, 0.45); }
+    .chatfab:active { transform: scale(0.94); }
+    .chatwrap { position: fixed; inset: 0; z-index: 90; display: none; flex-direction: column;
+      background: rgba(242, 246, 250, 0.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .chatwrap.open { display: flex; }
+    .chathead { background: var(--navy); color: #fff; padding: calc(var(--sat) + 0.7rem) 1.1rem 0.7rem;
+      display: flex; align-items: center; gap: 0.7rem; }
+    .chathead img { height: 30px; }
+    .chathead b { flex: 1; font-family: "BitterSlab", Georgia, serif; font-size: 1.1rem; }
+    .chathead .x { background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 0.2rem 0.5rem; }
+    .chatlog { flex: 1; overflow-y: auto; padding: 1rem 1rem 0.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .msg { max-width: 88%; padding: 0.8rem 1rem; border-radius: 18px; font-size: 1.05rem; line-height: 1.55; }
+    .msg.bot { background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 6px; align-self: flex-start;
+      box-shadow: 0 1px 3px rgba(14, 27, 44, 0.06); }
+    .msg.me { background: var(--navy); color: #fff; border-bottom-right-radius: 6px; align-self: flex-end; }
+    .msg a { color: var(--clay); font-weight: 700; }
+    .msg.me a { color: var(--gold); }
+    .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0.4rem 1rem; }
+    .chips button { background: #fff; border: 1px solid #bcd3ec; color: var(--clay); font-weight: 700; font-size: 0.92rem;
+      border-radius: 100px; padding: 0.4em 1em; cursor: pointer; font-family: inherit; }
+    .chatbar { display: flex; gap: 0.6rem; padding: 0.7rem 1rem calc(var(--sab) + 0.9rem); background: #fff;
+      border-top: 1px solid var(--line); }
+    .chatbar input { flex: 1; font-family: inherit; font-size: 1.05rem; border: 1px solid #c7d3e0; border-radius: 100px;
+      padding: 0.75rem 1.1rem; background: #fff; color: var(--ink); }
+    .chatbar button { background: var(--navy); color: #fff; border: 0; border-radius: 50%; width: 3rem; height: 3rem;
+      font-size: 1.2rem; cursor: pointer; flex: none; }
+    .smartline { text-align: center; font-size: 0.88rem; padding: 0.2rem 1rem 0.4rem; color: #5a6c80; }
+    .smartline button { background: none; border: 0; color: var(--clay); font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.88rem; }
+
     /* ---- toast ---- */
     .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tab-h) + var(--sab) + 0.9rem);
       z-index: 80; background: var(--navy); color: #fff; border: 1px solid var(--line-dark); border-radius: 14px;
@@ -1033,6 +1066,29 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <!-- Ask McCluster -->
+  <button class="chatfab" id="chatFab" type="button" aria-label="Ask McCluster">💬</button>
+  <div class="chatwrap" id="chatWrap" role="dialog" aria-modal="true" aria-label="Ask McCluster">
+    <div class="chathead">
+      <img src="assets/scraped/freedom-logo-300px.png" alt="">
+      <b>Ask McCluster</b>
+      <button class="x" id="chatClose" type="button" aria-label="Close chat">×</button>
+    </div>
+    <div class="chatlog" id="chatLog" aria-live="polite"></div>
+    <div class="chips" id="chatChips">
+      <button type="button">Apply for job training</button>
+      <button type="button">I'm behind on my mortgage</button>
+      <button type="button">What events are coming up?</button>
+      <button type="button">Bring MLK Corridors to my city</button>
+    </div>
+    <p class="smartline" id="smartLine" hidden>Built-in answers are on.
+      <button type="button" id="smartBtn">Turn on smart answers (free, ~1GB one-time download)</button></p>
+    <form class="chatbar" id="chatForm">
+      <input id="chatInput" type="text" placeholder="Ask about programs, events, help…" autocomplete="off">
+      <button type="submit" aria-label="Send">➤</button>
+    </form>
+  </div>
+
   <nav class="tabbar" aria-label="App">
     <a class="tab" href="#/home" data-tab="home" aria-current="page">
       <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 12.5 14 4.5l10 8M6.8 11.2V23h14.4V11.2"/></svg>
@@ -1051,6 +1107,7 @@
       Connect</a>
   </nav>
 
+  <script src="js/concierge.js"></script>
   <script src="js/store.js"></script>
   <script>
     (function () {
@@ -1898,9 +1955,83 @@
         renderCatalogs();
         renderEvents();
         route();
+        McConcierge.init({ programs: DATA.programs, trainings: DATA.trainings.filter(function (t) { return t.kind !== "intake"; }),
+          events: EVENTS, cityStories: KNOWN });
       }).catch(function () {
         say("Couldn't load the program catalog. Check your connection and reload.");
       });
+
+      /* ================= Ask McCluster wiring ================= */
+      (function () {
+        var wrap = document.getElementById("chatWrap");
+        var log = document.getElementById("chatLog");
+        var input = document.getElementById("chatInput");
+        function bubble(html, me) {
+          var d = document.createElement("div");
+          d.className = "msg " + (me ? "me" : "bot");
+          d.innerHTML = html;
+          log.appendChild(d);
+          log.scrollTop = log.scrollHeight;
+          return d;
+        }
+        function open() {
+          wrap.classList.add("open");
+          if (!log.children.length) {
+            bubble("Welcome to Freedom, Inc. I'm <b>McCluster</b>, the house concierge. Ask me anything about the programs, trainings, events, or how to get help today.");
+          }
+          if (McConcierge.smartAvailable() && !McConcierge.smartOn()) {
+            document.getElementById("smartLine").hidden = false;
+          }
+          input.focus();
+        }
+        function close() { wrap.classList.remove("open"); }
+        document.getElementById("chatFab").addEventListener("click", open);
+        document.getElementById("chatClose").addEventListener("click", close);
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && wrap.classList.contains("open")) close();
+        });
+        log.addEventListener("click", function (e) {
+          var a = e.target.closest("a[data-go]");
+          if (a) close();
+        });
+        function send(q) {
+          if (!q.trim() || !McConcierge.ready()) return;
+          bubble(q.replace(/[&<>]/g, ""), true);
+          var out = bubble("…");
+          McConcierge.ask(q, function (partial) {
+            out.textContent = partial;
+            log.scrollTop = log.scrollHeight;
+          }).then(function (r) {
+            out.innerHTML = r.html;
+            log.scrollTop = log.scrollHeight;
+          });
+        }
+        document.getElementById("chatForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var q = input.value;
+          input.value = "";
+          send(q);
+        });
+        document.getElementById("chatChips").addEventListener("click", function (e) {
+          var b = e.target.closest("button");
+          if (b) send(b.textContent);
+        });
+        document.getElementById("smartBtn").addEventListener("click", function () {
+          var line = document.getElementById("smartLine");
+          line.innerHTML = "Loading the free in-browser model…";
+          var prog = bubble("Downloading smart mode. This happens once and stays on your device. <span id='smartProg'>0%</span>");
+          McConcierge.enableSmart(function (txt, p) {
+            var el = document.getElementById("smartProg");
+            if (el) el.textContent = Math.round((p || 0) * 100) + "%";
+          }).then(function () {
+            prog.innerHTML = "Smart answers are on. Everything runs on your device, free, and organization facts stay grounded in this site's own records.";
+            line.hidden = true;
+          }).catch(function () {
+            prog.innerHTML = "Smart mode couldn't load here (it needs WebGPU and a solid connection). No problem: the built-in answers know this whole site.";
+            line.hidden = true;
+          });
+        });
+      })();
     })();
   </script>
 </body>

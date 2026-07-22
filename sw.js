@@ -5,7 +5,7 @@
    forward on their next visit. */
 "use strict";
 
-var VERSION = "freedom-app-v10";
+var VERSION = "freedom-app-v11";
 
 var SHELL = [
   "./",
@@ -13,6 +13,7 @@ var SHELL = [
   "./admin.html",
   "./deck.html",
   "./js/store.js",
+  "./js/concierge.js",
   "./manifest.webmanifest",
   "./assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2",
   "./assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2",

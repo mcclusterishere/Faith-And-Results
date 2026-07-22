@@ -1,34 +1,34 @@
 #!/usr/bin/env node
-/* Karma Cluster: Freedom, Inc.'s autonomous operations agent.
-   Runs on GitHub Actions (see .github/workflows/karma-cluster.yml), thinks
+/* McCluster OS: the operations engine that carries the founder's name.
+   Runs on GitHub Actions (see .github/workflows/mccluster.yml), thinks
    with the Claude API, and acts ONLY by writing whitelisted data files in
    this repo. It has no email, no network sends beyond the Claude API call
    itself, and no access to code. Outreach it drafts sits in the pipeline
-   until a human approves it in Admin > Karma. The charter in
-   data/karma/charter.json is its constitution; change behavior there. */
+   until a human approves it in Admin > McCluster. The charter in
+   data/mccluster/charter.json is its constitution; change behavior there. */
 "use strict";
 const fs = require("fs");
 
-const MODEL = process.env.KARMA_MODEL || "claude-fable-5";
+const MODEL = process.env.MCCLUSTER_MODEL || "claude-fable-5";
 const KEY = process.env.ANTHROPIC_API_KEY;
 if (!KEY) { console.error("ANTHROPIC_API_KEY is not set"); process.exit(1); }
 
 const read = (p, fb) => { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch { return fb; } };
-const charter = read("data/karma/charter.json", null);
+const charter = read("data/mccluster/charter.json", null);
 if (!charter) { console.error("charter.json missing or invalid"); process.exit(1); }
-const state = read("data/karma/state.json", { runs: 0, lastRun: "", lastBrief: "", seen: [] });
-const prospects = read("data/karma/prospects.json", { prospects: [] });
+const state = read("data/mccluster/state.json", { runs: 0, lastRun: "", lastBrief: "", seen: [] });
+const prospects = read("data/mccluster/prospects.json", { prospects: [] });
 const news = read("data/news.json", { items: [] });
 const events = read("data/events.json", { events: [] });
 const programs = read("data/programs.json", { programs: [] });
 const partners = read("data/jobs-partners.json", { partners: [] });
-const drafts = read("data/karma/event-drafts.json", { drafts: [] });
+const drafts = read("data/mccluster/event-drafts.json", { drafts: [] });
 
 const today = new Date().toISOString().slice(0, 10);
 const caps = charter.caps || {};
 
 const slim = (o) => JSON.stringify(o).slice(0, 6000);
-const prompt = `You are Karma Cluster, the autonomous operations agent for Freedom, Inc.
+const prompt = `You are McCluster OS, the autonomous operations engine for Freedom, Inc.
 (faithandresults.com), the faith-based economic development organization founded
 around Rev. Carl McCluster's work in ${19} American cities.
 
@@ -107,18 +107,18 @@ Respect the caps: max ${caps.newProspectsPerRun || 5} add_prospect, max ${caps.n
   }
 
   const brief = String(plan.brief || "No brief produced.").slice(0, 8000);
-  const briefFile = `data/karma/briefs/${today}.md`;
-  fs.writeFileSync(briefFile, `# Karma Cluster brief, ${today} (run #${state.runs + 1})\n\n${brief}\n\n## Applied this run\n${applied.map(x => "- " + x).join("\n") || "- nothing (quiet week)"}\n`);
-  const idx = read("data/karma/briefs/index.json", { briefs: [] });
+  const briefFile = `data/mccluster/briefs/${today}.md`;
+  fs.writeFileSync(briefFile, `# McCluster OS brief, ${today} (run #${state.runs + 1})\n\n${brief}\n\n## Applied this run\n${applied.map(x => "- " + x).join("\n") || "- nothing (quiet week)"}\n`);
+  const idx = read("data/mccluster/briefs/index.json", { briefs: [] });
   idx.briefs.unshift({ date: today, file: `${today}.md`, run: state.runs + 1 });
-  fs.writeFileSync("data/karma/briefs/index.json", JSON.stringify(idx, null, 1));
+  fs.writeFileSync("data/mccluster/briefs/index.json", JSON.stringify(idx, null, 1));
 
   state.runs += 1;
   state.lastRun = new Date().toISOString();
   state.lastBrief = brief;
-  fs.writeFileSync("data/karma/state.json", JSON.stringify(state, null, 1));
-  fs.writeFileSync("data/karma/prospects.json", JSON.stringify(prospects, null, 1));
-  fs.writeFileSync("data/karma/event-drafts.json", JSON.stringify(drafts, null, 1));
+  fs.writeFileSync("data/mccluster/state.json", JSON.stringify(state, null, 1));
+  fs.writeFileSync("data/mccluster/prospects.json", JSON.stringify(prospects, null, 1));
+  fs.writeFileSync("data/mccluster/event-drafts.json", JSON.stringify(drafts, null, 1));
   fs.writeFileSync("data/news.json", JSON.stringify(news, null, 1));
   console.log(`Run #${state.runs} complete. Applied: ${applied.length ? applied.join(" | ") : "nothing"}`);
 })().catch(e => { console.error("FATAL", e); process.exit(1); });
