@@ -60,13 +60,14 @@
       --navy: #0e1b2c; --navy-2: #16283f; --cream: #ffffff; --cream-2: #f2f6fa;
       --gold: #8ab6ea; --clay: #1f5d99; --ink: #17202b;
       --line: #dfe7f0; --line-dark: rgba(255, 255, 255, 0.16);
+      --canvas: #f4f7fa; --card: #ffffff;
       --danger: #b3261e;
       --bar-h: 3.4rem; --tab-h: 4.2rem;
       --sat: env(safe-area-inset-top, 0px); --sab: env(safe-area-inset-bottom, 0px);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { font-size: 20px; color-scheme: light; -webkit-text-size-adjust: 100%; }
-    body { background: var(--cream); color: var(--ink); font-family: "Atkinson", Verdana, sans-serif;
+    body { background: var(--canvas); color: var(--ink); font-family: "Atkinson", Verdana, sans-serif;
       font-size: 1.1rem; line-height: 1.7; overscroll-behavior-y: none; }
     h1, h2, h3 { font-family: "BitterSlab", Georgia, serif; font-weight: 900; color: var(--navy); line-height: 1.08; }
     h1:focus, h2:focus { outline: none; }
@@ -149,7 +150,7 @@
     }
 
     /* ---- partner logo marquee ---- */
-    .logos { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    .logos { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
       padding: 1.5rem 0; overflow: hidden; }
     .logos .track { display: flex; align-items: center; gap: 2.6rem; width: max-content; padding: 0 1.3rem; }
     .logos img { height: 46px; width: auto; border-radius: 8px; }
@@ -250,7 +251,7 @@
 
     /* ---- cards ---- */
     .cards { display: grid; gap: 1rem; margin-top: 1.4rem; }
-    .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.3rem;
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.3rem;
       box-shadow: 0 1px 3px rgba(14, 27, 44, 0.06), 0 8px 24px rgba(14, 27, 44, 0.04); }
     .card h3 { font-size: 1.618rem; margin-bottom: 0.5rem; }
     .card p { font-size: 1.06rem; }
@@ -284,7 +285,7 @@
     .sky text { fill: rgba(255, 255, 255, 0.88); font-family: "Atkinson", Verdana, sans-serif; font-size: 24px; font-weight: 700; pointer-events: none; }
     .sky line { stroke: rgba(138, 182, 234, 0.3); stroke-width: 2; }
     .cities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
-    .city { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 0.85rem 1rem; font-weight: 700;
+    .city { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 0.85rem 1rem; font-weight: 700;
       font-size: 1.05rem; color: var(--navy); display: flex; align-items: center; gap: 0.55rem; cursor: pointer; text-align: left;
       transition: transform 0.15s; box-shadow: 0 1px 3px rgba(14, 27, 44, 0.05); }
     .city:hover { transform: translateY(-3px); border-color: var(--clay); }
@@ -296,7 +297,7 @@
     .scrim { position: fixed; inset: 0; z-index: 70; background: rgba(16, 28, 44, 0.55); display: none; }
     .scrim.show { display: block; }
     .sheet { position: fixed; z-index: 71; left: 0; right: 0; bottom: 0; display: none;
-      background: #fff; color: var(--ink); border-radius: 24px 24px 0 0;
+      background: var(--card); color: var(--ink); border-radius: 24px 24px 0 0;
       box-shadow: 0 -12px 40px rgba(14, 27, 44, 0.25);
       padding: 0.9rem 1.3rem calc(1.4rem + var(--sab)); max-height: 75vh; overflow: auto; }
     .sheet.show { display: block; }
@@ -396,7 +397,7 @@
     .pillar-head p { font-size: 1rem; }
 
     /* ---- events calendar ---- */
-    .cal { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1rem; margin-top: 1.4rem;
+    .cal { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1rem; margin-top: 1.4rem;
       color: var(--ink); box-shadow: 0 1px 3px rgba(14, 27, 44, 0.06); }
     .cal .calhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
     .cal .calhead b { font-family: "BitterSlab", Georgia, serif; font-size: 1.2rem; color: var(--navy); }
@@ -419,6 +420,32 @@
     .appbar .account svg { width: 30px; height: 30px; stroke: var(--cream); fill: none; stroke-width: 2.3; stroke-linecap: round; }
     .appbar .account:hover svg, .appbar .account:focus svg { stroke: var(--gold); }
     .appbar .side { display: flex; align-items: center; gap: 0.7rem; }
+
+    /* ---- quick-action tile rail ---- */
+    .tilerail { display: flex; gap: 1rem; overflow-x: auto; padding: 0.5rem 0.2rem 1rem; scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .tilerail::-webkit-scrollbar { display: none; }
+    .qtile { flex: none; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem; color: var(--navy); width: 4.6rem; text-align: center; }
+    .qico { display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border-radius: 18px;
+      background: var(--card); border: 1px solid var(--line); box-shadow: 0 1px 3px rgba(14, 27, 44, 0.06); }
+    .qico svg { width: 26px; height: 26px; stroke: var(--clay); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .qtile--on .qico { background: var(--clay); border-color: var(--clay); box-shadow: 0 6px 18px rgba(31, 93, 153, 0.35); }
+    .qtile--on .qico svg { stroke: #fff; }
+    .qtile--hot .qico svg { stroke: var(--danger); }
+    .qtile:active .qico { transform: scale(0.94); }
+
+    /* ---- segmented control ---- */
+    .seg { display: flex; background: #e6edf4; border-radius: 12px; padding: 3px; margin-top: 1.2rem; }
+    .seg button { flex: 1; border: 0; background: none; font-family: inherit; font-weight: 700; font-size: 1rem;
+      color: #5a6c80; border-radius: 10px; padding: 0.55em 0; cursor: pointer; }
+    .seg button.on { background: var(--card); color: var(--navy); box-shadow: 0 1px 4px rgba(14, 27, 44, 0.14); }
+
+    /* ---- contextual title in the app bar ---- */
+    .appbar .ctx { position: absolute; left: 50%; transform: translateX(-50%) translateY(4px); color: #fff;
+      font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 1.05rem; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .appbar .ctx.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ---- signature details: the custom layer ---- */
     ::selection { background: var(--clay); color: #fff; }
@@ -489,7 +516,7 @@
     .chathead .x { background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 0.2rem 0.5rem; }
     .chatlog { flex: 1; overflow-y: auto; padding: 1rem 1rem 0.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
     .msg { max-width: 88%; padding: 0.8rem 1rem; border-radius: 18px; font-size: 1.05rem; line-height: 1.55; }
-    .msg.bot { background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 6px; align-self: flex-start;
+    .msg.bot { background: var(--card); border: 1px solid var(--line); border-bottom-left-radius: 6px; align-self: flex-start;
       box-shadow: 0 1px 3px rgba(14, 27, 44, 0.06); }
     .msg.me { background: var(--navy); color: #fff; border-bottom-right-radius: 6px; align-self: flex-end; }
     .msg a { color: var(--clay); font-weight: 700; }
@@ -530,6 +557,36 @@
       .bigacts { grid-template-columns: 1fr 1fr 1fr; }
       .wrap { max-width: 52rem; }
     }
+    /* ---- dark mode: the app respects the system ---- */
+    @media (prefers-color-scheme: dark) {
+      :root { --canvas: #0c1826; --card: #152438; --cream-2: #10202f; --line: #263852;
+        --ink: #e6edf6; --clay: #8ab6ea; --line-dark: rgba(255, 255, 255, 0.14); }
+      h1, h2, h3, .city, .prow strong, .field label, .calhead b, .cal td, .pillrow summary strong,
+      .foot, .card h3, .seg button.on, .appbar .get, .qtile { color: #e9f0f8; }
+      .appbar .get { background: #223a57; }
+      .sub, .card p, .prow small, .pillrow summary small, .foot small { color: #b9c7d8; }
+      .cal th { color: #7d92aa; } .cal td.dim { color: #3d5169; }
+      .cal td.evt { background: #1c3450; outline-color: #3b5e8c; }
+      .chip { background: #1c3450; border-color: #2f4d73; color: #cfe1f6; }
+      .field input, .field select, .field textarea, .tools select, .tools input, .chatbar input {
+        background: #132234; color: #e6edf6; border-color: #2c405c; }
+      .sheet h3 { color: #e9f0f8; }
+      .chatwrap { background: rgba(12, 24, 38, 0.96); }
+      .chatbar { background: #0f1e30; border-color: #263852; }
+      .chips button { background: #152438; border-color: #2c405c; color: #8ab6ea; }
+      .smartline { color: #7d92aa; }
+      .install { background: #13273d; border-color: #2c4666; }
+      .install h3 { color: #e9f0f8; }
+      .seg { background: #182a40; }
+      .btn--navy, .formfoot .btn { background: #223a57; border-color: #223a57; }
+      .logos img { background: #fff; padding: 4px; border-radius: 10px; }
+      a.card::after { border-color: #33506f; }
+      .card, .qico { box-shadow: none; }
+      .prow:hover, .prow:active { background: #1a2c44; }
+      .go, .back { color: #8ab6ea; }
+      .pnum { color: #33506f; }
+    }
+
     @media print { .appbar, .tabbar, .toast { display: none; } main { padding: 0; } .screen { display: block !important; } }
   </style>
 </head>
@@ -542,6 +599,7 @@
     </a>
     <div class="side">
       <button class="get" id="barInstall" type="button">Get the app</button>
+      <b class="ctx" id="ctxTitle" aria-hidden="true"></b>
       <i class="scrollprog" id="scrollProg" aria-hidden="true"></i>
       <button class="account" type="button" data-nav="#/profile" aria-label="My profile">
         <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="10" r="4.4"/><path d="M5.2 23.2c0-5 17.6-5 17.6 0"/></svg>
@@ -588,17 +646,17 @@
       </div>
     </div>
 
-    <section class="rv" style="background:var(--cream-2)">
+    <section class="rv">
       <div class="wrap">
         <p class="kick">Start here</p>
         <h2>What do you need today?</h2>
-        <div class="cards">
-          <a class="card" href="#/trainings"><h3>A job</h3>
-            <p>Four-week training, real employers.</p><p class="go">Apply →</p></a>
-          <a class="card" href="#/apply/homebuyer-education"><h3>A home</h3>
-            <p>From renting to keys, with counselors beside you.</p><p class="go">Start →</p></a>
-          <a class="card" href="#/apply/foreclosure-help"><h3>Help, fast</h3>
-            <p>Behind on the mortgage? We answer today.</p><p class="go">Reach us →</p></a>
+        <div class="tilerail">
+          <a class="qtile qtile--on" href="#/apply/workforce-readiness"><span class="qico"><svg viewBox="0 0 28 28"><path d="M14 5 25 10.2 14 15.4 3 10.2Z"/><path d="M8.2 12.9v4.9c0 2.4 11.6 2.4 11.6 0v-4.9M25 10.2v5.6"/></svg></span>A job</a>
+          <a class="qtile" href="#/apply/homebuyer-education"><span class="qico"><svg viewBox="0 0 28 28"><path d="M4 12.5 14 4.5l10 8M6.8 11.2V23h14.4V11.2"/></svg></span>A home</a>
+          <a class="qtile qtile--hot" href="#/apply/foreclosure-help"><span class="qico"><svg viewBox="0 0 28 28"><path d="M6.2 4.8c-1 0-1.7.8-1.6 1.7C5.5 15.7 12.3 22.5 21.5 23.4c.9.1 1.7-.6 1.7-1.6v-3.4c0-.8-.5-1.4-1.3-1.6l-3.5-.9c-.7-.2-1.4.1-1.8.7l-.9 1.3c-2.8-1.4-4.6-3.2-6-6l1.3-.9c.6-.4.9-1.1.7-1.8l-.9-3.5c-.2-.8-.8-1.3-1.6-1.3Z"/></svg></span>Help, fast</a>
+          <a class="qtile" href="#/corridor"><span class="qico"><svg viewBox="0 0 28 28"><path d="M14 3.5 17 10.2l7.3.7-5.5 4.9 1.6 7.2L14 19.2 7.6 23l1.6-7.2-5.5-4.9 7.3-.7Z"/></svg></span>Corridors</a>
+          <a class="qtile" href="#/events"><span class="qico"><svg viewBox="0 0 28 28"><rect x="4" y="6.5" width="20" height="17" rx="2.5"/><path d="M4 11.5h20M9.5 4v4M18.5 4v4"/></svg></span>Events</a>
+          <a class="qtile" href="#/connect"><span class="qico"><svg viewBox="0 0 28 28"><path d="M14 23.5C7 18 4 14.5 4 10.6 4 7.6 6.4 5.5 9.1 5.5c1.9 0 3.6 1 4.9 2.9 1.3-1.9 3-2.9 4.9-2.9 2.7 0 5.1 2.1 5.1 5.1 0 3.9-3 7.4-10 12.9Z"/></svg></span>Give</a>
         </div>
         <p style="margin-top:1.3rem; font-weight:700"><a href="#/about" style="color:var(--clay)">The leadership →</a>
           &nbsp;·&nbsp; <a href="#/cities" style="color:var(--clay)">Nineteen cities →</a>
@@ -929,11 +987,12 @@
         <div class="cta-row" style="margin-top:1rem">
           <button class="btn btn--navy" type="button" id="icsAll">Add our calendar to yours (.ics)</button>
         </div>
-        <div class="pillar-head"><h3>Coming up</h3></div>
-        <div class="cards" id="evtFuture"></div>
-        <div class="pillar-head"><h3>The archive</h3>
-          <p>What already happened. The record stays; the clutter doesn't.</p></div>
-        <div class="cards" id="evtPast"></div>
+        <div class="seg" role="tablist" id="evtSeg">
+          <button type="button" class="on" data-seg="future" role="tab" aria-selected="true">Coming up</button>
+          <button type="button" data-seg="past" role="tab" aria-selected="false">The record</button>
+        </div>
+        <div class="cards" id="evtFuture" style="margin-top:1rem"></div>
+        <div class="cards" id="evtPast" style="margin-top:1rem" hidden></div>
       </div>
     </section>
   </div>
@@ -1161,7 +1220,12 @@
         });
         if (!keepScroll) window.scrollTo(0, 0);
         var h = document.querySelector("#scr-" + name + " [data-title]");
-        if (h) { document.title = h.getAttribute("data-title"); h.focus({ preventScroll: true }); }
+        if (h) {
+          document.title = h.getAttribute("data-title");
+          h.focus({ preventScroll: true });
+          var ctx = document.getElementById("ctxTitle");
+          if (ctx) ctx.textContent = h.getAttribute("data-title").split(" · ")[0];
+        }
       }
 
       function route() {
@@ -1786,6 +1850,18 @@
         a.click();
         URL.revokeObjectURL(a.href);
       }
+      document.getElementById("evtSeg").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-seg]");
+        if (!b) return;
+        document.querySelectorAll("#evtSeg button").forEach(function (x) {
+          var on = x === b;
+          x.classList.toggle("on", on);
+          x.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        document.getElementById("evtFuture").hidden = b.getAttribute("data-seg") !== "future";
+        document.getElementById("evtPast").hidden = b.getAttribute("data-seg") !== "past";
+      });
+
       document.getElementById("icsAll").addEventListener("click", function () {
         var now = new Date(); now.setHours(0, 0, 0, 0);
         var future = EVENTS.filter(function (e) { return evDate(e) >= now; });
@@ -1856,6 +1932,8 @@
         bar.classList.toggle("lift", window.scrollY > 8);
         var max = document.documentElement.scrollHeight - window.innerHeight;
         if (prog && max > 0) prog.style.width = Math.min(100, (window.scrollY / max) * 100) + "%";
+        var ctx = document.getElementById("ctxTitle");
+        if (ctx) ctx.classList.toggle("show", window.scrollY > 170);
       }, { passive: true });
 
       /* ================= toast ================= */
