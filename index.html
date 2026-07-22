@@ -155,6 +155,18 @@
       .logos .track img:nth-child(n+15) { display: none; }
     }
 
+    /* ---- photo bands: full-bleed photography between sections ---- */
+    .photoband { position: relative; background: var(--navy) center / cover no-repeat; color: #fff;
+      padding: clamp(3.4rem, 10vh, 5.5rem) clamp(1.3rem, 4vw, 2.1rem); }
+    .photoband::before { content: ""; position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(14, 27, 44, 0.88) 35%, rgba(14, 27, 44, 0.55)); }
+    .photoband .wrap { position: relative; }
+    .photoband h2 { color: #fff; max-width: 24ch; }
+    .photoband p { max-width: 34rem; font-size: 1.15rem; color: rgba(255, 255, 255, 0.9); }
+    .photoband .kick { color: var(--gold); }
+    .pb-vision { background-image: url("assets/media/vision-left.jpg"); }
+    .pb-summit { background-image: url("assets/media/events-summits-bg.jpg"); }
+
     /* ---- leadership portraits ---- */
     .face { float: right; width: 92px; height: 92px; object-fit: cover; border-radius: 50%;
       border: 3px solid #fff; box-shadow: 0 0 0 1px var(--line), 0 4px 12px rgba(14, 27, 44, 0.12);
@@ -171,10 +183,11 @@
     .sub { font-size: 1.12rem; max-width: 34rem; }
 
     /* ---- hero ---- */
-    .hero { background: var(--navy); color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem);
-      position: relative; overflow: hidden; }
+    .hero { background: var(--navy) url("assets/media/events-summits-bg.jpg") center 30% / cover no-repeat;
+      color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem); position: relative; overflow: hidden; }
     .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(60% 55% at 78% 12%, rgba(96, 150, 220, 0.28), transparent 70%); }
+      background: linear-gradient(168deg, rgba(14, 27, 44, 0.92) 30%, rgba(14, 27, 44, 0.62)),
+        radial-gradient(60% 55% at 78% 12%, rgba(96, 150, 220, 0.25), transparent 70%); }
     .hero-mark { position: absolute; right: -14%; top: 2%; width: min(26rem, 78vw); opacity: 0.13;
       pointer-events: none; filter: saturate(1.1); }
     .hero .wrap { position: relative; }
@@ -446,15 +459,25 @@
 
     <div class="logos" aria-label="Partner institutions">
       <div class="track">
-        <img src="assets/scraped/fdic.jpg" alt="FDIC"><img src="assets/scraped/freddiemac.jpg" alt="Freddie Mac"><img src="assets/scraped/fanniemae.jpg" alt="Fannie Mae"><img src="assets/scraped/neighborworks-america-logo.jpg" alt="NeighborWorks America"><img src="assets/scraped/wellsfargo.jpg" alt="Wells Fargo"><img src="assets/scraped/chase-logo.jpg" alt="Chase"><img src="assets/scraped/bankofamerica.jpg" alt="Bank of America"><img src="assets/scraped/citibank-logo.jpg" alt="Citibank"><img src="assets/scraped/fhlatl.jpg" alt="Federal Home Loan Bank of Atlanta"><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt="Federal Home Loan Bank of San Francisco"><img src="assets/scraped/greenbank.jpg" alt="Connecticut Green Bank"><img src="assets/scraped/homefree.jpg" alt="HomeFree USA"><img src="assets/scraped/energize-ct-logo.jpg" alt="Energize CT"><img src="assets/scraped/faithcdc.jpg" alt="Faith CDC">
-        <img src="assets/scraped/fdic.jpg" alt=""><img src="assets/scraped/freddiemac.jpg" alt=""><img src="assets/scraped/fanniemae.jpg" alt=""><img src="assets/scraped/neighborworks-america-logo.jpg" alt=""><img src="assets/scraped/wellsfargo.jpg" alt=""><img src="assets/scraped/chase-logo.jpg" alt=""><img src="assets/scraped/bankofamerica.jpg" alt=""><img src="assets/scraped/citibank-logo.jpg" alt=""><img src="assets/scraped/fhlatl.jpg" alt=""><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt=""><img src="assets/scraped/greenbank.jpg" alt=""><img src="assets/scraped/homefree.jpg" alt=""><img src="assets/scraped/energize-ct-logo.jpg" alt=""><img src="assets/scraped/faithcdc.jpg" alt="">
+        <img src="assets/scraped/fdic.jpg" alt="FDIC"><img src="assets/scraped/freddiemac.jpg" alt="Freddie Mac"><img src="assets/scraped/fanniemae.jpg" alt="Fannie Mae"><img src="assets/scraped/neighborworks-america-logo.jpg" alt="NeighborWorks America"><img src="assets/scraped/wellsfargo.jpg" alt="Wells Fargo"><img src="assets/scraped/chase-logo.jpg" alt="Chase"><img src="assets/scraped/bankofamerica.jpg" alt="Bank of America"><img src="assets/scraped/citibank-logo.jpg" alt="Citibank"><img src="assets/scraped/fhlatl.jpg" alt="Federal Home Loan Bank of Atlanta"><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt="Federal Home Loan Bank of San Francisco"><img src="assets/scraped/greenbank.jpg" alt="Connecticut Green Bank"><img src="assets/scraped/homefree.jpg" alt="HomeFree USA"><img src="assets/scraped/energize-ct-logo.jpg" alt="Energize CT"><img src="assets/scraped/faithcdc.jpg" alt="Faith CDC"><img src="assets/scraped/urbandev.jpg" alt="U.S. Department of Housing and Urban Development"><img src="assets/scraped/housing.jpg" alt="Connecticut Fair Housing Center">
+        <img src="assets/scraped/fdic.jpg" alt=""><img src="assets/scraped/freddiemac.jpg" alt=""><img src="assets/scraped/fanniemae.jpg" alt=""><img src="assets/scraped/neighborworks-america-logo.jpg" alt=""><img src="assets/scraped/wellsfargo.jpg" alt=""><img src="assets/scraped/chase-logo.jpg" alt=""><img src="assets/scraped/bankofamerica.jpg" alt=""><img src="assets/scraped/citibank-logo.jpg" alt=""><img src="assets/scraped/fhlatl.jpg" alt=""><img src="assets/scraped/fhl-bank-sf-logo.jpg" alt=""><img src="assets/scraped/greenbank.jpg" alt=""><img src="assets/scraped/homefree.jpg" alt=""><img src="assets/scraped/energize-ct-logo.jpg" alt=""><img src="assets/scraped/faithcdc.jpg" alt=""><img src="assets/scraped/urbandev.jpg" alt=""><img src="assets/scraped/housing.jpg" alt="">
       </div>
     </div>
 
-    <section class="rv">
+    <div class="photoband pb-vision rv">
+      <div class="wrap">
+        <p class="kick">The work is real</p>
+        <h2>Rooms like this decide jobs, homes, and futures.</h2>
+        <p>For four decades, Freedom, Inc. has put everyday families in those rooms, with the
+          institutions that move money sitting across the table.</p>
+        <div class="cta-row"><a class="btn" style="background:#fff; border-color:#fff; color:var(--navy)" href="#/programs">See how it works</a></div>
+      </div>
+    </div>
+
+    <section class="rv" style="background:var(--cream-2)">
       <div class="wrap">
         <p class="kick">Start here</p>
-        <h2>Pick a door.</h2>
+        <h2>What do you need today?</h2>
         <div class="cards two">
           <a class="card" href="#/trainings"><span class="num">Trainings</span>
             <h3>Apply today</h3>
@@ -548,8 +571,9 @@
     <section class="rv">
       <div class="wrap">
         <p class="kick">Every program</p>
-        <h2>Every program, in the open.</h2>
-        <p class="sub">Every program from faithandresults.com, under its pillar. Tap any one for the full story, partners, and how to get involved.</p>
+        <h2>The work, in full.</h2>
+        <p class="sub">Every program, under its pillar. Tap any one for the full story, the partners,
+          and how to get involved.</p>
         <div id="programCatalog"></div>
       </div>
     </section>
@@ -559,7 +583,7 @@
     <section class="rv">
       <div class="wrap">
         <p class="kick">The collaboratives</p>
-        <h2>Programs in plain English.</h2>
+        <h2>The collaboratives, in plain English.</h2>
         <p class="sub">Every initiative under one roof: what it is, spelled out, no insider acronyms required.</p>
         <div class="cards two">
           <div class="roomc"><h3>NFLC</h3><span class="full">The National Faith Leaders Collaborative</span>
@@ -723,12 +747,18 @@
 
   <!-- ================= TRAININGS ================= -->
   <div class="screen" id="scr-trainings" role="region" aria-label="Trainings">
+    <div class="photoband pb-vision">
+      <div class="wrap">
+        <p class="kick">CT Faith Jobs Collaborative</p>
+        <h2>The next class is forming now.</h2>
+      </div>
+    </div>
     <section>
       <div class="wrap">
         <p class="kick">Trainings</p>
-        <h2 tabindex="-1" data-title="Trainings · Freedom, Inc.">Training you can apply to right now.</h2>
-        <p class="sub">Every training takes applications right here in the app. Build your profile once
-          and apply to any of them in minutes.</p>
+        <h2 tabindex="-1" data-title="Trainings · Freedom, Inc.">Training that ends in employment.</h2>
+        <p class="sub">Every training takes applications right here. Build your profile once and apply
+          to any of them in minutes.</p>
         <div class="cards" id="trainingList"></div>
         <div class="card" style="margin-top:1rem"><span class="num">Your profile</span>
           <h3>Fill it in once.</h3>
@@ -810,11 +840,18 @@
 
   <!-- ================= EVENTS ================= -->
   <div class="screen" id="scr-events" role="region" aria-label="Events">
+    <div class="photoband pb-summit">
+      <div class="wrap">
+        <p class="kick">Freedom, Inc. gatherings</p>
+        <h2>When we fill a room, things change.</h2>
+      </div>
+    </div>
     <section>
       <div class="wrap">
         <p class="kick">Events</p>
-        <h2 tabindex="-1" data-title="Events · Freedom, Inc.">The calendar keeps itself.</h2>
-        <p class="sub">Every gathering, conference, fair, and briefing. Future events rise to the top on their own, and past ones file themselves into the archive. RSVP or sponsor right here.</p>
+        <h2 tabindex="-1" data-title="Events · Freedom, Inc.">One calendar for everything.</h2>
+        <p class="sub">Every gathering, conference, fair, and briefing. What's ahead sits on top, what's
+          done keeps its place in the record. RSVP or sponsor right here.</p>
         <div class="cal" aria-label="Calendar">
           <div class="calhead">
             <button type="button" id="calPrev" aria-label="Previous month">←</button>
@@ -914,8 +951,8 @@
     <section>
       <div class="wrap">
         <p class="kick">My profile</p>
-        <h2 tabindex="-1" data-title="My Profile · Freedom, Inc.">Your profile, saved once.</h2>
-        <p class="sub">Lives on this device. Every application starts pre-filled from here.</p>
+        <h2 tabindex="-1" data-title="My Profile · Freedom, Inc.">Your profile.</h2>
+        <p class="sub">Saved on this device. Every application starts pre-filled from here.</p>
         <form id="profileForm" novalidate>
           <div id="profileFields"></div>
           <div class="formfoot">
