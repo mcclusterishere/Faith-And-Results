@@ -5,7 +5,7 @@
    forward on their next visit. */
 "use strict";
 
-var VERSION = "freedom-app-v14";
+var VERSION = "freedom-app-v15";
 
 var SHELL = [
   "./",
