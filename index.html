@@ -172,8 +172,6 @@
     a.card:active, .btn:active, .city:active, .door:active, .bigact:active { transform: scale(0.98); }
     .btn:hover { box-shadow: 0 2px 6px rgba(7, 13, 21, 0.3), 0 16px 32px -14px rgba(7, 13, 21, 0.5); }
     .dark .btn:hover, .connect-block .btn:hover, .bigact:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 16px 32px -14px rgba(0, 0, 0, 0.55); }
-    /* the numbers are milled from silver */
-    .band b { background: linear-gradient(180deg, #ffffff 15%, #ccdaec 62%, #8fa9c8 62%, #96b0cd); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
     /* ---- photos in cards: full-bleed header images ---- */
     .cardimg { display: block; width: calc(100% + 2.6rem); margin: -1.4rem -1.3rem 1rem; height: 10rem;
@@ -214,7 +212,7 @@
     .wrap { max-width: 46rem; margin: 0 auto; }
     .kick { font-weight: 700; font-size: 0.84rem; color: var(--clay); text-transform: uppercase; letter-spacing: 0.16em; }
     .dark .kick { color: var(--gold); }
-    h2 { font-size: clamp(2rem, 6.2vw, 2.618rem); margin: 0.5rem 0 0.8rem; }
+    h2 { font-size: clamp(2.1rem, 7.2vw, 2.9rem); font-weight: 600; margin: 0.5rem 0 0.8rem; }
     .sub { font-size: 1.12rem; max-width: 34rem; }
 
     /* ---- hero ---- */
@@ -230,7 +228,7 @@
     .hero-mark { position: absolute; right: -14%; top: 2%; width: min(26rem, 78vw); opacity: 0.13;
       pointer-events: none; filter: saturate(1.1); }
     .hero .wrap { position: relative; }
-    .hero h1 { color: var(--cream); font-size: clamp(2.7rem, 11vw, 4.236rem); margin: 0.5rem 0 1.3rem; letter-spacing: -0.03em; }
+    .hero h1 { color: var(--cream); font-weight: 500; font-size: clamp(2.9rem, 12vw, 4.6rem); margin: 0.5rem 0 1.3rem; letter-spacing: -0.03em; }
     .hero .sub { color: var(--cream); font-size: 1.2rem; max-width: 26rem; }
     .seals { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.3rem; }
     .seal { border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 8px; padding: 0.55rem 0.95rem;
@@ -254,13 +252,6 @@
     .band { background: linear-gradient(180deg, #0e1a29, #0a1220); color: var(--cream); padding: 1.9rem clamp(1.1rem, 4vw, 2.4rem);
       border-top: 1px solid rgba(255, 255, 255, 0.07); border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); }
-    .band .wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.3rem; text-align: left; }
-    .band b { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 700; font-size: 2.6rem; color: #fff; display: block; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-    .band span { color: rgba(255, 255, 255, 0.75); }
-    .band span { font-size: 1.05rem; font-weight: 700; display: block; margin-top: 0.3rem; }
-    /* the lead number carries phi times the weight of the rest */
-    .band .wrap > :first-child { grid-column: 1 / -1; }
-    .band .wrap > :first-child b { font-size: 4.236rem; }
 
     /* ---- cards: hairline gradient edges that catch light ---- */
     .cards { display: grid; gap: 1rem; margin-top: 1.4rem; }
@@ -269,7 +260,8 @@
       box-shadow: 0 1px 2px rgba(15, 23, 36, 0.05), 0 14px 30px -20px rgba(15, 23, 36, 0.22); }
     .card h3 { font-size: 1.618rem; margin-bottom: 0.5rem; }
     .card p { font-size: 1.06rem; }
-    .card .num { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--clay); }
+    .card .num { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #6b7f97; margin-bottom: 0.35rem; }
     .card details { margin-top: 0.6rem; }
     .card summary { cursor: pointer; font-weight: 700; font-size: 1.05rem; color: var(--clay); padding: 0.45rem 0; list-style-position: inside; }
     .card summary:hover { color: var(--navy); }
@@ -437,9 +429,8 @@
     .cal td.evt { background: #e9f0f9; outline: 1px solid #b0cbea; cursor: pointer; }
     .cal td.today { color: var(--clay); text-decoration: underline; }
     .cal td.dim { color: #b8c4d2; font-weight: 400; }
-    .evtcard summary { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: baseline; cursor: pointer; list-style: none; }
+    .evtcard summary { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; cursor: pointer; list-style: none; }
     .evtcard summary::-webkit-details-marker { display: none; }
-    .evtcard .when { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 700; color: var(--clay); font-size: 1.05rem; }
     .rsvpform { margin-top: 0.8rem; border-top: 1px solid var(--line); padding-top: 0.5rem; }
     .chip--sample { background: #faeceb; border-color: #dba39f; color: var(--danger); }
 
@@ -505,10 +496,10 @@
     .pillrow summary::after { content: "+"; margin-left: auto; font-family: "Grotesk", "Avenir Next", sans-serif;
       font-weight: 400; font-size: 1.6rem; color: var(--clay); transition: transform 0.25s ease; }
     .pillrow[open] summary::after { transform: rotate(45deg); }
-    .pnum { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 700; font-size: 1.8rem; color: #b9cde5;
-      min-width: 2.4rem; line-height: 1; }
-    .pillrow summary strong { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 700;
-      font-size: 1.35rem; color: var(--navy); line-height: 1.15; }
+    .pnum { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 300; font-size: 2.1rem; color: #a3b8d0;
+      min-width: 2.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
+    .pillrow summary strong { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
+      font-size: 1.38rem; letter-spacing: -0.015em; color: var(--navy); line-height: 1.15; }
     .pillrow summary small { display: block; color: #5a6c80; font-size: 0.95rem; }
     .plist { padding: 0 0 1rem 3.4rem; display: grid; gap: 0.15rem; }
     .prow { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; padding: 0.6rem 0.6rem;
@@ -574,8 +565,6 @@
         border-top: 0; border-right: 1px solid var(--line-dark); padding: 1rem 0 0; }
       .tab { flex: 0 0 auto; min-height: 5rem; width: 100%; font-size: 0.95rem; }
       main { padding: calc(var(--bar-h) + var(--sat)) 0 2rem 7.2rem; }
-      .band .wrap { grid-template-columns: repeat(3, 1fr); align-items: end; }
-      .band .wrap > :first-child { grid-column: auto; grid-row: 1 / 3; }
       .cards.two { grid-template-columns: 1fr 1fr; }
       /* the first card of every pair-grid leads the section at full width,
          wearing a machined steel edge: one strong voice, then the chorus */
@@ -584,6 +573,94 @@
       .bigacts { grid-template-columns: 1fr 1fr 1fr; }
       .wrap { max-width: 52rem; }
     }
+    /* ---- the editorial layer: numbered rows, micro-labels, airy stats,
+       quiet links, timelines, mega type. The agency format, machined
+       into the app. ---- */
+    .micro { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: #7c8da3; }
+    .edlist { margin-top: 1.2rem; border-bottom: 1px solid var(--line); }
+    .edrow { display: flex; align-items: center; gap: 0.9rem; padding: 1.05rem 0.15rem;
+      border-top: 1px solid var(--line); text-decoration: none; color: var(--ink);
+      transition: background 0.15s ease; }
+    .edrow:hover { background: rgba(23, 93, 174, 0.045); }
+    .edrow .idx { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 300; font-size: 1.7rem;
+      color: #a3b8d0; min-width: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+    .edrow strong { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
+      font-size: 1.26rem; letter-spacing: -0.015em; color: var(--navy); line-height: 1.15; }
+    .edrow small { display: block; color: #5a6c80; font-size: 0.95rem; margin-top: 0.2rem; }
+    .edrow .arrow { margin-left: auto; color: var(--clay); font-weight: 400; font-size: 1.35rem; flex: none; }
+    .edlist--dark, .edlist--dark .edrow { border-color: var(--line-dark); }
+    .edlist--dark .edrow, .edlist--dark .edrow strong { color: #fff; }
+    .edlist--dark .edrow small { color: rgba(255, 255, 255, 0.64); }
+    .edlist--dark .edrow .idx { color: rgba(255, 255, 255, 0.32); }
+    .edlist--dark .edrow .arrow { color: var(--gold); }
+    .edlist--dark .edrow:hover { background: rgba(255, 255, 255, 0.05); }
+
+    .qlink { display: inline-block; font-weight: 600; font-size: 1.02rem; color: var(--clay);
+      text-decoration: none; border-bottom: 1px solid rgba(23, 93, 174, 0.35); padding-bottom: 0.1em; }
+    .qlink:hover { border-bottom-color: currentColor; }
+    .dark .qlink, .connect-block .qlink, .photoband .qlink, .hero .qlink { color: #fff;
+      border-bottom-color: rgba(255, 255, 255, 0.45); }
+    .qlinks { display: flex; flex-wrap: wrap; gap: 0.9rem 1.5rem; margin-top: 1.4rem; }
+
+    /* stats: enormous, weightless numbers with whispered captions */
+    .statgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.7rem 1.1rem; }
+    .statgrid > :first-child { grid-column: 1 / -1; }
+    .stat b { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 300;
+      font-size: clamp(3rem, 12vw, 4.6rem); line-height: 0.95; letter-spacing: -0.03em;
+      color: var(--navy); font-variant-numeric: tabular-nums; }
+    .stat i { font-style: normal; font-weight: 300; font-size: 0.52em; }
+    .stat .micro { margin-top: 0.5rem; }
+    .band .stat b { background: linear-gradient(180deg, #ffffff 15%, #ccdaec 62%, #8fa9c8 62%, #96b0cd);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .band .micro { color: #93a7c0; }
+
+    /* timeline: the years walk across the page, diamonds mark the stops */
+    .timeline { display: flex; gap: 2.4rem; overflow-x: auto; margin-top: 1.9rem; padding: 1.2rem 0.2rem 0.9rem;
+      border-top: 1px solid var(--line); scrollbar-width: none; }
+    .timeline::-webkit-scrollbar { display: none; }
+    .tstop { flex: none; width: 11.5rem; position: relative; }
+    .tstop::before { content: ""; position: absolute; top: -1.45rem; left: 0.1rem; width: 7px; height: 7px;
+      transform: rotate(45deg); background: linear-gradient(135deg, #4a8cd2, var(--clay)); }
+    .tstop b { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 300;
+      font-size: 1.9rem; color: var(--navy); line-height: 1.1; }
+    .tstop span { display: block; font-size: 0.93rem; color: #5a6c80; margin-top: 0.3rem; }
+
+    /* mega type: one line, the whole voice */
+    .megatype { font-style: italic; font-weight: 600; font-size: clamp(3.1rem, 15vw, 6rem) !important;
+      line-height: 0.98; letter-spacing: -0.045em !important;
+      background: linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .megafoot { background: linear-gradient(180deg, #0d1826, #080f18); color: #fff;
+      padding: 2.4rem clamp(1.3rem, 4vw, 2.1rem) 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+    .megafoot .mega { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
+      font-style: italic; font-size: clamp(3rem, 15vw, 6.5rem); line-height: 0.98; letter-spacing: -0.045em;
+      text-decoration: none; margin: 0.5rem 0 2rem;
+      background: linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .megacols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .megacols .micro { color: rgba(255, 255, 255, 0.45); margin-bottom: 0.35rem; }
+    .megacols a, .megacols p { color: #e6ecf4; text-decoration: none; font-size: 0.95rem; font-weight: 700; margin: 0;
+      overflow-wrap: anywhere; }
+    .megacols a:hover { color: var(--gold); }
+    .megafoot .legal { margin-top: 2rem; display: flex; justify-content: space-between; gap: 1rem;
+      color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; font-weight: 400; }
+
+    /* event date blocks: the calendar leaf */
+    .evtcard .dt { display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-width: 3.3rem; border: 1px solid var(--line); border-radius: 10px; padding: 0.4rem 0.5rem 0.45rem; flex: none; }
+    .evtcard .dt b { font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 300; font-size: 1.65rem;
+      line-height: 1; color: var(--navy); }
+    .evtcard .dt .micro { font-size: 0.58rem; margin-top: 0.2rem; letter-spacing: 0.1em; }
+    .evtcard summary h3 { flex: 1 1 11rem; font-size: 1.22rem; }
+
+    @media (min-width: 880px) {
+      .statgrid { grid-template-columns: repeat(4, 1fr); align-items: end; }
+      .statgrid > :first-child { grid-column: auto; }
+      .megacols { grid-template-columns: repeat(4, 1fr); }
+    }
+
     /* ---- dark mode: graphite, lifted glass, cold light ---- */
     @media (prefers-color-scheme: dark) {
       :root { --canvas: #0a0f16; --card: #111927; --cream-2: #0d1420; --line: #223047;
@@ -617,6 +694,13 @@
       .go, .back { color: #8fbcf4; }
       .pnum { color: #33506f; }
       .install, .field input, .field select, .field textarea { color-scheme: dark; }
+      .edrow, .edrow strong, .tstop b, .stat b, .evtcard .dt b { color: #e9eff7; }
+      .edrow small, .tstop span { color: #b6c4d6; }
+      .edrow .idx { color: #3d5673; }
+      .edrow:hover { background: rgba(143, 188, 244, 0.06); }
+      .micro { color: #7a8fa8; }
+      .card .num { color: #7a8fa8; }
+      .evtcard .dt { border-color: #2c4060; }
     }
 
     @media print { .appbar, .tabbar, .toast { display: none; } main { padding: 0; } .screen { display: block !important; } }
@@ -655,19 +739,19 @@
           <span class="seal">Federal Home Loan Bank</span>
           <span class="seal">NeighborWorks America</span>
         </div>
-        <div class="cta-row">
+        <div class="cta-row" style="align-items:center">
           <a class="btn" href="#/trainings">Apply for training</a>
-          <a class="btn btn--line" href="#/programs">See the programs</a>
+          <a class="qlink" href="#/programs">See the programs →</a>
         </div>
       </div>
     </section>
 
     <div class="band" aria-label="The record in numbers">
-      <div class="wrap">
-        <div><b data-count="19">0</b><span>American cities</span></div>
-        <div><b data-count="100">0</b><span>Thousand families served</span></div>
-        <div><b data-count="5">0</b><span>Pillars of work</span></div>
-        <div><b data-count="1">0</b><span>Mission</span></div>
+      <div class="wrap statgrid">
+        <div class="stat"><b data-count="19">0</b><span class="micro">American cities</span></div>
+        <div class="stat"><b><span data-count="100">0</span><i>K</i></b><span class="micro">Families served</span></div>
+        <div class="stat"><b data-count="5">0</b><span class="micro">Pillars of work</span></div>
+        <div class="stat"><b data-count="1">0</b><span class="micro">Mission</span></div>
       </div>
     </div>
 
@@ -690,10 +774,20 @@
           <a class="qtile" href="#/events"><span class="qico"><svg viewBox="0 0 28 28"><rect x="4" y="6.5" width="20" height="17" rx="2.5"/><path d="M4 11.5h20M9.5 4v4M18.5 4v4"/></svg></span>Events</a>
           <a class="qtile" href="#/connect"><span class="qico"><svg viewBox="0 0 28 28"><path d="M14 23.5C7 18 4 14.5 4 10.6 4 7.6 6.4 5.5 9.1 5.5c1.9 0 3.6 1 4.9 2.9 1.3-1.9 3-2.9 4.9-2.9 2.7 0 5.1 2.1 5.1 5.1 0 3.9-3 7.4-10 12.9Z"/></svg></span>Give</a>
         </div>
-        <p style="margin-top:1.3rem; font-weight:700"><a href="#/about" style="color:var(--clay)">The leadership →</a>
-          &nbsp;·&nbsp; <a href="#/cities" style="color:var(--clay)">Nineteen cities →</a>
-          &nbsp;·&nbsp; <a href="#/news" style="color:var(--clay)">News →</a>
-          &nbsp;·&nbsp; <a href="#/corridor" style="color:var(--clay)">MLK Corridors →</a></p>
+      </div>
+    </section>
+
+    <section class="rv">
+      <div class="wrap">
+        <p class="kick">The work</p>
+        <h2>Five pillars.<br>One mission.</h2>
+        <div class="edlist" id="homeWork"></div>
+        <div class="qlinks">
+          <a class="qlink" href="#/about">The leadership →</a>
+          <a class="qlink" href="#/cities">Nineteen cities →</a>
+          <a class="qlink" href="#/news">News →</a>
+          <a class="qlink" href="#/corridor">MLK Corridors →</a>
+        </div>
       </div>
     </section>
 
@@ -733,8 +827,17 @@
       </div>
     </section>
 
-    <p class="foot">FREEDOM, INC. · Faith, backed by results.
-      <small>Runs on McCluster OS. Type set for every pair of eyes.</small></p>
+    <footer class="megafoot rv">
+      <span class="micro">Next move</span>
+      <a class="mega" href="#/connect">Get in touch.</a>
+      <div class="megacols">
+        <div><span class="micro">Phone</span><a href="tel:+12035498703">(203) 549-8703</a></div>
+        <div><span class="micro">Email</span><a href="mailto:info@faithandresults.com">info@faithandresults.com</a></div>
+        <div><span class="micro">Home base</span><p>Shiloh Baptist Church<br>Bridgeport, Connecticut</p></div>
+        <div><span class="micro">The app</span><p>Runs on McCluster OS.<br>Type set for every pair of eyes.</p></div>
+      </div>
+      <p class="legal"><span>© Freedom, Inc. · Faith, backed by results.</span><span>Nineteen cities</span></p>
+    </footer>
   </div>
 
   <!-- ================= PROGRAMS ================= -->
@@ -795,7 +898,8 @@
     <section class="connect-block dark">
       <div class="wrap">
         <p class="kick">Connect</p>
-        <h2 tabindex="-1" data-title="Connect · Freedom, Inc.">Every door is open.</h2>
+        <h2 class="megatype" tabindex="-1" data-title="Connect · Freedom, Inc.">Get in<br>touch.</h2>
+        <p class="sub" style="color:rgba(255,255,255,0.85)">Every door is open. Pick yours.</p>
         <div class="bigacts">
           <a class="bigact" href="tel:+12035498703">📞 Call (203) 549-8703</a>
           <a class="bigact bigact--line" href="mailto:info@faithandresults.com">✉️ Email the team</a>
@@ -811,6 +915,12 @@
           <a class="door" href="mailto:info@faithandresults.com?subject=Giving"><b>Give</b>
             <span>Fuel the mission. Every gift builds capacity in a community.</span></a>
         </div>
+        <div class="megacols" style="margin-top:1.7rem">
+          <div><span class="micro">Phone</span><a href="tel:+12035498703">(203) 549-8703</a></div>
+          <div><span class="micro">Email</span><a href="mailto:info@faithandresults.com">info@faithandresults.com</a></div>
+          <div><span class="micro">Home base</span><p>Shiloh Baptist Church<br>Bridgeport, Connecticut</p></div>
+          <div><span class="micro">Founded</span><p>A 1980s think-tank of pulpits,<br>nineteen cities strong today.</p></div>
+        </div>
         <div class="install" id="connectInstall" hidden>
           <h3>Take this app with you.</h3>
           <p>Install Freedom, Inc. on your device: instant open, full screen, works offline.</p>
@@ -821,8 +931,8 @@
           <p>On iPhone or iPad: tap <strong>Share</strong> in Safari, then
             <strong>Add to Home Screen</strong>.</p>
         </div>
-        <p class="foot">FREEDOM, INC. · Faith, backed by results.
-          <small>Runs on McCluster OS. Type set for every pair of eyes.</small></p>
+        <p class="foot" style="color:rgba(255,255,255,0.5); font-weight:400; padding-bottom:0">© Freedom, Inc. · Faith, backed by results.
+          <small style="color:rgba(255,255,255,0.4)">Runs on McCluster OS. Type set for every pair of eyes.</small></p>
       </div>
     </section>
   </div>
@@ -842,6 +952,16 @@
         <h2 tabindex="-1" data-title="Leadership · Freedom, Inc.">Led from the pulpit and the boardroom.</h2>
         <p class="sub" style="font-weight:700; color:var(--navy)">
           “Initiate and nurture renewal and restoration for our communities, in faith, with results.”</p>
+        <div class="timeline" aria-label="The arc of the work">
+          <div class="tstop"><b>1980s</b><span>Founded as a faith think-tank against the industrial collapse.</span></div>
+          <div class="tstop"><b>2019</b><span>MLK Corridors launches at MLK &amp; Main in Middletown.</span></div>
+          <div class="tstop"><b>2022</b><span>CT Faith Jobs brings Hartford HealthCare hiring to Bridgeport.</span></div>
+          <div class="tstop"><b>2025</b><span>Equity Uprise. The monopoles are denied.</span></div>
+          <div class="tstop"><b>Next</b><span>Your city on the map.</span></div>
+        </div>
+        <div class="statgrid" style="margin:2rem 0 0.5rem">
+          <div class="stat"><b><span data-count="100">0</span><i>K+</i></b><span class="micro">Families served, and counting</span></div>
+        </div>
         <div class="cards">
           <div class="card">
             <img class="face" src="assets/scraped/mccluster.jpg" alt="Rev. Carl McCluster">
@@ -1090,12 +1210,12 @@
       <div class="wrap">
         <p class="kick">The pipeline</p>
         <h2>Five stages, from "we want this" to funded.</h2>
-        <div class="cards">
-          <div class="card"><span class="num">1 · Join</span><p><strong>One form</strong>, from anywhere in America.</p></div>
-          <div class="card"><span class="num">2 · Research</span><p><strong>We confirm your corridor</strong> and find the right officials.</p></div>
-          <div class="card"><span class="num">3 · Outreach</span><p><strong>City hall hears from us together.</strong> Human-reviewed, always.</p></div>
-          <div class="card"><span class="num">4 · Proposal</span><p><strong>The funding ask</strong>, on the Connecticut playbook.</p></div>
-          <div class="card"><span class="num">5 · Corridor</span><p><strong>Your city joins the map.</strong></p></div>
+        <div class="edlist">
+          <div class="edrow"><span class="idx">01</span><span><strong>Join</strong><small>One form, from anywhere in America.</small></span></div>
+          <div class="edrow"><span class="idx">02</span><span><strong>Research</strong><small>We confirm your corridor and find the right officials.</small></span></div>
+          <div class="edrow"><span class="idx">03</span><span><strong>Outreach</strong><small>City hall hears from us together. Human-reviewed, always.</small></span></div>
+          <div class="edrow"><span class="idx">04</span><span><strong>Proposal</strong><small>The funding ask, on the Connecticut playbook.</small></span></div>
+          <div class="edrow"><span class="idx">05</span><span><strong>Corridor</strong><small>Your city joins the map.</small></span></div>
         </div>
         <div class="cta-row" style="margin-top:1.5rem">
           <a class="btn btn--navy" href="#/apply/corridor-join">Start the pipeline →</a>
@@ -1404,16 +1524,32 @@
             }).join("") + "</div></details>";
         }).join("");
 
-        document.getElementById("trainingList").innerHTML = DATA.trainings.filter(function (t) {
-          return t.kind !== "intake";
-        }).map(function (t) {
-          var ti = (DATA.visuals.trainingImgs || {})[t.id];
-          return '<div class="card">' +
-            (ti ? '<img class="cardimg" src="' + esc(ti) + '" alt="" loading="lazy">' : "") +
-            "<h3>" + esc(t.name) + (t.urgent ? ' <span class="badge-urgent">Urgent help</span>' : "") + "</h3>" +
-            "<p>" + esc(t.audience) + "</p>" +
-            '<div class="cta-row" style="margin-top:0.8rem"><a class="btn" href="#/apply/' + t.id + '">Apply</a>' +
-            '<a class="btn btn--navy" style="background:none; color:var(--navy)" href="#/training/' + t.id + '">Details</a></div></div>';
+        /* The featured pathway leads as a photo card; the rest run as an
+           editorial numbered list, the agency way. */
+        var tlist = DATA.trainings.filter(function (t) { return t.kind !== "intake"; });
+        var lead = tlist[0];
+        var leadImg = lead ? (DATA.visuals.trainingImgs || {})[lead.id] : null;
+        document.getElementById("trainingList").innerHTML = (lead
+          ? '<div class="card">' +
+            (leadImg ? '<img class="cardimg" src="' + esc(leadImg) + '" alt="" loading="lazy">' : "") +
+            '<span class="num">Featured pathway</span>' +
+            "<h3>" + esc(lead.name) + (lead.urgent ? ' <span class="badge-urgent">Urgent help</span>' : "") + "</h3>" +
+            "<p>" + esc(lead.audience) + "</p>" +
+            '<div class="cta-row" style="margin-top:0.8rem"><a class="btn" href="#/apply/' + lead.id + '">Apply</a>' +
+            '<a class="qlink" href="#/training/' + lead.id + '" style="align-self:center">Details →</a></div></div>'
+          : "") +
+          '<div class="edlist">' + tlist.slice(1).map(function (t, i) {
+            return '<a class="edrow" href="#/training/' + t.id + '"><span class="idx">0' + (i + 2) + '</span>' +
+              "<span><strong>" + esc(t.name) + (t.urgent ? ' <span class="badge-urgent">Urgent</span>' : "") + "</strong>" +
+              "<small>" + esc(t.audience) + "</small></span>" +
+              '<span class="arrow">→</span></a>';
+          }).join("") + "</div>";
+
+        var hw = document.getElementById("homeWork");
+        if (hw) hw.innerHTML = DATA.pillars.map(function (pl, i) {
+          return '<a class="edrow" href="#/programs"><span class="idx">0' + (i + 1) + '</span>' +
+            "<span><strong>" + esc(pl.name) + "</strong><small>" + esc(pl.blurb) + "</small></span>" +
+            '<span class="arrow">→</span></a>';
         }).join("");
       }
 
@@ -1801,15 +1937,18 @@
                 (pr.date ? " · " + esc(pr.date) : "") + "</span>";
             }).join("<br>") + "</p>";
         }
+        var d = evDate(ev);
+        var leaf = '<span class="dt"><b>' + d.getDate() + '</b><span class="micro">' +
+          d.toLocaleDateString("en-US", { month: "short" }) + " ’" + String(d.getFullYear()).slice(2) + "</span></span>";
         return '<details class="card evtcard rv in" data-ev="' + ev.id + '"><summary>' +
-          '<span class="when">' + when + "</span>" +
-          "<h3 style='width:100%'>" + esc(ev.title) + "</h3>" +
+          leaf +
+          "<h3>" + esc(ev.title) + "</h3>" +
           '<span class="chip">' + esc(ev.category || "Event") + "</span>" +
           (ev.sponsor && !past ? '<span class="chip">Sponsorships open</span>' : "") +
           (ev.sample ? '<span class="chip chip--sample">Sample: set real date</span>' : "") +
           "</summary>" +
           (ev.img ? '<img class="cardimg" style="margin-top:0.8rem; border-radius:12px" src="' + esc(ev.img) + '" alt="" loading="lazy">' : "") +
-          "<p style='margin-top:0.6rem'><strong>" + esc(ev.time || "") + (ev.time && ev.location ? " · " : "") + esc(ev.location || "") + "</strong></p>" +
+          "<p style='margin-top:0.6rem'><strong>" + when + (ev.time ? " · " + esc(ev.time) : "") + (ev.location ? " · " + esc(ev.location) : "") + "</strong></p>" +
           "<p>" + esc(ev.body || "") + "</p>" + press + acts + "</details>";
       }
 
