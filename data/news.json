@@ -1,5 +1,12 @@
 {
   "note": "News & Events. One entry = one object. The app AUTOMATICALLY hides anything older than 18 months; the 2020-events-still-live problem can never happen again. Add entries at the top.",
+  "press": [
+    { "source": "Easton Courier", "date": "March 2025", "title": "Bridgeport Church at Risk From UI's Monopoles Project", "url": "https://eastoncourier.news/2025/03/13/bridgeport-church-at-risk-by-united-illuminatings-monopoles-project/" },
+    { "source": "CT Mirror", "date": "November 2025", "title": "UI asks regulators to take another look at proposed power line", "url": "https://ctmirror.org/2025/11/03/ui-fairfield-congress-railroad-transmission-line-reconsider/" },
+    { "source": "Connecticut Public", "date": "September 2025", "title": "Bridgeport and Fairfield officials applaud governor's support on monopole fight", "url": "https://www.ctpublic.org/news/2025-09-17/bridgeport-and-fairfield-officials-applaud-lamonts-support-on-monopole-fight" },
+    { "source": "Earthjustice", "date": "", "title": "After deceiving Bridgeport's religious leaders, PSEG is facing the backlash", "url": "https://earthjustice.org/article/after-deceiving-bridgeports-religious-leaders-pseg-is-facing-the-backlash" },
+    { "source": "Shiloh Baptist Church on Facebook", "date": "", "title": "Watch: Rev. Carl McCluster, doing the Lord's work", "url": "https://www.facebook.com/SHILOHBPT/videos/rev-carl-mccluster-doing-the-lords-work/346516439957457/" }
+  ],
   "items": [
     {
       "date": "2026-07-18",

@@ -596,6 +596,9 @@
         <h2 tabindex="-1" data-title="News · Freedom, Inc.">What's happening now.</h2>
         <p class="sub">Nothing stale is ever shown here. Anything older than eighteen months retires itself automatically.</p>
         <div class="newsgrid" id="newsList" aria-live="polite"></div>
+        <div class="pillar-head"><h3>In the news</h3>
+          <p>Coverage of the work, from the outlets that watched it happen.</p></div>
+        <div class="newsgrid" id="pressList"></div>
       </div>
     </section>
   </div>
@@ -664,6 +667,11 @@
                 Under his leadership, Shiloh became the first African-American church in Connecticut
                 to become energy self-sufficient through solar.</p></details>
           </div>
+          <a class="card" href="https://www.facebook.com/SHILOHBPT/videos/rev-carl-mccluster-doing-the-lords-work/346516439957457/" target="_blank" rel="noopener">
+            <span class="num">Watch</span>
+            <h3>Rev. McCluster, doing the Lord's work</h3>
+            <p>See the ministry in motion, from Shiloh Baptist Church's own camera.</p>
+            <p class="go">▶ Watch the video →</p></a>
           <div class="card">
             <img class="face" src="assets/scraped/callion.jpg" alt="Deacon William S. Callion">
             <h3>Remembering Deacon William S. Callion</h3>
@@ -1525,6 +1533,15 @@
             '" target="_blank" rel="noopener" style="color:var(--clay); font-weight:700">▶ Watch the full event →</a></p>' : "") +
             '<p class="go" style="margin-top:0.5rem">This one’s history. The record stays here.</p>';
         }
+        var press = "";
+        if (ev.press && ev.press.length) {
+          press = '<p style="margin-top:0.7rem; font-weight:700; color:var(--navy)">In the news</p><p>' +
+            ev.press.map(function (pr) {
+              return '<a href="' + esc(pr.url) + '" target="_blank" rel="noopener" style="color:var(--clay); font-weight:700">' +
+                esc(pr.title) + "</a><br><span style='font-size:0.95rem'>" + esc(pr.source) +
+                (pr.date ? " · " + esc(pr.date) : "") + "</span>";
+            }).join("<br>") + "</p>";
+        }
         return '<details class="card evtcard rv in" data-ev="' + ev.id + '"><summary>' +
           '<span class="when">' + when + "</span>" +
           "<h3 style='width:100%'>" + esc(ev.title) + "</h3>" +
@@ -1533,7 +1550,7 @@
           (ev.sample ? '<span class="chip chip--sample">Sample: set real date</span>' : "") +
           "</summary>" +
           "<p style='margin-top:0.6rem'><strong>" + esc(ev.time || "") + (ev.time && ev.location ? " · " : "") + esc(ev.location || "") + "</strong></p>" +
-          "<p>" + esc(ev.body || "") + "</p>" + acts + "</details>";
+          "<p>" + esc(ev.body || "") + "</p>" + press + acts + "</details>";
       }
 
       function renderEvents() {
@@ -1654,6 +1671,15 @@
           var dt = new Date(i.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
           return '<div class="card"><span class="num">' + i.tag + " · " + dt + "</span><h3>" + i.title + "</h3><p>" + i.body + "</p></div>";
         }).join("");
+        var pressBox = document.getElementById("pressList");
+        if (pressBox && d.press && d.press.length) {
+          pressBox.innerHTML = d.press.map(function (pr) {
+            return '<a class="card" href="' + esc(pr.url) + '" target="_blank" rel="noopener">' +
+              '<span class="num">' + esc(pr.source) + (pr.date ? " · " + esc(pr.date) : "") + "</span>" +
+              "<h3>" + esc(pr.title) + "</h3>" +
+              '<p class="go">Read the coverage →</p></a>';
+          }).join("");
+        }
       }).catch(function () {
         document.getElementById("newsList").innerHTML =
           '<div class="card"><h3>News is offline</h3><p>Reconnect to load the latest, or call (203) 549-8703 for what’s next.</p></div>';
