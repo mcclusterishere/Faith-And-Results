@@ -104,8 +104,9 @@
     @media (prefers-reduced-motion: no-preference) {
       .screen.active { animation: rise 0.32s cubic-bezier(0.16, 1, 0.3, 1) both; }
       @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-      .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
-      .rv.in { opacity: 1; transform: none; }
+      .rv { opacity: 0; transform: translateY(22px) scale(0.992); filter: blur(4px);
+        transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.65s ease; }
+      .rv.in { opacity: 1; transform: none; filter: blur(0); }
 
       /* staggered card reveals inside each revealed section */
       .rv .card, .rv .roomc { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
@@ -646,7 +647,10 @@
       color: var(--navy); font-variant-numeric: tabular-nums; }
     .stat i { font-style: normal; font-weight: 300; font-size: 0.52em; }
     .stat .micro { margin-top: 0.5rem; }
-    .band .stat b { background: linear-gradient(180deg, #ffffff 15%, #ccdaec 62%, #8fa9c8 62%, #96b0cd);
+    .band .stat b { background:
+      linear-gradient(110deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 56%) no-repeat,
+      linear-gradient(180deg, #ffffff 15%, #ccdaec 62%, #8fa9c8 62%, #96b0cd);
+      background-size: 260% 100%, 100% 100%; background-position: 230% 0, 0 0;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .band .micro { color: #93a7c0; }
 
@@ -664,14 +668,20 @@
     /* mega type: one line, the whole voice */
     .megatype { font-style: italic; font-weight: 600; font-size: clamp(3.1rem, 15vw, 6rem) !important;
       line-height: 0.98; letter-spacing: -0.045em !important;
-      background: linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      background:
+        linear-gradient(110deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 56%) no-repeat,
+        linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      background-size: 260% 100%, 100% 100%; background-position: 230% 0, 0 0;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .megafoot { background: linear-gradient(180deg, #0d1826, #080f18); color: #fff;
       padding: 2.4rem clamp(1.3rem, 4vw, 2.1rem) 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.07); }
     .megafoot .mega { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
       font-style: italic; font-size: clamp(3rem, 15vw, 6.5rem); line-height: 0.98; letter-spacing: -0.045em;
       text-decoration: none; margin: 0.5rem 0 2rem;
-      background: linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      background:
+        linear-gradient(110deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 56%) no-repeat,
+        linear-gradient(180deg, #ffffff 20%, #c7d7ea 64%, #8fa9c8 64%, #9ab2ce);
+      background-size: 260% 100%, 100% 100%; background-position: 230% 0, 0 0;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .megacols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1); }
@@ -694,6 +704,98 @@
       .statgrid { grid-template-columns: repeat(4, 1fr); align-items: end; }
       .statgrid > :first-child { grid-column: auto; }
       .megacols { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ---- the glisten layer: the light moves, everything else holds still.
+       Every animation here is a pass of light or a settled arrival; nothing
+       bounces, nothing loops except slow specular sweeps. ---- */
+    .toast { transform: translateX(-50%) translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .seg button { transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+    .qlink { transition: border-color 0.2s ease, color 0.2s ease; }
+    .qico { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease; }
+    .gcard img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .cardimg { transition: filter 0.4s ease; }
+    @media (hover: hover) {
+      .gcard:hover img { transform: scale(1.05); }
+      a.card:hover .cardimg { filter: contrast(1.04) saturate(0.92) brightness(1.07); }
+      .qtile:hover .qico { transform: translateY(-2px); border-color: var(--clay); }
+      .edrow:hover .arrow { transform: translateX(3px); }
+    }
+    .edrow .arrow { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      /* silver catches a passing light: the numbers, the mega type */
+      .band .stat b { animation: silverSweep 8s ease-in-out 2s infinite; }
+      .band .statgrid > :nth-child(2) b { animation-delay: 2.8s; }
+      .band .statgrid > :nth-child(3) b { animation-delay: 3.6s; }
+      .band .statgrid > :nth-child(4) b { animation-delay: 4.4s; }
+      .megafoot .mega, .megatype { animation: silverSweep 9s ease-in-out 1.6s infinite; }
+      @keyframes silverSweep {
+        0%, 58% { background-position: 230% 0, 0 0; }
+        88%, 100% { background-position: -130% 0, 0 0; } }
+
+      /* quick-action tiles arrive one by one */
+      .rv .qtile { opacity: 0; transform: translateY(14px) scale(0.92);
+        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .rv.in .qtile { opacity: 1; transform: none; }
+      .rv.in .qtile:nth-child(2) { transition-delay: 0.07s; }
+      .rv.in .qtile:nth-child(3) { transition-delay: 0.13s; }
+      .rv.in .qtile:nth-child(4) { transition-delay: 0.21s; }
+      .rv.in .qtile:nth-child(5) { transition-delay: 0.29s; }
+      .rv.in .qtile:nth-child(6) { transition-delay: 0.37s; }
+
+      /* editorial rows slide in off the margin, one beat apart */
+      .rv .edrow, .rv .gcard { opacity: 0; transform: translateX(-12px);
+        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .rv.in .edrow, .rv.in .gcard { opacity: 1; transform: none; }
+      .rv.in .edrow:nth-child(2), .rv.in .gcard:nth-child(2) { transition-delay: 0.08s; }
+      .rv.in .edrow:nth-child(3), .rv.in .gcard:nth-child(3) { transition-delay: 0.16s; }
+      .rv.in .edrow:nth-child(4) { transition-delay: 0.24s; }
+      .rv.in .edrow:nth-child(5) { transition-delay: 0.32s; }
+
+      /* a pass of light crosses each pillar photo as it lands */
+      .edlist--photos .edrow::after { content: ""; position: absolute; top: -25%; bottom: -25%;
+        left: -50%; width: 32%; background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+        transform: skewX(-16deg); }
+      .rv.in .edlist--photos .edrow::after { animation: glintPass 1.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+      .rv.in .edlist--photos .edrow:nth-child(1)::after { animation-delay: 0.55s; }
+      .rv.in .edlist--photos .edrow:nth-child(2)::after { animation-delay: 0.75s; }
+      .rv.in .edlist--photos .edrow:nth-child(3)::after { animation-delay: 0.95s; }
+      .rv.in .edlist--photos .edrow:nth-child(4)::after { animation-delay: 1.15s; }
+      .rv.in .edlist--photos .edrow:nth-child(5)::after { animation-delay: 1.35s; }
+      @keyframes glintPass { from { left: -50%; } to { left: 145%; } }
+
+      /* the timeline walks in, each diamond cutting itself as it stops */
+      .rv .tstop { opacity: 0; transform: translateX(-14px);
+        transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .rv.in .tstop { opacity: 1; transform: none; }
+      .rv .tstop::before { transform: rotate(0deg) scale(0);
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s; }
+      .rv.in .tstop::before { transform: rotate(45deg) scale(1); }
+      .rv.in .tstop:nth-child(2) { transition-delay: 0.1s; }
+      .rv.in .tstop:nth-child(3) { transition-delay: 0.2s; }
+      .rv.in .tstop:nth-child(4) { transition-delay: 0.3s; }
+      .rv.in .tstop:nth-child(5) { transition-delay: 0.4s; }
+      .rv.in .tstop:nth-child(2)::before { transition-delay: 0.35s; }
+      .rv.in .tstop:nth-child(3)::before { transition-delay: 0.45s; }
+      .rv.in .tstop:nth-child(4)::before { transition-delay: 0.55s; }
+      .rv.in .tstop:nth-child(5)::before { transition-delay: 0.65s; }
+
+      /* the concierge button takes a slow glint every few seconds */
+      .chatfab { overflow: hidden; }
+      .chatfab::after { content: ""; position: absolute; top: -30%; bottom: -30%; left: -60%; width: 40%;
+        background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+        transform: skewX(-18deg); animation: fabGlint 9s ease-in-out 3s infinite; }
+      @keyframes fabGlint { 0%, 90% { left: -60%; } 100% { left: 165%; } }
+
+      /* the active tab draws its line */
+      .tab[aria-current="page"]::before { animation: tabline 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      @keyframes tabline { from { width: 0; opacity: 0; } }
+
+      /* the scrim breathes in behind the sheet */
+      .scrim.show { animation: scrimIn 0.25s ease both; }
+      @keyframes scrimIn { from { opacity: 0; } }
     }
 
     /* ---- dark mode: graphite, lifted glass, cold light ---- */
@@ -983,7 +1085,7 @@
         <h2>Still in the pulpit. Still at the table.</h2>
       </div>
     </div>
-    <section>
+    <section class="rv">
       <div class="wrap">
         <button class="back" type="button" data-nav="#/home">← Back to Home</button>
         <p class="kick">About</p>
