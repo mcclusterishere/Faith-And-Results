@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin — Freedom, Inc.</title>
+  <title>Admin · Freedom, Inc.</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23101c2c%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c99a2e%22>★</text></svg>">
   <style>
@@ -105,7 +105,7 @@
         <label for="gatePw">Password</label>
         <input id="gatePw" type="password" autocomplete="current-password">
       </div>
-      <p class="err" id="gateErr">That didn't work — try again.</p>
+      <p class="err" id="gateErr">That didn't work. Try again.</p>
       <button class="btn" type="submit">Open the admin</button>
     </form>
   </div>
@@ -128,7 +128,7 @@
     <main>
       <div class="banner" id="demoBanner" hidden>
         <b>Demo mode.</b> Submissions live in this browser only, and the passcode is a
-        courtesy lock — not security. Flip <code>data/config.json</code> to
+        courtesy lock, not security. Flip <code>data/config.json</code> to
         <code>"mode": "supabase"</code> for a real database and real admin login
         (see <a href="https://github.com/mcclusterishere/faith-and-results/blob/main/docs/BACKEND.md">docs/BACKEND.md</a>).
       </div>
@@ -162,8 +162,7 @@
       <section class="pane" id="pane-events">
         <h2>Events &amp; RSVPs</h2>
         <p class="note" style="margin-bottom:1rem">Draft events here (stored in this browser), then
-          <b>Download events.json</b> and commit it to publish — the app sorts future/past automatically,
-          so the calendar never goes stale. Each event shows its RSVP roster with one-tap email and text
+          <b>Download events.json</b> and commit it to publish; the app sorts future/past automatically, so the calendar never goes stale. Each event shows its RSVP roster with one-tap email and text
           blasts.</p>
         <div class="tools">
           <button class="btn" id="evtNew" type="button">+ New event</button>
@@ -190,8 +189,7 @@
       <!-- people -->
       <section class="pane" id="pane-people">
         <h2>People</h2>
-        <p class="note" style="margin-bottom:1rem">Every profile built in the app. Profiles feed
-          applications — one person, many applications, one record.</p>
+        <p class="note" style="margin-bottom:1rem">Every profile built in the app. Profiles feed applications: one person, many applications, one record.</p>
         <div class="tools">
           <input id="pSearch" type="search" placeholder="Search name, email, congregation…">
           <button class="btn btn--navy" id="exportPeople" type="button">Export CSV</button>
@@ -227,8 +225,7 @@
           <button class="btn" id="testHook" type="button">Send a test event</button>
           <span id="testResult" style="font-weight:700"></span>
         </div>
-        <p class="note">Every application, profile save, and status change POSTs to the webhook —
-          point it at Zapier, Make, or n8n and fan out to Mailchimp, Google Sheets, a CRM, a Slack
+        <p class="note">Every application, profile save, and status change POSTs to the webhook. Point it at Zapier, Make, or n8n and fan out to Mailchimp, Google Sheets, a CRM, a Slack
           channel, anywhere. Full recipes: <a href="https://github.com/mcclusterishere/faith-and-results/blob/main/docs/BACKEND.md">docs/BACKEND.md</a>.</p>
       </section>
     </main>
@@ -284,7 +281,7 @@
         } else {
           document.getElementById("gateDemo").hidden = false;
           document.getElementById("gateBlurb").textContent =
-            "Demo mode — enter the passcode from data/config.json.";
+            "Demo mode: enter the passcode from data/config.json.";
           if (sessionStorage.getItem(UNLOCKED) === "yes") openAdmin();
         }
       });
@@ -386,7 +383,7 @@
           '<select data-stage style="margin-left:0.4rem; font-family:inherit; font-size:0.95rem; border:3px solid var(--navy); border-radius:10px; padding:0.3rem 0.5rem">' +
           opts + "</select></label>" +
           '<span class="chip' + (stale ? " chip--declined" : "") + '">' + age + " day" + (age === 1 ? "" : "s") +
-          " in stage" + (stale ? " — needs a follow-up" : "") + "</span></div>";
+          " in stage" + (stale ? ", needs a follow-up" : "") + "</span></div>";
       }
       function forwardControls(a) {
         if (a.training !== "workforce-readiness" || !PARTNERS.length) return "";
@@ -401,7 +398,7 @@
             "\nPathway: " + pathway + "\nReference: " + a.id +
             "\n\nPlease confirm receipt and a tracking link so we can follow this application.");
         return '<div class="acts"><a class="btn" href="mailto:' + esc(target.contactEmail) +
-          "?subject=" + encodeURIComponent("Jobs Collaborative referral " + a.id + (a.name ? " — " + a.name : "")) +
+          "?subject=" + encodeURIComponent("Jobs Collaborative referral " + a.id + (a.name ? " · " + a.name : "")) +
           "&body=" + body + '">Forward to ' + esc(target.contactName || target.name) + "</a>" +
           '<span class="chip">' + esc(target.name) + "</span></div>";
       }
@@ -412,15 +409,15 @@
           if (a.answers[k]) answers += "<dt>" + esc(k) + "</dt><dd>" + esc(a.answers[k]) + "</dd>";
         });
         return '<details class="apprec" data-id="' + esc(a.id) + '">' +
-          "<summary><b>" + esc(a.name || "—") + '</b><span class="who">' + esc(a.trainingName) + "</span>" +
+          "<summary><b>" + esc(a.name || "–") + '</b><span class="who">' + esc(a.trainingName) + "</span>" +
           chip(a.status) + (a.stage ? '<span class="chip">' + esc(a.stage) + "</span>" : "") +
           '<span class="when">' + fmtDate(a.submittedAt) + "</span></summary>" +
           '<div class="appbody"><dl>' +
           "<dt>Reference</dt><dd>" + esc(a.id) + "</dd>" +
-          "<dt>Email</dt><dd>" + esc(a.email || "—") + "</dd>" +
-          "<dt>Phone</dt><dd>" + esc(a.phone || "—") + "</dd>" +
-          "<dt>City</dt><dd>" + esc(a.city || "—") + "</dd>" +
-          "<dt>Organization</dt><dd>" + esc(a.org || "—") + "</dd>" +
+          "<dt>Email</dt><dd>" + esc(a.email || "–") + "</dd>" +
+          "<dt>Phone</dt><dd>" + esc(a.phone || "–") + "</dd>" +
+          "<dt>City</dt><dd>" + esc(a.city || "–") + "</dd>" +
+          "<dt>Organization</dt><dd>" + esc(a.org || "–") + "</dd>" +
           answers +
           (a.notes ? "<dt>Notes</dt><dd>" + esc(a.notes) + "</dd>" : "") +
           (a.note ? "<dt>Reviewer note</dt><dd>" + esc(a.note) + "</dd>" : "") +
@@ -522,7 +519,7 @@
             '<span class="chip">' + roster.length + " RSVP" + (roster.length === 1 ? "" : "s") +
             (sponsors ? " · " + sponsors + " sponsor" : "") + "</span>" +
             '<span class="chip' + (ev._src === "local" ? " chip--declined" : "") + '">' +
-            (ev._src === "local" ? "draft — publish via download" : "published") + "</span></summary>" +
+            (ev._src === "local" ? "draft: publish via download" : "published") + "</span></summary>" +
             '<div class="appbody">' +
             "<p>" + esc(ev.body || "") + "</p>" +
             (roster.length ? "<dl>" + roster.map(function (r) {
@@ -532,7 +529,7 @@
             '<div class="acts">' + blast +
             (ev._src === "local" ? '<button class="btn btn--clay" data-evdel="' + esc(ev.id) + '" type="button">Delete draft</button>' : "") +
             "</div></div></details>";
-        }).join("") : '<div class="empty">No events yet — draft one above.</div>';
+        }).join("") : '<div class="empty">No events yet. Draft one above.</div>';
       }
       document.getElementById("evtNew").addEventListener("click", function () {
         document.getElementById("evtForm").hidden = false;
@@ -600,11 +597,11 @@
                 '<span class="who">' + esc(x.org || "") + '</span><span class="when">' + esc(x.date || "") + "</span></summary>" +
                 '<div class="appbody"><div class="acts"><button class="btn btn--navy" data-dossier="' +
                 esc(x.file) + '" type="button">Read the dossier</button></div></div></details>';
-            }).join("") : '<div class="empty">No dossiers yet — run the workflow for the first city.</div>';
+            }).join("") : '<div class="empty">No dossiers yet. Run the workflow for the first city.</div>';
           })
           .catch(function () {
             document.getElementById("dossierList").innerHTML =
-              '<div class="empty">No dossiers yet — run the workflow for the first city.</div>';
+              '<div class="empty">No dossiers yet. Run the workflow for the first city.</div>';
           });
       }
       document.addEventListener("click", function (e) {
@@ -629,12 +626,12 @@
         });
         document.getElementById("peopleList").innerHTML = rows.length
           ? rows.map(function (p) {
-            return '<details class="apprec"><summary><b>' + esc(p.name || "—") + '</b><span class="who">' +
+            return '<details class="apprec"><summary><b>' + esc(p.name || "–") + '</b><span class="who">' +
               esc(p.email || "") + '</span><span class="when">' + fmtDate(p.updatedAt) + "</span></summary>" +
               '<div class="appbody"><dl>' +
-              "<dt>Phone</dt><dd>" + esc(p.phone || "—") + "</dd>" +
-              "<dt>City</dt><dd>" + esc(p.city || "—") + "</dd>" +
-              "<dt>Organization</dt><dd>" + esc(p.org || "—") + "</dd>" +
+              "<dt>Phone</dt><dd>" + esc(p.phone || "–") + "</dd>" +
+              "<dt>City</dt><dd>" + esc(p.city || "–") + "</dd>" +
+              "<dt>Organization</dt><dd>" + esc(p.org || "–") + "</dd>" +
               (p.about ? "<dt>About</dt><dd>" + esc(p.about) + "</dd>" : "") +
               "</dl></div></details>";
           }).join("")
@@ -649,8 +646,8 @@
       function renderAuto() {
         document.getElementById("autoKv").innerHTML =
           "<dt>Mode</dt><dd>" + esc(config.mode) + (config.mode === "demo" ? " (this browser only)" : "") + "</dd>" +
-          "<dt>Database</dt><dd>" + (config.mode === "supabase" && config.supabaseUrl ? esc(config.supabaseUrl) : "none — demo storage") + "</dd>" +
-          "<dt>Outbound webhook</dt><dd>" + (config.webhookUrl ? esc(config.webhookUrl) : "not set — add webhookUrl in data/config.json") + "</dd>" +
+          "<dt>Database</dt><dd>" + (config.mode === "supabase" && config.supabaseUrl ? esc(config.supabaseUrl) : "none (demo storage)") + "</dd>" +
+          "<dt>Outbound webhook</dt><dd>" + (config.webhookUrl ? esc(config.webhookUrl) : "not set; add webhookUrl in data/config.json") + "</dd>" +
           "<dt>Notify email</dt><dd>" + esc(config.notifyEmail || "not set") + "</dd>";
         document.getElementById("testHook").disabled = !config.webhookUrl;
       }
@@ -658,7 +655,7 @@
         var out = document.getElementById("testResult");
         out.textContent = "Sending…";
         FreedomStore.fireWebhook("test", { hello: "from the Freedom, Inc. admin" }).then(function (ok) {
-          out.textContent = ok ? "Sent ✓ — check your Zap/scenario history." : "Failed — is the URL right?";
+          out.textContent = ok ? "Sent ✓ Check your Zap/scenario history." : "Failed. Is the URL right?";
           out.style.color = ok ? "var(--ok)" : "var(--clay)";
         });
       });

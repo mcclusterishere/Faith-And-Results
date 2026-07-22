@@ -1,5 +1,5 @@
 {
-  "note": "Backend configuration. mode: 'demo' stores everything in this browser (zero setup — perfect for client demos). 'supabase' uses a real database + real admin login. Webhook automations fire in ANY mode when webhookUrl is set — point it at Zapier/Make/n8n to fan out to Mailchimp, Sheets, CRMs, anything. See docs/BACKEND.md.",
+  "note": "Backend configuration. mode: 'demo' stores everything in this browser (zero setup, perfect for client demos). 'supabase' uses a real database + real admin login. Webhook automations fire in ANY mode when webhookUrl is set: point it at Zapier/Make/n8n to fan out to Mailchimp, Sheets, CRMs, anything. See docs/BACKEND.md.",
   "mode": "demo",
   "supabaseUrl": "",
   "supabaseAnonKey": "",

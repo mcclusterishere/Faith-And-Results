@@ -1,42 +1,42 @@
 {
-  "note": "The one events file. The app sorts future events to the top and moves past ones into the archive automatically — this page can never go stale. Admin > Events can draft entries and download a merged copy of this file to publish. The archive below is real history imported from the WordPress export.",
+  "note": "The one events file. The app sorts future events to the top and moves past ones into the archive automatically, so this page can never go stale. Admin > Events can draft entries and download a merged copy of this file to publish. The archive below is real history imported from the WordPress export.",
   "events": [
     {
       "id": "fcdc-conference-next",
       "sample": true,
-      "title": "FCDC Annual Meeting & Conference — Next Edition",
+      "title": "FCDC Annual Meeting & Conference: Next Edition",
       "date": "2026-10-15",
       "time": "8:30 AM – 4:30 PM",
       "location": "Bridgeport, CT",
       "category": "Conference",
       "rsvp": true,
       "sponsor": true,
-      "body": "The Faith Community Development Corporation's annual gathering of congregations, municipalities, and funders. Organizations may register to attend or join as a paid sponsor — sponsors get the stage, the program book, and the room. (Sample date — set the real one in data/events.json.)"
+      "body": "The Faith Community Development Corporation's annual gathering of congregations, municipalities, and funders. Organizations may register to attend or join as a paid sponsor. Sponsors get the stage, the program book, and the room. (Sample date; set the real one in data/events.json.)"
     },
     {
       "id": "equity-uprise-summit-2025",
-      "title": "Equity Uprise Summit — Standing Against the Monopoles",
+      "title": "Equity Uprise Summit: Standing Against the Monopoles",
       "date": "2025-10-05",
       "time": "October 5, 2025",
       "location": "Shiloh Baptist Church, Bridgeport, CT",
       "category": "Community",
       "rsvp": false,
       "link": "https://www.youtube.com/live/Tum9BPmGjEY",
-      "body": "Anchored by Pastor Carl McCluster, 85-year-old Shiloh Baptist became ground zero for the community's stand against United Illuminating's Docket 516R plan to run high-voltage transmission monopoles through Bridgeport and Fairfield's residential and historic districts — threatening Shiloh itself and the historic Mary & Eliza Freeman Houses. Residents and clergy were joined by a bipartisan delegation including Senator Tony Hwang, Representative Jennifer Leeper, city council members, and Freeman Center president Maisa Tisdale, raising transparency and environmental-justice concerns the process had ignored. That October, the Connecticut Siting Council denied UI's application — and the community's unified front was recognized as a major factor in the rejection."
+      "body": "Anchored by Pastor Carl McCluster, 85-year-old Shiloh Baptist became ground zero for the community's stand against United Illuminating's Docket 516R plan to run high-voltage transmission monopoles through Bridgeport and Fairfield's residential and historic districts, threatening Shiloh itself and the historic Mary & Eliza Freeman Houses. Residents and clergy were joined by a bipartisan delegation including Senator Tony Hwang, Representative Jennifer Leeper, city council members, and Freeman Center president Maisa Tisdale, raising transparency and environmental-justice concerns the process had ignored. That October, the Connecticut Siting Council denied UI's application, and the community's unified front was recognized as a major factor in the rejection."
     },
     {
       "id": "fcdc-conference-2023",
-      "title": "FCDC Annual Meeting & Conference — \"Defining Light in This Present Darkness of Gun Violence\"",
+      "title": "FCDC Annual Meeting & Conference: \"Defining Light in This Present Darkness of Gun Violence\"",
       "date": "2023-08-16",
       "time": "8:30 AM – 4:30 PM",
       "location": "Bridgeport, CT",
       "category": "Conference",
       "rsvp": false,
-      "body": "Faith CDC's annual meeting and conference workshops — empowering, educating, and equipping people and communities in response to gun violence."
+      "body": "Faith CDC's annual meeting and conference workshops: empowering, educating, and equipping people and communities in response to gun violence."
     },
     {
       "id": "ukraine-2022",
-      "title": "\"United We Stand\" — Connecticut for the People of Ukraine",
+      "title": "\"United We Stand\": Connecticut for the People of Ukraine",
       "date": "2022-06-23",
       "time": "June 23 – July 23, 2022",
       "location": "Statewide, CT",
@@ -52,7 +52,7 @@
       "location": "Calvary Baptist Church, Norwalk, CT",
       "category": "Community",
       "rsvp": false,
-      "body": "The National Faith Leaders Collaborative praying together — part of Connecticut's Season of Peace, Healing and Reconciliation."
+      "body": "The National Faith Leaders Collaborative praying together, part of Connecticut's Season of Peace, Healing and Reconciliation."
     },
     {
       "id": "hhc-opportunity-fair-2022",
@@ -62,7 +62,7 @@
       "location": "45 Lyon Terrace, Bridgeport, CT",
       "category": "Jobs",
       "rsvp": false,
-      "body": "Let's put people to work: the CT Faith Jobs Collaborative and Hartford HealthCare brought hiring to old Bridgeport City Hall — the model for the jobs pipeline this app now runs year-round."
+      "body": "Let's put people to work: the CT Faith Jobs Collaborative and Hartford HealthCare brought hiring to old Bridgeport City Hall, the model for the jobs pipeline this app now runs year-round."
     },
     {
       "id": "shared-legacies-2022",
@@ -72,17 +72,17 @@
       "location": "Klein Auditorium, Bridgeport, CT",
       "category": "Community",
       "rsvp": false,
-      "body": "Christian, Jewish, and ecumenical leaders hosted a screening on the history of civil-rights collaboration — part of the Season of Peace featuring SCLC President Dr. Charles Steele, Jr."
+      "body": "Christian, Jewish, and ecumenical leaders hosted a screening on the history of civil-rights collaboration, part of the Season of Peace featuring SCLC President Dr. Charles Steele, Jr."
     },
     {
       "id": "mlk-corridors-launch-2019",
-      "title": "Martin Luther King, Jr. Corridors — Connecticut Launch",
+      "title": "Martin Luther King, Jr. Corridors: Connecticut Launch",
       "date": "2019-01-18",
       "time": "2:00 PM",
       "location": "Spear Park, corner of MLK & Main Street, Middletown, CT",
       "category": "Corridors",
       "rsvp": false,
-      "body": "The public launch of the MLK Corridors Initiative — Norwalk, Middletown, and New Britain named as Connecticut's corridor communities."
+      "body": "The public launch of the MLK Corridors Initiative: Norwalk, Middletown, and New Britain named as Connecticut's corridor communities."
     },
     {
       "id": "law-enforcement-summit-2018",
@@ -92,7 +92,7 @@
       "location": "Victory Cathedral, Hartford, CT",
       "category": "Community",
       "rsvp": false,
-      "body": "\"Come, Let Us Reason… Together\" — with the Black & Latino Caucus, the Governor, Senator Blumenthal, police chiefs, mayors, the NAACP, the Urban League, and congregations statewide."
+      "body": "\"Come, Let Us Reason… Together,\" with the Black & Latino Caucus, the Governor, Senator Blumenthal, police chiefs, mayors, the NAACP, the Urban League, and congregations statewide."
     },
     {
       "id": "housing-summit-2018",
@@ -102,7 +102,7 @@
       "location": "Margaret Morton Government Center, Bridgeport, CT",
       "category": "Conference",
       "rsvp": false,
-      "body": "With FHLB–San Francisco, HUD's regional director, and Bridgeport's planning office — plus the introduction of \"FREEDOM to Work,\" a new jobs program for Bridgeport residents."
+      "body": "With FHLB–San Francisco, HUD's regional director, and Bridgeport's planning office, plus the introduction of \"FREEDOM to Work,\" a new jobs program for Bridgeport residents."
     },
     {
       "id": "sustainability-summit-2018",
@@ -112,7 +112,7 @@
       "location": "University of Bridgeport & Shiloh Baptist Church",
       "category": "Community",
       "rsvp": false,
-      "body": "\"Learning to breathe easier and build better\" — a full day of community training, a clergy luncheon, and an evening community conversation."
+      "body": "\"Learning to breathe easier and build better\": a full day of community training, a clergy luncheon, and an evening community conversation."
     }
   ]
 }

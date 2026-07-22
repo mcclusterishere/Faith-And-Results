@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Freedom, Inc. — Faith, Backed by Results</title>
-  <meta name="description" content="The Freedom, Inc. app: economic development, education, housing, and sustainability — delivered with faith communities in seventeen American cities. FDIC · HUD · Federal Home Loan Bank · NeighborWorks America.">
+  <title>Freedom, Inc. · Faith, Backed by Results</title>
+  <meta name="description" content="The Freedom, Inc. app: economic development, education, housing, and sustainability, delivered with faith communities in nineteen American cities. FDIC · HUD · Federal Home Loan Bank · NeighborWorks America.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Freedom, Inc. — Faith, Backed by Results">
-  <meta property="og:description" content="Economic development, education, housing, and sustainability — delivered with faith communities in seventeen American cities.">
+  <meta property="og:title" content="Freedom, Inc. · Faith, Backed by Results">
+  <meta property="og:description" content="Economic development, education, housing, and sustainability, delivered with faith communities in nineteen American cities.">
   <meta property="og:image" content="assets/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#101c2c">
@@ -28,7 +28,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Freedom, Inc.",
-    "alternateName": "F.R.E.E.D.O.M. — Faith Restoration Empowerment & Economic Development Outreach Ministries",
+    "alternateName": "F.R.E.E.D.O.M., Faith Restoration Empowerment & Economic Development Outreach Ministries",
     "url": "https://faithandresults.com",
     "telephone": "+1-203-549-8703",
     "email": "info@faithandresults.com",
@@ -40,13 +40,13 @@
 
   <style>
     /* ============================================================
-       FREEDOM, INC. — THE APP.
+       FREEDOM, INC.: THE APP.
        The faithandresults.com rebuild as an installable mobile app:
        app bar on top, five big tabs on the bottom, screens in
        between, works offline. ELDER-FIRST THROUGHOUT: Atkinson
        Hyperlegible body (Braille Institute), Bitter slab headlines,
        20px base, AAA navy-on-cream contrast, tap targets 48px+.
-       Fonts self-hosted — no CDN.
+       Fonts self-hosted, no CDN.
        ============================================================ */
     @font-face { font-family: "Atkinson"; src: url("assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Atkinson"; src: url("assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
@@ -100,11 +100,11 @@
       /* staggered card reveals inside each revealed section */
       .rv .card, .rv .roomc { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
       .rv.in .card, .rv.in .roomc { opacity: 1; transform: none; }
-      .rv.in .cards > :nth-child(2) { transition-delay: 0.09s; }
-      .rv.in .cards > :nth-child(3) { transition-delay: 0.18s; }
-      .rv.in .cards > :nth-child(4) { transition-delay: 0.27s; }
-      .rv.in .cards > :nth-child(5) { transition-delay: 0.36s; }
-      .rv.in .cards > :nth-child(n+6) { transition-delay: 0.45s; }
+      /* reveal timing walks the Fibonacci run: 5, 13, 21, 34, 55 */
+      .rv.in .cards > :nth-child(2) { transition-delay: 0.13s; }
+      .rv.in .cards > :nth-child(3) { transition-delay: 0.21s; }
+      .rv.in .cards > :nth-child(4) { transition-delay: 0.34s; }
+      .rv.in .cards > :nth-child(n+5) { transition-delay: 0.55s; }
 
       /* hero: staggered entrance, replayed on every homecoming */
       .hero .wrap > * { opacity: 0; transform: translateY(20px); animation: heroIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -153,12 +153,16 @@
     /* ---- leadership portraits ---- */
     .face { float: right; width: 92px; height: 92px; object-fit: cover; border-radius: 50%;
       border: 3px solid var(--gold); margin: 0 0 0.6rem 0.9rem; }
-    section { padding: clamp(2rem, 5vh, 3.2rem) clamp(1.1rem, 4vw, 2.4rem); }
+    /* Rhythm and scale sit on the golden ratio: spacing steps follow the
+       Fibonacci run (0.5 · 0.8 · 1.3 · 2.1 · 3.4 · 5.5), type steps multiply
+       by phi (1 → 1.618 → 2.618 → 4.236), and sections breathe more above
+       than below (3.4 : 2.1), the way an editor sets a page. */
+    section { padding: clamp(2.1rem, 6vh, 3.4rem) clamp(1.3rem, 4vw, 2.1rem) 2.1rem; }
     .wrap { max-width: 46rem; margin: 0 auto; }
     .kick { font-weight: 700; font-size: 1rem; color: var(--clay); text-transform: uppercase; letter-spacing: 0.08em; }
     .dark .kick { color: var(--gold); }
-    h2 { font-size: clamp(1.9rem, 6.2vw, 2.7rem); margin: 0.45rem 0 0.9rem; }
-    .sub { font-size: 1.12rem; max-width: 40rem; }
+    h2 { font-size: clamp(2rem, 6.2vw, 2.618rem); margin: 0.5rem 0 0.8rem; }
+    .sub { font-size: 1.12rem; max-width: 34rem; }
 
     /* ---- hero ---- */
     .hero { background: var(--navy); color: var(--cream); padding-top: clamp(2.4rem, 7vh, 4rem);
@@ -168,11 +172,13 @@
     .hero-mark { position: absolute; right: -14%; top: 2%; width: min(26rem, 78vw); opacity: 0.13;
       pointer-events: none; filter: saturate(1.1); }
     .hero .wrap { position: relative; }
-    .hero h1 { color: var(--cream); font-size: clamp(2.7rem, 11vw, 4.6rem); margin: 0.55rem 0 1rem; }
-    .hero .sub { color: var(--cream); font-size: 1.2rem; }
-    .seals { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
+    .hero h1 { color: var(--cream); font-size: clamp(2.7rem, 11vw, 4.236rem); margin: 0.5rem 0 1.3rem; letter-spacing: -0.01em; }
+    .hero .sub { color: var(--cream); font-size: 1.2rem; max-width: 26rem; }
+    .seals { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.3rem; }
     .seal { border: 3px solid var(--gold); border-radius: 12px; padding: 0.6rem 1.05rem; font-weight: 700; font-size: 1.05rem;
       background: rgba(201, 154, 46, 0.14); }
+    .seals .seal:nth-child(odd) { transform: rotate(-0.7deg); }
+    .seals .seal:nth-child(even) { transform: rotate(0.5deg); }
     .cta-row { margin-top: 1.9rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
     .btn { display: inline-block; font-weight: 700; font-size: 1.1rem; text-decoration: none; cursor: pointer;
       border-radius: 100px; padding: 0.9em 1.8em; border: 3px solid var(--gold); color: var(--navy); background: var(--gold); }
@@ -183,14 +189,17 @@
 
     /* ---- counting band ---- */
     .band { background: var(--navy); color: var(--cream); padding: 1.9rem clamp(1.1rem, 4vw, 2.4rem); }
-    .band .wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.3rem; text-align: center; }
-    .band b { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 2.9rem; color: var(--gold); display: block; line-height: 1; }
+    .band .wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.3rem; text-align: left; }
+    .band b { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 2.6rem; color: var(--gold); display: block; line-height: 1; }
     .band span { font-size: 1.05rem; font-weight: 700; display: block; margin-top: 0.3rem; }
+    /* the lead number carries phi times the weight of the rest */
+    .band .wrap > :first-child { grid-column: 1 / -1; }
+    .band .wrap > :first-child b { font-size: 4.236rem; }
 
     /* ---- cards ---- */
     .cards { display: grid; gap: 1rem; margin-top: 1.4rem; }
     .card { background: #fffdf7; border: 3px solid var(--navy); border-radius: 18px; padding: 1.4rem 1.3rem; }
-    .card h3 { font-size: 1.45rem; margin-bottom: 0.45rem; }
+    .card h3 { font-size: 1.618rem; margin-bottom: 0.5rem; }
     .card p { font-size: 1.06rem; }
     .card .num { font-family: "BitterSlab", Georgia, serif; font-weight: 900; font-size: 1.05rem; color: var(--clay); }
     .card details { margin-top: 0.6rem; }
@@ -361,8 +370,12 @@
         border-top: 0; border-right: 3px solid var(--gold); padding: 1rem 0 0; }
       .tab { flex: 0 0 auto; min-height: 5rem; width: 100%; font-size: 0.95rem; }
       main { padding: calc(var(--bar-h) + var(--sat)) 0 2rem 7.2rem; }
-      .band .wrap { grid-template-columns: repeat(4, 1fr); }
+      .band .wrap { grid-template-columns: repeat(3, 1fr); align-items: end; }
+      .band .wrap > :first-child { grid-column: auto; grid-row: 1 / 3; }
       .cards.two { grid-template-columns: 1fr 1fr; }
+      /* the first card of every pair-grid leads the section at full width,
+         wearing a gold edge: one strong voice, then the chorus */
+      .cards.two > :first-child { grid-column: 1 / -1; border-left: 9px solid var(--gold); }
       .doors { grid-template-columns: 1fr 1fr; }
       .bigacts { grid-template-columns: 1fr 1fr 1fr; }
       .wrap { max-width: 52rem; }
@@ -374,7 +387,7 @@
   <a class="skip" href="#view">Skip to the content</a>
 
   <header class="appbar" id="appbar">
-    <a class="brand" href="#/home" aria-label="Freedom, Inc. — Home">
+    <a class="brand" href="#/home" aria-label="Freedom, Inc. Home">
       <img src="assets/scraped/freedom-logo-300px.png" alt="Freedom, Inc.">
     </a>
     <div class="side">
@@ -393,9 +406,8 @@
       <img class="hero-mark" src="assets/scraped/freedom-logo-300px.png" alt="" aria-hidden="true">
       <div class="wrap">
         <p class="kick">Freedom, Inc. · Faith Restoration Empowerment &amp; Economic Development Outreach Ministries</p>
-        <h1 tabindex="-1" data-title="Freedom, Inc. — Faith, Backed by Results">Faith, backed<br>by results.</h1>
-        <p class="sub">Economic development, education, housing, and sustainability — delivered with
-          faith communities in <strong>nineteen American cities</strong>.</p>
+        <h1 tabindex="-1" data-title="Freedom, Inc. · Faith, Backed by Results">Faith, backed<br>by results.</h1>
+        <p class="sub">Economic development, education, housing, and sustainability, delivered with faith communities in <strong>nineteen American cities</strong>.</p>
         <div class="seals" aria-label="Consulting credentials">
           <span class="seal">FDIC</span>
           <span class="seal">HUD</span>
@@ -432,8 +444,7 @@
         <div class="cards two">
           <a class="card" href="#/trainings"><span class="num">Trainings</span>
             <h3>Apply today</h3>
-            <p>Workforce readiness, homebuyer education, foreclosure help, financial empowerment —
-              build a profile once, apply in minutes.</p>
+            <p>Workforce readiness, homebuyer education, foreclosure help, financial empowerment. Build a profile once and apply in minutes.</p>
             <p class="go">See the trainings →</p></a>
           <a class="card" href="#/about"><span class="num">Leadership</span>
             <h3>Rev. Carl McCluster</h3>
@@ -442,16 +453,15 @@
             <p class="go">Meet the leadership →</p></a>
           <a class="card" href="#/cities"><span class="num">The footprint</span>
             <h3>Seventeen cities</h3>
-            <p>From Bridgeport to Oakland — tap any city on the constellation and see the work there.</p>
+            <p>From Bridgeport to Oakland. Tap any city on the constellation and see the work there.</p>
             <p class="go">Open the map →</p></a>
           <a class="card" href="#/corridor"><span class="num">MLK Corridors</span>
             <h3>Bring it to your city</h3>
-            <p>Norwalk, Middletown, and New Britain were first. The pipeline — research, outreach,
-              proposal — starts with one form.</p>
+            <p>Norwalk, Middletown, and New Britain were first. The pipeline starts with one form: research, outreach, proposal.</p>
             <p class="go">See the initiative →</p></a>
           <a class="card" href="#/news"><span class="num">News &amp; events</span>
             <h3>Happening now</h3>
-            <p>The latest from all seventeen cities — nothing stale is ever shown.</p>
+            <p>The latest from all nineteen cities. Nothing stale is ever shown.</p>
             <p class="go">Read the news →</p></a>
         </div>
       </div>
@@ -459,15 +469,14 @@
 
     <section class="quote dark rv">
       <blockquote>Change the course of our state, our nation, and of the world.</blockquote>
-      <cite>— Rev. Carl McCluster · Shiloh Baptist Church, Bridgeport</cite>
+      <cite>Rev. Carl McCluster · Shiloh Baptist Church, Bridgeport</cite>
     </section>
 
     <section class="rv" id="homeInstallWrap">
       <div class="wrap">
         <div class="install" id="homeInstall" hidden>
           <h3>Put Freedom, Inc. in your pocket.</h3>
-          <p>Add the app to your home screen — it opens instantly, full screen, and works even
-            without a connection.</p>
+          <p>Add the app to your home screen. It opens instantly, full screen, and works even without a connection.</p>
           <button class="btn" id="homeInstallBtn" type="button">Add to home screen</button>
         </div>
         <div class="install" id="homeInstallIos" hidden>
@@ -481,8 +490,8 @@
       </div>
     </section>
 
-    <p class="foot">FREEDOM, INC. — Faith, backed by results.
-      <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible — type built for every pair of eyes.</small></p>
+    <p class="foot">FREEDOM, INC. · Faith, backed by results.
+      <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible, type built for every pair of eyes.</small></p>
   </div>
 
   <!-- ================= PROGRAMS ================= -->
@@ -490,33 +499,29 @@
     <section>
       <div class="wrap">
         <p class="kick">The work</p>
-        <h2 tabindex="-1" data-title="Programs — Freedom, Inc.">Four pillars. One mission.</h2>
+        <h2 tabindex="-1" data-title="Programs · Freedom, Inc.">Four pillars, one mission.</h2>
         <p class="sub">FREEDOM was organized as a think-tank collaborative of senior pastors, grassroots
-          leaders, and business and industry — working where faith and economics meet.</p>
+          leaders, and business and industry, working where faith and economics meet.</p>
         <div class="cards two">
           <div class="card"><span class="num">01</span><h3>Economic Development</h3>
-            <p>Financial empowerment with the institutions that move money — from foreclosure prevention
+            <p>Financial empowerment with the institutions that move money: from foreclosure prevention
               with the FDIC and Federal Home Loan Banks to community lending partnerships.</p>
             <details><summary>See how this works</summary>
               <p>Foreclosure prevention and intervention programs built with the FDIC, HUD, and the Federal
-                Home Loan Banks of Atlanta, Boston, and San Francisco — plus state and municipal housing
-                finance authorities — bringing bank-grade tools to church-anchored communities.</p></details></div>
+                Home Loan Banks of Atlanta, Boston, and San Francisco, plus state and municipal housing finance authorities, bringing bank-grade tools to church-anchored communities.</p></details></div>
           <div class="card"><span class="num">02</span><h3>Education &amp; Training</h3>
-            <p>Workforce and business training designed and delivered nationally — including training for
+            <p>Workforce and business training designed and delivered nationally, including training for
               NeighborWorks America, the country's largest HUD housing intermediary.</p>
             <details><summary>See how this works</summary>
-              <p>The Connecticut Faith Jobs Collaborative designs workforce programs — race and gender
-                neutral by design — that move residents into building-trade employment and training,
+              <p>The Connecticut Faith Jobs Collaborative designs workforce programs, race and gender neutral by design, that move residents into building-trade employment and training,
                 through the congregations they already trust.</p></details></div>
           <div class="card"><span class="num">03</span><h3>Housing</h3>
             <p>Homes saved and homes built: foreclosure intervention, housing counseling, and development
               with state and municipal housing finance authorities.</p>
             <details><summary>See how this works</summary>
-              <p>The FREEDOM–Faith CDC collaborative develops faith-based housing — congregations turning
-                land and trust into homes, with the finance authorities at the table from day one.</p></details></div>
+              <p>The FREEDOM–Faith CDC collaborative develops faith-based housing: congregations turning land and trust into homes, with the finance authorities at the table from day one.</p></details></div>
           <div class="card"><span class="num">04</span><h3>Sustainability</h3>
-            <p>Building congregations and community organizations that outlast any single grant —
-              capacity, governance, and revenue that renews itself.</p>
+            <p>Building congregations and community organizations that outlast any single grant: capacity, governance, and revenue that renews itself.</p>
             <details><summary>See how this works</summary>
               <p>Proof of concept at home: under Rev. McCluster, Shiloh Baptist became the first
                 African-American church in Connecticut to reach energy self-sufficiency through solar.</p></details></div>
@@ -529,9 +534,8 @@
     <section class="rv">
       <div class="wrap">
         <p class="kick">Every program</p>
-        <h2>The whole catalog. Nothing hidden.</h2>
-        <p class="sub">Every program from faithandresults.com, under its pillar — tap any one for the
-          full story, partners, and how to get involved.</p>
+        <h2>Every program, in the open.</h2>
+        <p class="sub">Every program from faithandresults.com, under its pillar. Tap any one for the full story, partners, and how to get involved.</p>
         <div id="programCatalog"></div>
       </div>
     </section>
@@ -542,19 +546,18 @@
       <div class="wrap">
         <p class="kick">The collaboratives</p>
         <h2>Programs in plain English.</h2>
-        <p class="sub">Every initiative under one roof — what it is, spelled out, no insider acronyms required.</p>
+        <p class="sub">Every initiative under one roof: what it is, spelled out, no insider acronyms required.</p>
         <div class="cards two">
           <div class="roomc"><h3>NFLC</h3><span class="full">The National Faith Leaders Collaborative</span>
-            <p>Senior pastors across the country organized as one voice for community renewal — home of the
+            <p>Senior pastors across the country organized as one voice for community renewal, and home of the
               <strong>Saving America's Soul</strong> initiative.</p></div>
           <div class="roomc"><h3>CFLC</h3><span class="full">The Connecticut Faith Leaders Collaborative</span>
-            <p>The Connecticut chapter — from Bridgeport to New Britain, working with mayors and ministerial
+            <p>The Connecticut chapter, from Bridgeport to New Britain, working with mayors and ministerial
               alliances on the ground.</p></div>
           <div class="roomc"><h3>CT Faith Jobs</h3><span class="full">The Connecticut Faith Jobs Collaborative</span>
-            <p>Jobs and workforce pipelines built through congregations — training people the economy
-              actually hires.</p></div>
+            <p>Jobs and workforce pipelines built through congregations, training people the economy actually hires.</p></div>
           <div class="roomc"><h3>Faith CDC</h3><span class="full">Faith Community Development Corporation</span>
-            <p>The development arm chartered by Shiloh Baptist Church — creator, sponsor, and trainer of
+            <p>The development arm chartered by Shiloh Baptist Church: creator, sponsor, and trainer of
               faith-based organizations nationwide.</p></div>
         </div>
       </div>
@@ -565,8 +568,7 @@
         <p class="kick">Who we serve</p>
         <h2>Partners on every side of the table.</h2>
         <p class="sub">Houses of worship. Faith-based organizations. Community economic development
-          corporations. Municipalities and government agencies. If you hold a community's trust —
-          or its budget — FREEDOM builds with you.</p>
+          corporations. Municipalities and government agencies. If you hold a community's trust or its budget, FREEDOM builds with you.</p>
         <div class="cta-row"><a class="btn btn--navy" href="#/connect">Start the conversation</a></div>
       </div>
     </section>
@@ -577,8 +579,8 @@
     <section>
       <div class="wrap">
         <p class="kick">The footprint</p>
-        <h2 tabindex="-1" id="cityCount" data-title="The Cities — Freedom, Inc.">The cities. One screen.</h2>
-        <p class="sub">Tap any star or any city — projects and affiliates load here as the client supplies
+        <h2 tabindex="-1" id="cityCount" data-title="The Cities · Freedom, Inc.">The cities, one map.</h2>
+        <p class="sub">Tap any star or any city. Projects and affiliates load here as the client supplies
           each city's story.</p>
         <div class="sky" aria-hidden="true"><svg id="skyMap" viewBox="0 0 1000 560"></svg></div>
         <div class="cities-grid" id="cityGrid"></div>
@@ -591,9 +593,8 @@
     <section>
       <div class="wrap">
         <p class="kick">News &amp; events</p>
-        <h2 tabindex="-1" data-title="News — Freedom, Inc.">What's happening now.</h2>
-        <p class="sub">Nothing stale is ever shown here — anything older than eighteen months retires
-          itself automatically.</p>
+        <h2 tabindex="-1" data-title="News · Freedom, Inc.">What's happening now.</h2>
+        <p class="sub">Nothing stale is ever shown here. Anything older than eighteen months retires itself automatically.</p>
         <div class="newsgrid" id="newsList" aria-live="polite"></div>
       </div>
     </section>
@@ -604,7 +605,7 @@
     <section class="connect-block dark">
       <div class="wrap">
         <p class="kick">Connect</p>
-        <h2 tabindex="-1" data-title="Connect — Freedom, Inc.">Four doors. All open.</h2>
+        <h2 tabindex="-1" data-title="Connect · Freedom, Inc.">Every door is open.</h2>
         <div class="bigacts">
           <a class="bigact" href="tel:+12035498703">📞 Call (203) 549-8703</a>
           <a class="bigact bigact--line" href="mailto:info@faithandresults.com">✉️ Email the team</a>
@@ -612,17 +613,17 @@
         </div>
         <div class="doors">
           <a class="door" href="mailto:info@faithandresults.com?subject=Partnership%20inquiry"><b>Partner</b>
-            <span>Institutions, municipalities, funders — start the conversation.</span></a>
+            <span>Institutions, municipalities, funders: start the conversation.</span></a>
           <a class="door" href="mailto:info@faithandresults.com?subject=Training%20request"><b>Book training</b>
             <span>Workforce, housing counseling, and capacity-building programs.</span></a>
           <a class="door" href="mailto:info@faithandresults.com?subject=Newsletter%20signup"><b>Stay close</b>
-            <span>The newsletter — news, events, and wins from all nineteen cities.</span></a>
+            <span>The newsletter: news, events, and wins from all nineteen cities.</span></a>
           <a class="door" href="mailto:info@faithandresults.com?subject=Giving"><b>Give</b>
-            <span>Fuel the mission — every gift builds capacity in a community.</span></a>
+            <span>Fuel the mission. Every gift builds capacity in a community.</span></a>
         </div>
         <div class="install" id="connectInstall" hidden>
           <h3>Take this app with you.</h3>
-          <p>Install Freedom, Inc. on your device — instant open, full screen, works offline.</p>
+          <p>Install Freedom, Inc. on your device: instant open, full screen, works offline.</p>
           <button class="btn" id="connectInstallBtn" type="button">Install the app</button>
         </div>
         <div class="install" id="connectInstallIos" hidden>
@@ -630,8 +631,8 @@
           <p>On iPhone or iPad: tap <strong>Share</strong> in Safari, then
             <strong>Add to Home Screen</strong>.</p>
         </div>
-        <p class="foot">FREEDOM, INC. — Faith, backed by results.
-          <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible — type built for every pair of eyes.</small></p>
+        <p class="foot">FREEDOM, INC. · Faith, backed by results.
+          <small>Demo rebuild prepared by McCluster. Set in Atkinson Hyperlegible, type built for every pair of eyes.</small></p>
       </div>
     </section>
   </div>
@@ -642,19 +643,18 @@
       <div class="wrap">
         <button class="back" type="button" data-nav="#/home">← Back to Home</button>
         <p class="kick">About</p>
-        <h2 tabindex="-1" data-title="Leadership — Freedom, Inc.">Led from the pulpit and the boardroom.</h2>
+        <h2 tabindex="-1" data-title="Leadership · Freedom, Inc.">Led from the pulpit and the boardroom.</h2>
         <p class="sub" style="font-weight:700; color:var(--navy)">
-          “Initiate and nurture renewal and restoration for our communities — in faith, with results.”</p>
+          “Initiate and nurture renewal and restoration for our communities, in faith, with results.”</p>
         <div class="cards">
           <div class="card">
             <img class="face" src="assets/scraped/mccluster.jpg" alt="Rev. Carl McCluster">
             <h3>Rev. Carl McCluster</h3>
-            <p>Senior Pastor of Shiloh Baptist Church in Bridgeport, Connecticut — a pulpit he has held
-              for more than two decades — and Managing Director of FREEDOM. Founder of the Faith
+            <p>Senior Pastor of Shiloh Baptist Church in Bridgeport, Connecticut, a pulpit he has held for more than two decades, and Managing Director of FREEDOM. Founder of the Faith
               Community Development Corporation, the faith-based CDC chartered by Shiloh, and former
               chairperson of Bridgeport's South End Neighborhood Revitalization Zone.</p>
             <details><summary>The fuller story</summary>
-              <p>Trained in both economies — a Bachelor of Arts in Political Economy from Colorado
+              <p>Trained in both economies: a Bachelor of Arts in Political Economy from Colorado
                 College and a Master of Divinity from the Samuel DeWitt Proctor School of Theology at
                 Virginia Union University. Advisory Board Chair for Faith Acts; Lecturer on Financial
                 Affairs for the Connecticut State Missionary Baptist Convention; former Economic
@@ -667,7 +667,7 @@
           <div class="card">
             <img class="face" src="assets/scraped/callion.jpg" alt="Deacon William S. Callion">
             <h3>Remembering Deacon William S. Callion</h3>
-            <p>A tribute to one of FREEDOM's founders — the organization carries his name forward in
+            <p>A tribute to one of FREEDOM's founders. The organization carries his name forward in
               every city it serves.</p>
           </div>
           <div class="card">
@@ -676,14 +676,13 @@
               Banks of Atlanta, Boston, and San Francisco</strong>. Trainer for <strong>NeighborWorks
               America</strong> in eleven cities. More than <strong>100,000 families</strong> served through
               Homes Saved By Faith. Partnerships with governors, U.S. senators, members of Congress,
-              and municipal leaders — plus state housing finance authorities and financial
+              and municipal leaders, plus state housing finance authorities and financial
               institutions across the country.</p>
           </div>
           <div class="card">
             <h3>The roots</h3>
             <p>Born in the 1980s as a faith-based answer to high unemployment, a decaying industrial
-              base, and rising crime in Oakland, Atlanta, Connecticut, and the Industrial Midwest —
-              FREEDOM was organized as a think-tank collaborative of senior pastors, grassroots
+              base, and rising crime in Oakland, Atlanta, Connecticut, and the Industrial Midwest. FREEDOM was organized as a think-tank collaborative of senior pastors, grassroots
               leaders, and business and industry across Texas, Georgia, Maryland and D.C.,
               California, Colorado, Connecticut, Louisiana, and New York, taking each community's
               best practices and deploying them wherever opportunity presented itself.</p>
@@ -705,14 +704,13 @@
     <section>
       <div class="wrap">
         <p class="kick">Trainings</p>
-        <h2 tabindex="-1" data-title="Trainings — Freedom, Inc.">Learn it. Apply for it. Today.</h2>
+        <h2 tabindex="-1" data-title="Trainings · Freedom, Inc.">Training you can apply to right now.</h2>
         <p class="sub">Every training takes applications right here in the app. Build your profile once
           and apply to any of them in minutes.</p>
         <div class="cards" id="trainingList"></div>
         <div class="card" style="margin-top:1rem"><span class="num">Your profile</span>
           <h3>Fill it in once.</h3>
-          <p>Your name, contact, and congregation carry into every application automatically —
-            and your application statuses live there too.</p>
+          <p>Your name, contact, and congregation carry into every application automatically, and your application statuses live there too.</p>
           <div class="cta-row"><a class="btn btn--navy" href="#/profile">Open my profile</a></div>
         </div>
       </div>
@@ -725,7 +723,7 @@
       <div class="wrap">
         <button class="back" type="button" data-nav="#/programs">← All programs</button>
         <p class="kick" id="progKick"></p>
-        <h2 tabindex="-1" id="progName" data-title="Program — Freedom, Inc."></h2>
+        <h2 tabindex="-1" id="progName" data-title="Program · Freedom, Inc."></h2>
         <p class="sub" id="progBody"></p>
         <div class="cards" id="progExtra"></div>
       </div>
@@ -738,7 +736,7 @@
       <div class="wrap">
         <button class="back" type="button" data-nav="#/trainings">← All trainings</button>
         <p class="kick" id="trKick"></p>
-        <h2 tabindex="-1" id="trName" data-title="Training — Freedom, Inc."></h2>
+        <h2 tabindex="-1" id="trName" data-title="Training · Freedom, Inc."></h2>
         <p class="sub" id="trBody"></p>
         <div class="cards" id="trExtra"></div>
         <div class="cta-row" style="margin-top:1.5rem">
@@ -755,7 +753,7 @@
         <button class="back" type="button" id="applyBack">← Back</button>
         <div id="applyFormWrap">
           <p class="kick">Application</p>
-          <h2 tabindex="-1" id="applyTitle" data-title="Apply — Freedom, Inc."></h2>
+          <h2 tabindex="-1" id="applyTitle" data-title="Apply · Freedom, Inc."></h2>
           <p class="sub">Five minutes, no fine print. Fields marked <span class="req">*</span> are required.</p>
           <form id="applyForm" novalidate>
             <div id="applyFields"></div>
@@ -777,8 +775,7 @@
               <h3 id="doneRef"></h3>
               <p id="doneMsg"></p></div>
             <div class="card"><h3>What happens next</h3>
-              <p>The team reviews every application and reaches out — usually within a few business
-                days. Your application and its status live in <a href="#/profile">your profile</a>.</p></div>
+              <p>The team reviews every application and reaches out, usually within a few business days. Your application and its status live in <a href="#/profile">your profile</a>.</p></div>
           </div>
           <div class="cta-row" style="margin-top:1.5rem">
             <a class="btn btn--navy" href="#/profile">See my applications</a>
@@ -794,9 +791,8 @@
     <section>
       <div class="wrap">
         <p class="kick">Events</p>
-        <h2 tabindex="-1" data-title="Events — Freedom, Inc.">One calendar. Never stale.</h2>
-        <p class="sub">Every gathering, conference, fair, and briefing — future events rise to the top on
-          their own, past events file themselves into the archive. RSVP or sponsor right here.</p>
+        <h2 tabindex="-1" data-title="Events · Freedom, Inc.">The calendar keeps itself.</h2>
+        <p class="sub">Every gathering, conference, fair, and briefing. Future events rise to the top on their own, and past ones file themselves into the archive. RSVP or sponsor right here.</p>
         <div class="cal" aria-label="Calendar">
           <div class="calhead">
             <button type="button" id="calPrev" aria-label="Previous month">←</button>
@@ -813,7 +809,7 @@
         <div class="pillar-head"><h3>Coming up</h3></div>
         <div class="cards" id="evtFuture"></div>
         <div class="pillar-head"><h3>The archive</h3>
-          <p>What already happened — the record stays, the clutter doesn't.</p></div>
+          <p>What already happened. The record stays; the clutter doesn't.</p></div>
         <div class="cards" id="evtPast"></div>
       </div>
     </section>
@@ -825,11 +821,10 @@
       <div class="wrap">
         <button class="back" type="button" data-nav="#/programs" style="color:var(--gold)">← All programs</button>
         <p class="kick">MLK Corridors Initiative</p>
-        <h1 tabindex="-1" data-title="MLK Corridors — Freedom, Inc." style="font-size:clamp(2.2rem,9vw,3.6rem)">The street that
+        <h1 tabindex="-1" data-title="MLK Corridors · Freedom, Inc." style="font-size:clamp(2.2rem,9vw,3.6rem)">The street that
           carries his name should carry the neighborhood.</h1>
         <p class="sub">At least <strong>955 American streets across 41 states</strong> bear Dr. King's
-          name. Too many are symbols without investment. The Corridors Initiative changes that —
-          city by city, congregation by congregation.</p>
+          name. Too many are symbols without investment. The Corridors Initiative changes that, city by city, congregation by congregation.</p>
         <div class="cta-row">
           <a class="btn" href="#/apply/corridor-join">Bring it to your city</a>
         </div>
@@ -842,8 +837,7 @@
         <div class="cards">
           <div class="card"><span class="num">What happened</span>
             <h3>Three corridors, named and launched.</h3>
-            <p>The initiative launched <strong>January 18, 2019 at Spear Park — the corner of MLK and
-              Main Street in Middletown</strong> — naming corridor communities in <strong>Norwalk,
+            <p>The initiative launched <strong>January 18, 2019 at Spear Park, the corner of MLK and Main Street in Middletown,</strong> naming corridor communities in <strong>Norwalk,
               Middletown, and New Britain</strong> as epicenters for renewed economic activity, in
               collaboration with the office of the Governor and the CT Department of Banking.</p></div>
           <div class="card"><span class="num">Who was involved</span>
@@ -860,13 +854,13 @@
               streets through three fronts: <strong>economic development &amp; jobs</strong> (two of
               three net new U.S. jobs come from the small businesses these corridors lack capital
               for), <strong>education &amp; training</strong> that matches skills to employers'
-              needs, and <strong>housing</strong> — Connecticut carries the nation's fifth-highest
+              needs, and <strong>housing</strong>. Connecticut carries the nation's fifth-highest
               minority homeownership gap, and corridor housing stock has decayed under
               above-average foreclosure rates and underinvestment.</p></div>
           <div class="card"><span class="num">Cost &amp; effects</span>
             <h3>The numbers publish here.</h3>
             <p><em>Investment figures and measured outcomes for the Connecticut corridors publish in
-              this card as the client supplies them — dollars sought, dollars landed, storefronts
+              this card as the client supplies them: dollars sought, dollars landed, storefronts
               opened, jobs created. The framework is built; the numbers drop in.</em></p></div>
         </div>
       </div>
@@ -874,19 +868,15 @@
     <section class="collab rv" style="background:var(--cream-2)">
       <div class="wrap">
         <p class="kick">The pipeline</p>
-        <h2>From "we want this" to funded — five stages.</h2>
+        <h2>Five stages, from "we want this" to funded.</h2>
         <div class="cards">
-          <div class="card"><span class="num">1 · Join</span><p><strong>Tell us about your organization and city</strong> —
-            the form asks for everything the pipeline needs, wherever you live.</p></div>
+          <div class="card"><span class="num">1 · Join</span><p><strong>Tell us about your organization and city.</strong> The form asks for everything the pipeline needs, wherever you live.</p></div>
           <div class="card"><span class="num">2 · Research</span><p><strong>We confirm your corridor.</strong> Does your city
-            have a street named for Dr. King? What condition is it in? Our research automation builds
-            the dossier — including the right officials to contact.</p></div>
+            have a street named for Dr. King? What condition is it in? Our research automation builds the dossier, including the right officials to contact.</p></div>
           <div class="card"><span class="num">3 · Outreach</span><p><strong>City hall hears from us together.</strong> Drafted
-            letters to the mayor's office, planning department, and economic development office — reviewed
-            by a human, sent with your name beside ours.</p></div>
+            letters to the mayor's office, planning department, and economic development office, each reviewed by a human and sent with your name beside ours.</p></div>
           <div class="card"><span class="num">4 · Proposal</span><p><strong>The funding ask.</strong> A financial-support
-            proposal modeled on the Connecticut playbook — the same kind of program outline that went
-            to DECD — tailored to your city and funders.</p></div>
+            proposal modeled on the Connecticut playbook, the same kind of program outline that went to DECD, tailored to your city and funders.</p></div>
           <div class="card"><span class="num">5 · Corridor</span><p><strong>Your city joins the map.</strong> Norwalk,
             Middletown, and New Britain were first. Your corridor is next.</p></div>
         </div>
@@ -902,7 +892,7 @@
     <section>
       <div class="wrap">
         <p class="kick">My profile</p>
-        <h2 tabindex="-1" data-title="My Profile — Freedom, Inc.">You, saved once.</h2>
+        <h2 tabindex="-1" data-title="My Profile · Freedom, Inc.">Your profile, saved once.</h2>
         <p class="sub">Lives on this device. Every application starts pre-filled from here.</p>
         <form id="profileForm" novalidate>
           <div id="profileFields"></div>
@@ -959,25 +949,25 @@
         "New Britain, CT", "New Orleans, LA", "Oakland, CA", "Orlando, FL", "Providence, RI",
         "San Antonio, TX", "Tulsa, OK", "Washington, D.C."];
       var KNOWN = {
-        "Bridgeport, CT": "Home base — <b>Shiloh Baptist Church</b>, the Faith CDC, and the <b>Shiloh Bethel Centre</b> development. Ten African-American and Hispanic churches joined with <b>Freddie Mac and Chase</b> for a homeownership effort praised by Rep. DeLauro — CreditSmart education, counseling, and low-down-payment mortgages.",
-        "New Britain, CT": "An MLK corridor community — jointly led by <b>Mayor Erin Stewart</b> and <b>Bishop Dale Shaw</b> with the Black Ministers Alliance of New Britain and Freedom, Inc.",
-        "Atlanta, GA": "The <b>\"Get the Facts\"</b> homeownership initiative with historic <b>First United Congregational Church</b>, the Homeownership Training Center, and Freddie Mac — six downtown acres positioned for affordable housing and community services.",
-        "Decatur, GA": "With <b>Green Forest CDC</b>: development consulting on <b>The Forest at Columbia</b> — a 161-unit affordable multi-family community with an extensive $9M renovation — plus full-cycle homeownership training.",
-        "Cleveland, OH": "The Foreclosure Intervention Initiative with <b>HomeFree USA</b> (a certified HUD intermediary), the City of Cleveland, financial institutions, and faith organizations — free HUD intervention services, homebuyer education, and financial literacy.",
-        "Everett, MA": "Boston-area collaboration with the <b>Covenant Christian Church Alliance, FDIC, HUD, and NeighborWorks America</b> — foreclosure intervention and FDIC MoneySmart financial literacy, launched with Moneywise host Kelvin Boston.",
-        "Houston, TX": "Texas was one of FREEDOM's founding think-tank regions — projects and affiliates active here.",
-        "San Antonio, TX": "The South Texas Affordable Housing Initiative with <b>Macedonia CDC</b> and Freddie Mac — building and rebuilding affordable, mixed-income communities for low-income, immigrant, and minority families.",
-        "New Orleans, LA": "The anchor of FREEDOM's <b>Louisiana statewide</b> engagement — home of the LouLease Lease Purchase Plus program with the Louisiana Public Facilities Authority.",
-        "Denver, CO": "The <b>HomeOwnership Transformation Initiative</b> — launched with a U.S. Senator and Denver's mayor alongside Wells Fargo, Cherry Creek Mortgage, Colorado State Bank, and Freddie Mac: credit literacy plus flexible mortgages.",
-        "Oakland, CA": "The East Bay <b>\"Catch The Dream\"</b> alliance — homebuyer education, counseling, and down-payment assistance across Alameda, Contra Costa, and Solano counties with Chase, Wells Fargo, and Freddie Mac.",
-        "Orlando, FL": "<b>Catch the Dream Orlando</b> — church and CDC partners with Bank of America, SunTrust, and Wells Fargo expanding affordable homeownership for African-American and Latino residents.",
-        "Tulsa, OK": "The <b>Genesis Initiative</b> with the Metropolitan Tulsa Urban League, HUD, and Freddie Mac — capacity building for faith-based affordable housing and financial literacy, kicked off at a city-wide empowerment conference.",
+        "Bridgeport, CT": "Home base: <b>Shiloh Baptist Church</b>, the Faith CDC, and the <b>Shiloh Bethel Centre</b> development. Ten African-American and Hispanic churches joined with <b>Freddie Mac and Chase</b> for a homeownership effort praised by Rep. DeLauro: CreditSmart education, counseling, and low-down-payment mortgages.",
+        "New Britain, CT": "An MLK corridor community, jointly led by <b>Mayor Erin Stewart</b> and <b>Bishop Dale Shaw</b> with the Black Ministers Alliance of New Britain and Freedom, Inc.",
+        "Atlanta, GA": "The <b>\"Get the Facts\"</b> homeownership initiative with historic <b>First United Congregational Church</b>, the Homeownership Training Center, and Freddie Mac, with six downtown acres positioned for affordable housing and community services.",
+        "Decatur, GA": "With <b>Green Forest CDC</b>: development consulting on <b>The Forest at Columbia</b>, a 161-unit affordable multi-family community with an extensive $9M renovation, plus full-cycle homeownership training.",
+        "Cleveland, OH": "The Foreclosure Intervention Initiative with <b>HomeFree USA</b> (a certified HUD intermediary), the City of Cleveland, financial institutions, and faith organizations: free HUD intervention services, homebuyer education, and financial literacy.",
+        "Everett, MA": "Boston-area collaboration with the <b>Covenant Christian Church Alliance, FDIC, HUD, and NeighborWorks America</b>: foreclosure intervention and FDIC MoneySmart financial literacy, launched with Moneywise host Kelvin Boston.",
+        "Houston, TX": "Texas was one of FREEDOM's founding think-tank regions. Projects and affiliates active here.",
+        "San Antonio, TX": "The South Texas Affordable Housing Initiative with <b>Macedonia CDC</b> and Freddie Mac, building and rebuilding affordable, mixed-income communities for low-income, immigrant, and minority families.",
+        "New Orleans, LA": "The anchor of FREEDOM's <b>Louisiana statewide</b> engagement, and home of the LouLease Lease Purchase Plus program with the Louisiana Public Facilities Authority.",
+        "Denver, CO": "The <b>HomeOwnership Transformation Initiative</b>, launched with a U.S. Senator and Denver's mayor alongside Wells Fargo, Cherry Creek Mortgage, Colorado State Bank, and Freddie Mac: credit literacy plus flexible mortgages.",
+        "Oakland, CA": "The East Bay <b>\"Catch The Dream\"</b> alliance: homebuyer education, counseling, and down-payment assistance across Alameda, Contra Costa, and Solano counties with Chase, Wells Fargo, and Freddie Mac.",
+        "Orlando, FL": "<b>Catch the Dream Orlando</b>: church and CDC partners with Bank of America, SunTrust, and Wells Fargo expanding affordable homeownership for African-American and Latino residents.",
+        "Tulsa, OK": "The <b>Genesis Initiative</b> with the Metropolitan Tulsa Urban League, HUD, and Freddie Mac: capacity building for faith-based affordable housing and financial literacy, kicked off at a city-wide empowerment conference.",
         "Providence, RI": "With <b>Cathedral of Life</b>: quarterly financial literacy training grown into a full homeownership education and counseling program for low- and moderate-income citizens.",
-        "Washington, D.C.": "Part of FREEDOM's founding Maryland &amp; D.C. organizing region — and a NeighborWorks Training Institute city.",
-        "Baltimore, MD": "Part of FREEDOM's founding Maryland &amp; D.C. organizing region — projects and affiliates active.",
-        "Chicago, IL": "A founding think-tank region, a NeighborWorks Training Institute city, and home of the Leaders Network — a Saving America's Soul partner.",
-        "Detroit, MI": "Industrial Midwest roots — one of the communities whose 1980s challenges gave birth to FREEDOM.",
-        "Little Rock, AR": "Projects and affiliates active — this city's full story publishes as the client supplies it."
+        "Washington, D.C.": "Part of FREEDOM's founding Maryland &amp; D.C. organizing region, and a NeighborWorks Training Institute city.",
+        "Baltimore, MD": "Part of FREEDOM's founding Maryland &amp; D.C. organizing region. Projects and affiliates active.",
+        "Chicago, IL": "A founding think-tank region, a NeighborWorks Training Institute city, and home of the Leaders Network, a Saving America's Soul partner.",
+        "Detroit, MI": "Industrial Midwest roots: one of the communities whose 1980s challenges gave birth to FREEDOM.",
+        "Little Rock, AR": "Projects and affiliates active. This city's full story publishes as the client supplies it."
       };
       var GEO = {
         "Oakland, CA": [37.8, -122.3], "Denver, CO": [39.7, -105.0], "Tulsa, OK": [36.2, -95.9],
@@ -1054,7 +1044,7 @@
       function openSheet(city) {
         document.getElementById("sheetCity").textContent = city;
         document.getElementById("sheetBody").innerHTML = KNOWN[city] ||
-          "Projects and affiliates active here. This city's projects, partners, and wins publish on this screen as the client supplies them.";
+          "Projects and affiliates active here. Each city's projects, partners, and wins publish on this screen as the client supplies them.";
         markCity(city);
         if (!sheet.classList.contains("show")) lastFocus = document.activeElement;
         sheet.classList.add("show");
@@ -1094,7 +1084,7 @@
       var WORDS = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
         "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
         "Nineteen", "Twenty"];
-      document.getElementById("cityCount").textContent = (WORDS[CITIES.length] || CITIES.length) + " cities. One screen.";
+      document.getElementById("cityCount").textContent = (WORDS[CITIES.length] || CITIES.length) + " cities, one map.";
       var grid = document.getElementById("cityGrid");
       grid.innerHTML = CITIES.map(function (c) {
         return '<button class="city" type="button">' + c + "</button>";
@@ -1194,7 +1184,7 @@
             '<a class="btn btn--navy" href="#/training/' + t.id + '">About this training</a></div></div>';
         });
         document.getElementById("progExtra").innerHTML = extra;
-        document.title = p.name + " — Freedom, Inc.";
+        document.title = p.name + " · Freedom, Inc.";
         if (current === "program") window.scrollTo(0, 0);
         return true;
       }
@@ -1214,12 +1204,12 @@
         }
         if (t.urgent) {
           extra += '<div class="card"><span class="num">Facing a deadline?</span>' +
-            "<p>If a sale date is scheduled or a notice has arrived, don't wait on a form — call " +
+            "<p>If a sale date is scheduled or a notice has arrived, don't wait on a form. Call " +
             '<a href="tel:+12035498703" style="color:var(--clay); font-weight:700">(203) 549-8703</a> today.</p></div>';
         }
         document.getElementById("trExtra").innerHTML = extra;
         document.getElementById("trApply").setAttribute("href", "#/apply/" + t.id);
-        document.title = t.name + " — Freedom, Inc.";
+        document.title = t.name + " · Freedom, Inc.";
         if (current === "training") window.scrollTo(0, 0);
         return true;
       }
@@ -1233,7 +1223,7 @@
         { id: "org", label: "Congregation or organization (if any)", t: "text" }
       ];
 
-      /* Field ids are prefixed per screen ("a" = apply, "p" = profile) — both
+      /* Field ids are prefixed per screen ("a" = apply, "p" = profile), since both
          forms exist in the DOM at once, so unprefixed ids would collide. */
       function fieldHtml(f, px) {
         var fid = "f-" + px + "-" + f.id;
@@ -1274,9 +1264,9 @@
         if (t.id === "workforce-readiness" && DATA.partners) {
           var opts = [];
           DATA.partners.forEach(function (pt) {
-            (pt.programs || []).forEach(function (pr) { opts.push(pt.name + " — " + pr.name); });
+            (pt.programs || []).forEach(function (pr) { opts.push(pt.name + " · " + pr.name); });
           });
-          opts.push("Not sure yet — match me");
+          opts.push("Not sure yet, match me");
           extraQs.push({ id: "pathway", label: "Which pathway interests you?", t: "select", options: opts });
         }
         var fields = BASE_FIELDS.concat(extraQs, [{ id: "notes", label: "Anything else we should know?", t: "long" }]);
@@ -1290,7 +1280,7 @@
         var btn = document.getElementById("applySubmit");
         btn.disabled = false;
         btn.textContent = "Submit application";
-        document.title = "Apply: " + t.name + " — Freedom, Inc.";
+        document.title = "Apply: " + t.name + " · Freedom, Inc.";
         if (current === "apply") window.scrollTo(0, 0);
         return true;
       }
@@ -1344,7 +1334,7 @@
           var app = res[0];
           document.getElementById("doneRef").textContent = app.id;
           document.getElementById("doneMsg").textContent = "Your application to " + t.name +
-            " is in. Keep this reference — it's also saved in your profile on this device.";
+            " is in. Keep this reference; it's also saved in your profile on this device.";
           renderDoneExtras(t, app);
           document.getElementById("applyFormWrap").hidden = true;
           document.getElementById("applyDoneWrap").hidden = false;
@@ -1353,7 +1343,7 @@
         }).catch(function () {
           btn.disabled = false;
           btn.textContent = "Submit application";
-          say("Couldn't send just now — check your connection and try again.");
+          say("Couldn't send just now. Check your connection and try again.");
         });
       });
 
@@ -1366,13 +1356,13 @@
         var q = encodeURIComponent(city);
         var links = [
           ["Find the MLK street on the map", "https://www.google.com/maps/search/" + encodeURIComponent("Martin Luther King near " + city)],
-          ["City hall — contact page", "https://www.google.com/search?q=" + q + encodeURIComponent(" city hall contact")],
+          ["City hall contact page", "https://www.google.com/search?q=" + q + encodeURIComponent(" city hall contact")],
           ["Planning & zoning department", "https://www.google.com/search?q=" + q + encodeURIComponent(" planning and zoning department contact")],
           ["Economic development office", "https://www.google.com/search?q=" + q + encodeURIComponent(" economic development office contact")]
         ];
         var card = document.createElement("div");
         card.className = "card extra-done";
-        card.innerHTML = '<span class="num">Research starters — ' + esc(city) + "</span>" +
+        card.innerHTML = '<span class="num">Research starters for ' + esc(city) + "</span>" +
           "<h3>The pipeline is already moving.</h3>" +
           "<p>Our team runs the full research dossier next. If you want to look now, these are the doors:</p>" +
           "<p>" + links.map(function (l) {
@@ -1382,7 +1372,7 @@
         var prop = document.createElement("div");
         prop.className = "card extra-done";
         prop.innerHTML = '<span class="num">The funding ask</span><h3>Your proposal draft, started.</h3>' +
-          "<p>A financial-support proposal modeled on the Connecticut playbook, pre-filled with your answers — open it, print it, or save it as PDF. The team refines it with you before anything is sent.</p>";
+          "<p>A financial-support proposal modeled on the Connecticut playbook, pre-filled with your answers. Open it, print it, or save it as PDF. The team refines it with you before anything is sent.</p>";
         var btn = document.createElement("button");
         btn.className = "btn btn--navy";
         btn.type = "button";
@@ -1398,22 +1388,22 @@
         var w = window.open("", "_blank");
         if (!w) { say("Allow pop-ups to open the proposal draft."); return; }
         var d = w.document;
-        d.title = "MLK Corridor Proposal Draft — " + city;
+        d.title = "MLK Corridor Proposal Draft: " + city;
         var body =
           "<h1>Martin Luther King, Jr. Corridor Initiative<br>" + esc(city) + "</h1>" +
-          "<p class='draft'>DRAFT — prepared with Freedom, Inc. (faithandresults.com) · " +
+          "<p class='draft'>DRAFT, prepared with Freedom, Inc. (faithandresults.com) · " +
           new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) + "</p>" +
-          "<h2>Submitted by</h2><p>" + esc(app.org || "[ORGANIZATION]") + " — " + esc(a["Your organization"] || "") +
+          "<h2>Submitted by</h2><p>" + esc(app.org || "[ORGANIZATION]") + " · " + esc(a["Your organization"] || "") +
           (a["Organization size"] ? ", " + esc(a["Organization size"]) : "") + "<br>Contact: " + esc(app.name || "") +
           (a["Your role in the organization"] ? ", " + esc(a["Your role in the organization"]) : "") +
           " · " + esc(app.email || "") + (app.phone ? " · " + esc(app.phone) : "") + "</p>" +
-          "<h2>The request</h2><p>We respectfully request financial support — anticipated source: <strong>" +
-          esc(a["Financial support you expect to seek"] || "[FUNDING SOURCE]") + "</strong> — to organize, plan, and " +
+          "<h2>The request</h2><p>We respectfully request financial support (anticipated source: <strong>" +
+          esc(a["Financial support you expect to seek"] || "[FUNDING SOURCE]") + "</strong>) to organize, plan, and " +
           "activate the corridor named for Dr. Martin Luther King, Jr. in " + esc(city) + ".</p>" +
           "<h2>The corridor today</h2><p>" +
           esc(a["Does your city have a street or corridor named for Dr. King?"] === "Yes"
-            ? "Our city's MLK corridor exists today: " + (a["If yes — the corridor today is…"] || "[CONDITION]") + "."
-            : "Corridor identification in progress — Freedom, Inc.'s research confirms the street, its condition, and its stakeholders.") +
+            ? "Our city's MLK corridor exists today: " + (a["If yes, the corridor today is…"] || "[CONDITION]") + "."
+            : "Corridor identification in progress; Freedom, Inc.'s research confirms the street, its condition, and its stakeholders.") +
           "</p>" +
           "<h2>Our vision</h2><p>" + esc(a["What should your corridor become?"] || "[VISION]") + "</p>" +
           (a["Local partners already at the table (if any)"] ? "<h2>Partners at the table</h2><p>" +
@@ -1422,7 +1412,7 @@
           "Corridors Initiative organized by the Black Ministers Alliance of New Britain with a statewide coalition, " +
           "which named corridor communities in Norwalk, Middletown, and New Britain and submitted its program " +
           "outline to the Connecticut Department of Economic and Community Development.</p>" +
-          "<h2>Budget</h2><p>[BUDGET TABLE — completed with Freedom, Inc. during proposal review]</p>" +
+          "<h2>Budget</h2><p>[BUDGET TABLE, completed with Freedom, Inc. during proposal review]</p>" +
           "<p class='draft'>Reference " + esc(app.id) + " · This draft is a starting point; Freedom, Inc. reviews and " +
           "finalizes every proposal with the applicant before submission.</p>";
         d.body.innerHTML = body;
@@ -1459,7 +1449,7 @@
           return '<div class="card"><span class="num">' + esc(a.id) + " · " + dt + "</span>" +
             "<h3>" + esc(a.trainingName) + "</h3>" +
             '<p><span class="' + cls + '">' + label + "</span>" +
-            (a.note ? " — " + esc(a.note) : "") + "</p></div>";
+            (a.note ? " · " + esc(a.note) : "") + "</p></div>";
         }).join("");
       }
 
@@ -1527,20 +1517,20 @@
             '<div class="field"><label for="re-' + ev.id + '">Email</label><input id="re-' + ev.id + '" type="email"></div>' +
             '<div class="field"><label for="rp-' + ev.id + '">Mobile (for text reminders)</label><input id="rp-' + ev.id + '" type="tel"></div>' +
             (ev.sponsor ? '<div class="field"><label for="rt-' + ev.id + '">I want to…</label><select id="rt-' + ev.id + '">' +
-              "<option>Attend</option><option>Sponsor — send me the sponsorship package</option></select></div>" : "") +
+              "<option>Attend</option><option>Sponsor: send me the sponsorship package</option></select></div>" : "") +
             '<div class="cta-row" style="margin-top:0.9rem"><button class="btn" type="button" data-rsvp="' + ev.id + '">Count me in</button>' +
             '<button class="btn btn--navy" type="button" data-ics="' + ev.id + '">Add to my calendar</button></div></div>';
         } else if (past) {
           acts = (ev.link ? '<p style="margin-top:0.6rem"><a href="' + esc(ev.link) +
             '" target="_blank" rel="noopener" style="color:var(--clay); font-weight:700">▶ Watch the full event →</a></p>' : "") +
-            '<p class="go" style="margin-top:0.5rem">This one’s history — the record stays here.</p>';
+            '<p class="go" style="margin-top:0.5rem">This one’s history. The record stays here.</p>';
         }
         return '<details class="card evtcard rv in" data-ev="' + ev.id + '"><summary>' +
           '<span class="when">' + when + "</span>" +
           "<h3 style='width:100%'>" + esc(ev.title) + "</h3>" +
           '<span class="chip">' + esc(ev.category || "Event") + "</span>" +
           (ev.sponsor && !past ? '<span class="chip">Sponsorships open</span>' : "") +
-          (ev.sample ? '<span class="chip chip--sample">Sample — set real date</span>' : "") +
+          (ev.sample ? '<span class="chip chip--sample">Sample: set real date</span>' : "") +
           "</summary>" +
           "<p style='margin-top:0.6rem'><strong>" + esc(ev.time || "") + (ev.time && ev.location ? " · " : "") + esc(ev.location || "") + "</strong></p>" +
           "<p>" + esc(ev.body || "") + "</p>" + acts + "</details>";
@@ -1555,7 +1545,7 @@
           .sort(function (a, b) { return evDate(b) - evDate(a); });
         document.getElementById("evtFuture").innerHTML = future.length
           ? future.map(function (e) { return evtCard(e, false); }).join("")
-          : '<div class="card"><h3>New dates landing soon</h3><p>The next season of gatherings publishes here. Want the first word? RSVP lists get it — leave your details on any event, or write <a href="mailto:info@faithandresults.com" style="color:var(--clay)">info@faithandresults.com</a>.</p></div>';
+          : '<div class="card"><h3>New dates landing soon</h3><p>The next season of gatherings publishes here. Want the first word? Leave your details on any event, or write <a href="mailto:info@faithandresults.com" style="color:var(--clay)">info@faithandresults.com</a>.</p></div>';
         document.getElementById("evtPast").innerHTML = past.length
           ? past.map(function (e) { return evtCard(e, true); }).join("")
           : '<div class="card"><p>Nothing archived yet.</p></div>';
@@ -1583,8 +1573,8 @@
           }).then(function () {
             r.textContent = "You're on the list ✓";
             say(typeEl && typeEl.value.indexOf("Sponsor") === 0
-              ? "Got it — the sponsorship package is on its way." : "RSVP received — see you there.");
-          }).catch(function () { r.disabled = false; say("Couldn't send the RSVP — try again."); });
+              ? "Got it. The sponsorship package is on its way." : "RSVP received. See you there.");
+          }).catch(function () { r.disabled = false; say("Couldn't send the RSVP. Try again."); });
           return;
         }
         var icsBtn = e.target.closest("button[data-ics]");
@@ -1657,7 +1647,7 @@
         var items = (d.items || []).filter(function (i) { return now - new Date(i.date).getTime() < FRESH; });
         var box = document.getElementById("newsList");
         if (!items.length) {
-          box.innerHTML = '<div class="card"><h3>New season loading</h3><p>Fresh news and events publish here — nothing stale is ever shown. Call (203) 549-8703 for what’s next.</p></div>';
+          box.innerHTML = '<div class="card"><h3>New season loading</h3><p>Fresh news and events publish here, and nothing stale is ever shown. Call (203) 549-8703 for what’s next.</p></div>';
           return;
         }
         box.innerHTML = items.slice(0, 6).map(function (i) {
@@ -1666,7 +1656,7 @@
         }).join("");
       }).catch(function () {
         document.getElementById("newsList").innerHTML =
-          '<div class="card"><h3>News is offline</h3><p>Reconnect to load the latest — or call (203) 549-8703 for what’s next.</p></div>';
+          '<div class="card"><h3>News is offline</h3><p>Reconnect to load the latest, or call (203) 549-8703 for what’s next.</p></div>';
       });
 
       /* ================= app bar lift on scroll ================= */
@@ -1684,7 +1674,7 @@
         clearTimeout(toastTimer);
         toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 3500);
       }
-      window.addEventListener("offline", function () { say("You're offline — the app keeps working from its saved copy."); });
+      window.addEventListener("offline", function () { say("You're offline. The app keeps working from its saved copy."); });
       window.addEventListener("online", function () { say("Back online."); });
 
       /* ================= install ================= */
@@ -1718,7 +1708,7 @@
       });
       window.addEventListener("appinstalled", function () {
         hideInstallUi();
-        say("Installed — find Freedom, Inc. on your home screen.");
+        say("Installed. Find Freedom, Inc. on your home screen.");
       });
       var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
       if (isIos && !standalone) {
@@ -1749,7 +1739,7 @@
         renderEvents();
         route();
       }).catch(function () {
-        say("Couldn't load the program catalog — check your connection and reload.");
+        say("Couldn't load the program catalog. Check your connection and reload.");
       });
     })();
   </script>
