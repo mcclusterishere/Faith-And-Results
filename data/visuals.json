@@ -1,19 +1,33 @@
 {
- "note": "The photo map, curated from a full review of all 253 media files. gallery renders as the swipeable strip on Home; programImgs/trainingImgs put header photos on cards by id; cityImgs put photos atop city sheets by exact city name.",
+ "note": "The photo map, curated from a full review of all 253 media files. gallery renders as the swipeable strip on Home (each entry: src, t title, s sentence, href tap target); pillarImgs shade the Home pillar rows; pillarCards wash into the Programs accordion; programImgs/trainingImgs put header photos on cards by id; cityImgs put photos atop city sheets by exact city name.",
  "gallery": [
-  "assets/media/1234-1.jpg",
-  "assets/media/1024x1024-1-1.jpg",
-  "assets/media/920x920-1.jpg",
-  "assets/media/920x920-2-e1568129718198.jpg",
-  "assets/media/920x920-3.jpg",
-  "assets/media/920x920-4.jpg",
-  "assets/media/1.jpg",
-  "assets/media/123.jpg",
-  "assets/media/IMG_20190523_163536-e1569945976711.jpg",
-  "assets/media/1024x1024-1.jpg",
-  "assets/media/1024x1024-2.jpg",
-  "assets/media/3987856887562105002-e1568301092799.jpg"
+  { "src": "assets/media/1234-1.jpg", "t": "The Norwalk launch", "s": "Rev. McCluster at the podium with the mayor and the congressman as Norwalk joins the corridor map.", "href": "#/corridor" },
+  { "src": "assets/media/1024x1024-1-1.jpg", "t": "The voice of the work", "s": "Rev. Carl McCluster, taking the mission to the microphone.", "href": "#/about" },
+  { "src": "assets/media/920x920-1.jpg", "t": "The state's microphone", "s": "Faith leaders stand with state officials as the case is made on the record.", "href": "#/corridor" },
+  { "src": "assets/media/920x920-2-e1568129718198.jpg", "t": "City hall, together", "s": "Norwalk's leadership and the collaborative, shoulder to shoulder.", "href": "#/corridor" },
+  { "src": "assets/media/920x920-3.jpg", "t": "Washington listens", "s": "A U.S. senator takes the corridor case, flags at his back.", "href": "#/news" },
+  { "src": "assets/media/920x920-4.jpg", "t": "Say it plain", "s": "The pulpit speaks to power.", "href": "#/news" },
+  { "src": "assets/media/1.jpg", "t": "The playbook, taught", "s": "Walking a city through the Corridors presentation guide, slide by slide.", "href": "#/corridor" },
+  { "src": "assets/media/123.jpg", "t": "Middletown says yes", "s": "The launch at city hall, under the wall of mayors.", "href": "#/corridor" },
+  { "src": "assets/media/IMG_20190523_163536-e1569945976711.jpg", "t": "The working table", "s": "A corridor community works the plan, chair by chair.", "href": "#/corridor" },
+  { "src": "assets/media/1024x1024-1.jpg", "t": "Full pews, real talk", "s": "A community conversation fills the sanctuary.", "href": "#/events" },
+  { "src": "assets/media/1024x1024-2.jpg", "t": "Between the meetings", "s": "The conversations that move cities happen in hallways.", "href": "#/cities" },
+  { "src": "assets/media/3987856887562105002-e1568301092799.jpg", "t": "Community and the badge", "s": "Clergy and officers side by side at the Police Officer's Prayer memorial.", "href": "#/events" }
  ],
+ "pillarImgs": {
+  "economic": "assets/media/mission-bg-2.jpg",
+  "education": "assets/media/vision-mobile.jpg",
+  "housing": "assets/media/freedom-slider-1.jpg",
+  "sustainability": "assets/media/sustainability-bg.jpg",
+  "community": "assets/media/IMG_20190516_162315-e1559237250402.jpg"
+ },
+ "pillarCards": {
+  "economic": "assets/media/history-bg-3.jpg",
+  "education": "assets/media/history-housing-bg.jpg",
+  "housing": "assets/media/housing-bg.jpg",
+  "sustainability": "assets/media/sustainability-slider-bg-overlay.jpg",
+  "community": "assets/media/freedom-slide2.jpg"
+ },
  "programImgs": {
   "homes-saved-by-faith": "assets/media/homes-saved-header.jpg",
   "get-home-now": "assets/media/freedom-fb-1.jpg",

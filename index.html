@@ -178,12 +178,21 @@
       object-fit: cover; border-radius: 11px 11px 0 0; }
     .sheetimg { display: block; width: calc(100% + 2.6rem); margin: -0.9rem -1.3rem 1rem; height: 11rem; object-fit: cover; }
 
-    /* ---- swipeable photo gallery (scroll-snap, mobile first) ---- */
+    /* ---- swipeable photo gallery: captioned, tappable cards ---- */
     .gallery { display: flex; gap: 0.8rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.4rem 1.3rem 1rem;
       -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .gallery::-webkit-scrollbar { display: none; }
-    .gallery img { scroll-snap-align: center; height: 15rem; width: auto; max-width: 86vw; object-fit: cover;
-      border-radius: 10px; box-shadow: 0 1px 3px rgba(10, 16, 26, 0.2), 0 16px 32px -18px rgba(10, 16, 26, 0.4); flex: none; }
+    .gcard { flex: none; scroll-snap-align: center; position: relative; display: block; border-radius: 10px;
+      overflow: hidden; height: 15.5rem; width: min(78vw, 20rem); text-decoration: none;
+      box-shadow: 0 1px 3px rgba(10, 16, 26, 0.2), 0 16px 32px -18px rgba(10, 16, 26, 0.4); }
+    .gcard img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gcard .gcap { position: absolute; inset: auto 0 0 0; padding: 2.2rem 0.95rem 0.85rem;
+      background: linear-gradient(180deg, transparent, rgba(6, 10, 17, 0.62) 38%, rgba(6, 10, 17, 0.9)); }
+    .gcard .gcap b { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
+      font-size: 1.08rem; color: #fff; letter-spacing: -0.01em; line-height: 1.15; }
+    .gcard .gcap span { display: block; font-size: 0.88rem; line-height: 1.35; color: rgba(255, 255, 255, 0.85);
+      margin-top: 0.25rem; }
+    .gcard:active { transform: scale(0.985); }
 
     /* ---- photo bands: full-bleed photography between sections ---- */
     .photoband { position: relative; background: var(--navy) center / cover no-repeat; color: #fff;
@@ -480,7 +489,7 @@
     .logos img { filter: grayscale(1) opacity(0.72); transition: filter 0.3s ease; }
     .logos img:hover { filter: none; }
     .gallery { padding-bottom: 2.1rem; }
-    .gallery img:nth-child(even) { transform: translateY(1.05rem); }
+    .gallery > :nth-child(even) { transform: translateY(1.05rem); }
     a.card { position: relative; }
     a.card::after { content: ""; position: absolute; top: 10px; right: 10px; width: 12px; height: 12px;
       border-top: 1.5px solid #b6c7dc; border-right: 1.5px solid #b6c7dc;
@@ -596,6 +605,32 @@
     .edlist--dark .edrow .arrow { color: var(--gold); }
     .edlist--dark .edrow:hover { background: rgba(255, 255, 255, 0.05); }
 
+    /* photo-backed pillar rows: each pillar wears its own image, shaded
+       dark enough that the words always win */
+    .edlist--photos { border: 0; display: grid; gap: 0.85rem; }
+    .edlist--photos .edrow { border: 0; border-radius: 12px; overflow: hidden; position: relative;
+      padding: 1.35rem 1.15rem; min-height: 6.6rem; background-size: cover; background-position: center;
+      box-shadow: 0 1px 2px rgba(8, 13, 20, 0.2), 0 14px 28px -18px rgba(8, 13, 20, 0.5); }
+    .edlist--photos .edrow::before { content: ""; position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(8, 13, 20, 0.86) 30%, rgba(8, 13, 20, 0.42)); }
+    .edlist--photos .edrow > * { position: relative; }
+    .edlist--photos .edrow, .edlist--photos .edrow strong { color: #fff; }
+    .edlist--photos .edrow small { color: rgba(255, 255, 255, 0.8); }
+    .edlist--photos .edrow .idx { color: rgba(255, 255, 255, 0.42); }
+    .edlist--photos .edrow .arrow { color: var(--gold); }
+    .edlist--photos .edrow:hover { background-color: transparent; }
+    .edlist--photos .edrow:active { transform: scale(0.985); }
+
+    /* wash cards: a photo you can just make out behind the words */
+    .washcard { display: block; position: relative; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--line); background-size: cover; background-position: center;
+      padding: 1rem 1.1rem; margin: 0.15rem 0 0.6rem; }
+    .washcard::before { content: ""; position: absolute; inset: 0; background: rgba(240, 243, 247, 0.87); }
+    .washcard > * { position: relative; }
+    .washcard b { display: block; font-family: "Grotesk", "Avenir Next", sans-serif; font-weight: 600;
+      font-size: 1.05rem; color: var(--navy); letter-spacing: -0.01em; }
+    .washcard span { display: block; font-size: 0.95rem; color: #46586d; margin-top: 0.2rem; }
+
     .qlink { display: inline-block; font-weight: 600; font-size: 1.02rem; color: var(--clay);
       text-decoration: none; border-bottom: 1px solid rgba(23, 93, 174, 0.35); padding-bottom: 0.1em; }
     .qlink:hover { border-bottom-color: currentColor; }
@@ -695,6 +730,9 @@
       .pnum { color: #33506f; }
       .install, .field input, .field select, .field textarea { color-scheme: dark; }
       .edrow, .edrow strong, .tstop b, .stat b, .evtcard .dt b { color: #e9eff7; }
+      .washcard::before { background: rgba(13, 19, 29, 0.87); }
+      .washcard b { color: #e9eff7; }
+      .washcard span { color: #b6c4d6; }
       .edrow small, .tstop span { color: #b6c4d6; }
       .edrow .idx { color: #3d5673; }
       .edrow:hover { background: rgba(143, 188, 244, 0.06); }
@@ -781,7 +819,7 @@
       <div class="wrap">
         <p class="kick">The work</p>
         <h2>Five pillars.<br>One mission.</h2>
-        <div class="edlist" id="homeWork"></div>
+        <div class="edlist edlist--photos" id="homeWork"></div>
         <div class="qlinks">
           <a class="qlink" href="#/about">The leadership →</a>
           <a class="qlink" href="#/cities">Nineteen cities →</a>
@@ -1515,10 +1553,15 @@
         var cat = document.getElementById("programCatalog");
         cat.innerHTML = DATA.pillars.map(function (pl, i) {
           var progs = DATA.programs.filter(function (p) { return p.pillar === pl.id; });
+          var wash = (DATA.visuals.pillarCards || {})[pl.id];
           return '<details class="pillrow rv in"' + (i === 0 ? " open" : "") + '><summary>' +
             '<b class="pnum">0' + (i + 1) + '</b><span><strong>' + esc(pl.name) + "</strong>" +
             "<small>" + esc(pl.blurb) + "</small></span></summary>" +
-            '<div class="plist">' + progs.map(function (p) {
+            '<div class="plist">' +
+            (wash ? '<div class="washcard" style="background-image:url(\'' + esc(wash) + '\')">' +
+              "<b>" + progs.length + " program" + (progs.length === 1 ? "" : "s") + ", every one live.</b>" +
+              "<span>" + esc(pl.blurb) + " Tap any program to open it.</span></div>" : "") +
+            progs.map(function (p) {
               return '<a class="prow" href="' + (p.screen || "#/program/" + p.id) + '"><span><strong>' + esc(p.name) +
                 "</strong><small>" + esc(p.tag) + "</small></span><em>→</em></a>";
             }).join("") + "</div></details>";
@@ -1547,7 +1590,10 @@
 
         var hw = document.getElementById("homeWork");
         if (hw) hw.innerHTML = DATA.pillars.map(function (pl, i) {
-          return '<a class="edrow" href="#/programs"><span class="idx">0' + (i + 1) + '</span>' +
+          var pi = (DATA.visuals.pillarImgs || {})[pl.id];
+          return '<a class="edrow" href="#/programs"' +
+            (pi ? ' style="background-image:url(\'' + esc(pi) + '\')"' : "") +
+            '><span class="idx">0' + (i + 1) + '</span>' +
             "<span><strong>" + esc(pl.name) + "</strong><small>" + esc(pl.blurb) + "</small></span>" +
             '<span class="arrow">→</span></a>';
         }).join("");
@@ -1739,13 +1785,18 @@
         });
       });
 
-      /* ================= photo gallery ================= */
+      /* ================= photo gallery: captioned, tappable ================= */
       function renderGallery() {
         var g = DATA.visuals.gallery || [];
         var box = document.getElementById("homeGallery");
         if (!box || !g.length) return;
-        box.innerHTML = g.map(function (src) {
-          return '<img src="' + esc(src) + '" alt="Freedom, Inc. at work" loading="lazy">';
+        box.innerHTML = g.map(function (it) {
+          if (typeof it === "string") it = { src: it };
+          return '<a class="gcard" href="' + esc(it.href || "#/news") + '">' +
+            '<img src="' + esc(it.src) + '" alt="' + esc(it.t || "Freedom, Inc. at work") + '" loading="lazy">' +
+            (it.t ? '<span class="gcap"><b>' + esc(it.t) + "</b>" +
+              (it.s ? "<span>" + esc(it.s) + "</span>" : "") + "</span>" : "") +
+            "</a>";
         }).join("");
         box.parentElement.hidden = false;
       }
