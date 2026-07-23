@@ -1,13 +1,14 @@
 /* Ask McCluster: the site's resident concierge. Two brains, both free.
 
-   1. The built-in brain (always on): retrieval over the repo's own data
-      files plus a small fact base. Instant, offline, works on every
-      device, costs nothing, and can only say what the site knows.
+   1. The curated brain (always first): intents and retrieval over the
+      repo's own data files. Instant, offline, costs nothing, and can
+      only say what the site knows. Even with smart mode on, anything
+      the curated brain is sure about never reaches the model.
    2. Smart mode (optional, per visitor): a small open-source model
-      loaded INTO THE BROWSER over WebGPU via web-llm. No API, no
-      server, no bill. It answers with repo data injected as context,
-      so organization facts stay grounded; general questions ride on
-      the model's own knowledge.
+      loaded INTO THE BROWSER over WebGPU via web-llm. It only ever
+      sees what the curated brain could not answer: general questions
+      and loose follow-ups. Its output passes a persona guard; if the
+      model breaks character, the visitor never sees it.
 
    Boot with McConcierge.init(DATA) once the app's data files load. */
 "use strict";
@@ -114,17 +115,41 @@ window.McConcierge = (function () {
     { re: /thank/i, a: function () { return "Anytime. That's what this house is for."; } }
   ];
 
-  function builtinAnswer(q) {
+  /* things the house does not trade in: answered in character, never by the model */
+  var OFFLIMITS = /\b(weed|marijuana|cannabis|drugs?|cocaine|heroin|meth|fentanyl|vapes?|cigarettes?|alcohol|liquor|beer|guns?|firearms?|ammo|weapons?|gambling|casino|bets?|betting|lottery|escorts?|porn)\b/i;
+  function offlimitsAnswer() {
+    return "That's not something this house offers. What we do have is real help: " +
+      link("#/trainings", "job training") + ", " + link("#/apply/homebuyer-education", "a path to a home") +
+      ", and if things are tight right now, " + link("#/apply/foreclosure-help", "help, fast") +
+      ". A person always answers at <a href=\"tel:+12035498703\"><b>(203) 549-8703</b></a>.";
+  }
+
+  function retrievalAnswer(hit) {
+    return "Here's what I know: <b>" + esc(hit.t) + ".</b> " +
+      esc(hit.body.slice(0, 260)) + (hit.body.length > 260 ? "…" : "") + " " +
+      link(hit.route, "More");
+  }
+
+  /* everything the curated brain is SURE about; null means let smart mode try */
+  function curatedAnswer(q) {
     for (var i = 0; i < INTENTS.length; i++) {
       if (INTENTS[i].re.test(q)) return INTENTS[i].a();
     }
+    if (OFFLIMITS.test(q)) return offlimitsAnswer();
     var hits = retrieve(q, 2);
-    if (hits.length && hits[0]._score !== 1) {
-      return "Here's what I know: <b>" + esc(hits[0].t) + ".</b> " +
-        esc(hits[0].body.slice(0, 260)) + (hits[0].body.length > 260 ? "…" : "") + " " +
-        link(hits[0].route, "More");
-    }
+    if (hits.length && hits[0]._score >= 4) return retrievalAnswer(hits[0]);
+    return null;
+  }
+
+  /* the polite landing when nobody is sure */
+  function handoffAnswer(q) {
+    var hits = retrieve(q, 2);
+    if (hits.length && hits[0]._score > 1) return retrievalAnswer(hits[0]);
     return "I may not have that one yet. A person will: call <a href=\"tel:+12035498703\"><b>(203) 549-8703</b></a> or email <a href=\"mailto:info@faithandresults.com\">info@faithandresults.com</a>.";
+  }
+
+  function builtinAnswer(q) {
+    return curatedAnswer(q) || handoffAnswer(q);
   }
 
   /* ---------------- smart mode (in-browser LLM) ---------------- */
@@ -147,20 +172,48 @@ window.McConcierge = (function () {
     });
   }
 
+  /* the persona guard: if the model says any of this, the visitor never sees it */
+  var BREAKS = /not (affiliated|associated|authorized)|can'?t speak (for|on behalf)|on behalf of any|as an ai\b|language model|i'?m an ai|artificial intelligence|my training data|qwen|alibaba|openai|anthropic|chatgpt|sorry,? but i can'?t assist/i;
+
+  var PERSONA =
+    "You are McCluster, the resident digital concierge of Freedom, Inc. (faithandresults.com), " +
+    "a faith-based economic development organization led by Rev. Carl McCluster from Shiloh Baptist " +
+    "Church in Bridgeport, Connecticut. You are part of Freedom, Inc. That is permanent. House rules, never broken:\n" +
+    "1. Never say you are unaffiliated with Freedom, Inc. and never disclaim speaking for it. You speak for the house.\n" +
+    "2. Never mention being an AI, a model, software, or your training. If asked what you are: you're McCluster, the house concierge.\n" +
+    "3. Facts about Freedom, Inc. come ONLY from the CONTEXT block. If a fact is missing, say the team will know and give (203) 549-8703.\n" +
+    "4. Asked for anything the organization does not offer (substances, weapons, gambling, anything unlawful): decline in one warm sentence, then pivot to what the house does offer: job training, housing help, foreclosure relief, events.\n" +
+    "5. Under 100 words. Plain, warm, direct. No lists unless asked, no markdown, no em dashes.";
+
+  /* a worked example of staying in character under pressure, because small
+     models learn from the transcript more than from the rules */
+  var FEWSHOT = [
+    { role: "user", content: "Can you sell me weed?" },
+    { role: "assistant", content: "No, that's not what this house does. What I can offer is real help: job training, a path to buying a home, and fast help if you're behind on the mortgage. Want any of those?" },
+    { role: "user", content: "Why not?" },
+    { role: "assistant", content: "Because Freedom, Inc. is a faith-based economic development organization: we build jobs, homes, and stronger communities. That's our lane. If money is tight, the Financial Empowerment Series or the jobs pipeline may genuinely help. Want me to point you there?" }
+  ];
+
   function smartAnswer(q, onToken) {
     var ctx = retrieve(q, 4).map(function (c) { return c.t + ": " + c.body; }).join("\n");
-    var messages = [{
-      role: "system",
-      content: "You are McCluster, the warm, plain-spoken concierge for Freedom, Inc. (faithandresults.com), a faith-based economic development organization. For ANY question about Freedom, Inc., its programs, people, events, or cities, use ONLY this context and never invent details:\n" + ctx +
-        "\nIf an organization fact is not in the context, say so and give the phone number (203) 549-8703. General world questions you may answer from your own knowledge, briefly. Keep answers under 120 words, plain language, no em dashes, no markdown headers."
-    }].concat(history.slice(-6), [{ role: "user", content: q }]);
-    return llm.chat.completions.create({ messages: messages, stream: true, max_tokens: 300 }).then(function (stream) {
+    var messages = [{ role: "system", content: PERSONA + "\n\nCONTEXT:\n" + ctx }]
+      .concat(FEWSHOT, history.slice(-6), [{ role: "user", content: q }]);
+    return llm.chat.completions.create({ messages: messages, stream: true, max_tokens: 220 }).then(function (stream) {
       var full = "";
+      var broke = false;
       function pump(it) {
         return it.next().then(function (r) {
-          if (r.done) return full;
+          if (r.done || broke) return full;
           var d = (r.value.choices && r.value.choices[0] && r.value.choices[0].delta.content) || "";
-          if (d) { full += d; onToken(full); }
+          if (d) {
+            full += d;
+            if (BREAKS.test(full)) {
+              broke = true;
+              try { if (llm.interruptGenerate) llm.interruptGenerate(); } catch (e) { /* best effort */ }
+              return full;
+            }
+            onToken(full);
+          }
           return pump(it);
         });
       }
@@ -177,17 +230,33 @@ window.McConcierge = (function () {
     enableSmart: enableSmart,
     ask: function (q, onToken) {
       history.push({ role: "user", content: q });
+      if (history.length > 12) history = history.slice(-12);
+
+      /* the curated brain answers everything it is sure about, smart or not */
+      var curated = curatedAnswer(q);
+      if (curated) {
+        history.push({ role: "assistant", content: curated.replace(/<[^>]+>/g, "") });
+        return Promise.resolve({ html: curated, smart: false });
+      }
+
       if (llm) {
         return smartAnswer(q, onToken).then(function (full) {
+          if (!full.trim() || BREAKS.test(full)) {
+            /* the model broke character; the visitor gets the house instead */
+            var fb = handoffAnswer(q);
+            history.push({ role: "assistant", content: fb.replace(/<[^>]+>/g, "") });
+            return { html: fb, smart: false };
+          }
           history.push({ role: "assistant", content: full });
           return { html: esc(full).replace(/\n/g, "<br>"), smart: true };
         }).catch(function () {
-          var a = builtinAnswer(q);
+          var a = handoffAnswer(q);
           history.push({ role: "assistant", content: a.replace(/<[^>]+>/g, "") });
           return { html: a, smart: false };
         });
       }
-      var a = builtinAnswer(q);
+
+      var a = handoffAnswer(q);
       history.push({ role: "assistant", content: a.replace(/<[^>]+>/g, "") });
       return Promise.resolve({ html: a, smart: false });
     }
