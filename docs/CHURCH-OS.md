@@ -60,6 +60,66 @@ does not need the 512GB Mac. Size the box to the congregation.
 
 ---
 
+## The two tiers: your fleet and their box
+
+There are two different machines in this business and they are easy to confuse.
+Keeping them separate is what makes the whole thing work.
+
+### Tier A: the central fleet (yours)
+
+This is your infrastructure, in one place, that you run and manage. A rack of
+older enterprise servers is a genuinely good fit here. A fleet of twenty Dell
+PowerEdge R610s, for example, gives you roughly 240 CPU cores and one to four
+terabytes of aggregate RAM: plenty for everything a datacenter does, as long as
+you do not ask it to be the frontier-model brain.
+
+What the fleet runs:
+
+- **The management plane** for every church install: provisioning, updates,
+  monitoring, health checks, license and support tracking.
+- **The encrypted off-site backups** for all of them. Each church's box holds
+  its own data locally; the fleet holds the encrypted backup so a stolen or
+  dead box never means a lost congregation.
+- **The hosted option.** Not every church will want or afford its own box. A
+  church too small for hardware can run as a tenant on your fleet instead, same
+  software, their data isolated.
+- **Dev, staging, and the website hosting** for faithandresults.com and the
+  church sites.
+- **The small models on CPU:** routing, classification, embeddings for search,
+  and Whisper transcription. These tolerate CPU and DDR3 fine. See the honest
+  limits below.
+
+What the fleet is NOT: it is not where a big frontier model runs. Old Xeons on
+DDR3 have low memory bandwidth (~32 GB/s per socket versus ~800 GB/s on a Mac
+M3 Ultra), no GPUs, and the boxes are joined only by ethernet. Sharding one
+giant model across many nodes needs an interconnect like NVLink; over ethernet
+the token-by-token network round-trips make it unusably slow. Aggregate RAM
+across nodes does not equal usable capacity for a single large model. For the
+heavy reasoning model, add **one modern inference node** (a DGX Spark, or a Mac
+Studio 512GB for a true frontier model) and let the fleet be everything around
+it. The router sends cheap requests to the small models on the fleet and the
+hard ones to that node.
+
+Reality checks on a fleet like this: twenty R610s draw roughly 3 to 5
+kilowatts, which is dedicated circuits, real cooling, loud 1U fans, and a power
+bill around $500 to $1000 a month. And the hardware is fifteen years old and
+out of warranty, so plan for drive and PSU failures and keep spares. It is
+excellent value for compute you already own; it is not free to run.
+
+### Tier B: the per-church appliance (theirs)
+
+One small modern box that lives in the church building, sized to the
+congregation. This is the product. You never ship a rack to a church. The
+appliance holds that church's data locally, runs its back office, and phones
+home to your fleet only for backups and updates over the encrypted tunnel.
+
+The rule of thumb: **their data lives on their box; your fleet holds the
+encrypted copy and runs the business.** A church's records never sit unencrypted
+on your infrastructure, which keeps the "your data never leaves the building"
+promise true even though you hold the backups.
+
+---
+
 ## The software stack
 
 Bottom to top:
