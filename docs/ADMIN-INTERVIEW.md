@@ -1,223 +1,279 @@
 # The Administrator Interview
 ### The operational audit of Freedom, Inc. / Faith CDC, and the map for automating everything that can be automated
+### Destination: WordPress
 
 This is the instrument for interviewing the final administrator. It was built
-from a full audit of the platform: every screen, every form, every data file,
-every agent, and every doc in this repo. Walk out of this interview with the
-answers and the artifacts below, and every automatable operation in this
-organization can be automated, with a human approval gate on everything that
-leaves the house.
+from two full audits: one of the existing platform (every screen, form, data
+file, agent, and doc in this repo) and one of WordPress as the destination
+(plan constraints, plugin ecosystem, flow mapping, migration path, and the
+security of putting this particular data in this particular place).
 
-**The goal, said once:** every action an individual takes today becomes a flow
-where AI does the work, the admin taps Approve in the panel, and the right
-people get notified. Nothing external ever sends without a human tap. Money
-never moves by AI. That is the standing rule and it never bends.
+The organization is transferring everything to WordPress. That decision is
+taken. This document interviews for it.
+
+**The goal, said once:** every action a person takes by hand today becomes a
+flow where AI does the work, the administrator taps Approve inside WordPress,
+and the right people get notified. Nothing external ever sends without a human
+tap. Money never moves by AI. That rule never bends, and on WordPress it stops
+being an honor system and becomes an enforced permission.
+
+The technical companion to this document is **docs/WORDPRESS-BUILD.md**: the
+stack, the data model, the admin experience, the agent rewiring, the cutover
+runbook, and the path to the church's own box. Read this one before the
+interview. Read that one before the build.
 
 ---
 
-## Part 0: What the audit already found (read before the interview)
+## Part 0: The four things to know before you walk in
 
-Ground truth from the platform, so you interview from knowledge, not guesses:
+**1. Today, nobody is notified of anything.** The current app runs in demo
+mode: every application, RSVP, and profile lives only in the browser that
+submitted it. A family with a foreclosure sale date scheduled generates zero
+alerts. This is the single most urgent problem in the organization and it has
+nothing to do with WordPress. It gets fixed in week one of the migration, not
+at the end.
 
-1. **Today, nobody is notified of anything.** The app is in demo mode: every
-   application, RSVP, and profile lives only in the localStorage of the browser
-   that submitted it. A family with a foreclosure sale date scheduled generates
-   zero alerts. `notifyEmail` is set to info@faithandresults.com but no code
-   ever sends to it. The webhook that would fan out to email, SMS, and CRM is
-   built and tested, but its URL is empty. This is the single most urgent thing
-   the interview must resolve: the go-live decision (Supabase project + webhook)
-   that takes the platform from browser-only to real.
-2. **The admin panel is verified working end to end.** Passcode gate, all seven
-   panes (Dashboard, Applications, Events, People, Research, McCluster,
-   Automations), full data round trip from public form to admin review, stage
-   changes, partner forwarding, CSV exports, event drafting, blast links. Two
-   minor issues found in the audit are already fixed. The panel is the approval
-   surface everything below plugs into.
-3. **The approval gates already exist as one-tap mailto links.** Forward to
-   partner, approve and send a prospect, email an applicant. The pattern is
-   right; the mailto is the weakness (no record, no delivery, personal mail
-   client). The build replaces mailto with tracked sends behind the same taps.
-4. **Two AI agents already exist** (the McCluster OS weekly engine and the
-   corridor researcher, both GitHub Actions calling the Anthropic API), with
-   human gates codified in a charter. Whether their `ANTHROPIC_API_KEY` secret
-   has ever been set, and whether they have ever run, is an interview question.
-5. **The whole relationship graph lives in one man's head and address book.**
-   The repo names exactly two living contacts: Rev. Carl McCluster and Deborah
-   Lee at Hartford HealthCare. Everything else (FDIC, HUD, FHLB, Freddie Mac,
-   NeighborWorks, the state agencies, the clergy coalitions, the 19-city
-   anchors) has no named person on file. The supervised export of that address
-   book is the single most valuable artifact this interview can produce.
+**2. "WordPress Business" is ambiguous, and getting it wrong wastes the
+project.** It could mean the WordPress.com Business plan, or self-hosted
+WordPress on business hosting. They have different constraints. Worse: on
+WordPress.com, seeing a Plugins menu no longer proves you are on Business,
+because plugin installs reportedly opened to lower tiers in 2026. **Confirm the
+tier by capability, not by menu.** Domain 0 below is the ten minutes that
+resolves this, and it comes first.
+
+**3. WordPress roles are a UI filter, not a confidentiality boundary.** This is
+the finding that changes what the organization should collect at all. Any
+WordPress role that can install a plugin, run an export, or reach a backup can
+read every row in the database regardless of what their dashboard shows. So the
+promise "pastoral care notes are visible only to the tightest tier" cannot be
+made true on WordPress. Part 6 is the honest conversation that follows from
+this, and it must happen in the room before any sensitive data is migrated.
+
+**4. The approval gates already exist, in the right shape, on the wrong
+mechanism.** Forward-to-partner, approve-and-send, email-applicant: all are
+one-tap today, all are mailto links that leave no record and send from someone's
+personal mail client. WordPress replaces the mechanism and keeps the shape.
 
 ---
 
 ## Part 1: How to run the session
 
 **Who is in the room.** The final administrator. Rev. McCluster for the
-partner, governance, and pastoral sections if at all possible (those answers
-are his). The treasurer or bookkeeper for the finance section, even by phone.
+partner, governance, and pastoral sections — those answers are his. The
+treasurer or bookkeeper for finance, even by phone. Whoever holds the WordPress
+and domain logins, for Domain 0.
 
-**Length.** Plan three sessions of about two hours, or one long day with
-breaks. Suggested split: Session 1 = systems, intake, jobs. Session 2 =
-corridors, events, communications, giving. Session 3 = people and care,
-partners, governance, privacy, artifact handover.
+**Length.** Three sessions of about two hours, or one long day with breaks.
+Suggested split: Session 1 = WordPress environment, systems, intake, jobs.
+Session 2 = corridors, events, communications, giving. Session 3 = people and
+care, partners, governance, privacy, artifact handover.
 
-**Record it.** Ask permission, then record audio of the whole thing. The
-transcription becomes training data for the automation: the exact phrases they
-use, the exceptions they mention in passing, the names they drop. Whisper
-transcription is already in the Church OS roster for precisely this.
+**Record it,** with permission. The transcript becomes the source for the
+automation: the exact phrases they use, the exceptions they mention in passing,
+the names they drop. Transcription is already in the Church OS plan for exactly
+this.
 
-**The two-column rule.** For every operation they describe, capture two
-things: *what happens* (steps, people, tools, timing) and *what breaks* (the
-exception, the workaround, the thing they do at 11pm). The second column is
-where the automation value lives.
+**The two-column rule.** For every operation: capture *what happens* (steps,
+people, tools, timing) and *what breaks* (the exception, the workaround, the
+thing they do at 11pm). The second column is where the automation value is.
 
-**Artifacts beat answers.** Whenever an answer references a document, a
-spreadsheet, a template, or a list: ask for the thing itself, on the spot, into
-a single collection folder. The checklist for every domain is below. An
-interview that produces twenty artifacts beats one that produces forty answers.
+**Artifacts beat answers.** When an answer references a document, a
+spreadsheet, a template, or a list, ask for the thing itself, on the spot, into
+one collection folder. An interview that produces twenty artifacts beats one
+that produces forty answers.
 
 **Close every domain with the same three questions.**
-- What eats the most hours in this area every month?
+- What eats the most hours here every month?
 - What has actually gone wrong here before?
 - If you were gone for a month, who could do this, and what would they need?
 
 ---
 
-## Part 2: The interview, domain by domain
+## Part 2: Domain 0 — Which WordPress, exactly (do this first, it takes ten minutes)
 
-Eleven domains. Each gives you: what we already know (so you never ask what the
-repo can answer), the questions, and the artifacts to collect. The automation
-flows each domain becomes are in Part 3.
+Everything downstream depends on this. Do not accept a plan name as an answer.
+Have them open the site's dashboard while you sit there.
+
+**Ask them to look, and report what they see:**
+- [ ] Open the site admin. Is the URL `something.wordpress.com` or a hosting
+      control panel like cPanel / WP Engine / Kinsta / SiteGround?
+- [ ] **The tier tell (WordPress.com only):** go to Settings → Hosting
+      Configuration. **Are there SFTP/SSH credentials? Is there a Cron tab?**
+      Those two exist on Business and above only. If they are absent, this is
+      Personal or Premium no matter what the invoice says, and the plan needs
+      upgrading before anything else happens.
+- [ ] Is there a **Staging** option? (Business and above.)
+- [ ] Is there **phpMyAdmin / database access**? (Business and above.)
+- [ ] Under Plugins, can they **upload a plugin ZIP** (not just install from the
+      directory)? Custom code ships as a ZIP, so this matters.
+- [ ] What is the **exact renewal price and date**, and who pays it?
+- [ ] Who owns the WordPress.com account or hosting account — the church, Rev.
+      McCluster personally, a former volunteer, an agency?
+- [ ] How many WordPress sites exist in total? (faithandresults.com,
+      faithcdc.org, a Shiloh church site, anything else?)
+- [ ] Is the **old** faithandresults.com WordPress still live, and is this new
+      Business site a separate install or the same one?
+- [ ] Who else has admin logins today, and are any of them former staff or
+      volunteers who should be removed?
+- [ ] Is two-factor authentication on for every admin account?
+
+**Then verify these three things technically, before designing anything.** The
+research behind this document could not fetch primary sources (the proxy
+blocked wordpress.com and vendor domains), so these rest on search results and
+must be proven on the actual site:
+- [ ] Does an authenticated REST write work from outside? Create an Application
+      Password and POST a draft post from another machine. **The AI agents
+      depend on this.** If it fails on WordPress.com, the agent auth path
+      becomes OAuth2 through public-api.wordpress.com, which is materially more
+      work.
+- [ ] Does the server cron feature actually run a scheduled job on time? (On
+      Business, Settings → Cron. WP-Cron alone fires on page visits and will
+      silently skip jobs on a low-traffic site — never build the foreclosure
+      alert on it.)
+- [ ] Can the site make **outbound** HTTP calls? Test a request from the site to
+      an endpoint you control. If outbound is filtered, the architecture flips to
+      pull-based.
+
+**Also check** the required plugin list against the platform's blocked-plugin
+list *before* committing (WordPress.com publishes one; managed hosts publish
+their own). Discovering a blocked plugin after purchase is a bad day.
 
 ---
 
-### Domain 1: Systems inventory and credentials (start here, it is concrete)
+## Part 3: The interview, domain by domain
 
-**We know:** The new site is a static PWA on GitHub Pages, auto-deployed from
-main. The old WordPress site at faithandresults.com is still live somewhere,
-with its media already migrated into this repo. The phone number everywhere is
-(203) 549-8703. The admin runs in demo mode. Backend and cutover paths are
-fully documented in docs/BACKEND.md but not executed.
+Eleven domains. Each gives you what we already know (so you never ask what the
+repo can answer), the questions, and the artifacts to collect.
+
+---
+
+### Domain 1: Systems, credentials, and the old site
+
+**We know:** The original faithandresults.com was WordPress; its media library
+was already scraped into this repo and a content export was ingested. The
+current app is a static site on GitHub Pages. The phone everywhere is
+(203) 549-8703. Email is info@faithandresults.com.
 
 **Ask:**
-- [ ] Where is faithandresults.com registered and hosted? What does it cost
-      monthly, who gets the bills, and who holds the registrar and hosting
-      logins? Is faithcdc.org separate, and whose is it?
-- [ ] Where does info@faithandresults.com actually live (Google Workspace, the
-      web host, GoDaddy mail)? Who has the password, who checks it daily, and
-      how many unread messages are in it right now?
-- [ ] Would DNS cutover break the email? (If mail hosting rides on the old web
-      host, it might. Establish this before any cutover date.)
-- [ ] The phone: what is behind (203) 549-8703? Landline, Google Voice,
-      someone's cell forwarding? Who answers it, and is there voicemail access?
-- [ ] Name every subscription and login the org pays for or uses: giving app,
-      Zoom, Canva, Constant Contact or Mailchimp, QuickBooks, anything.
-- [ ] Which spreadsheets are the real operational databases today? Ask by
+- [ ] Where is faithandresults.com **registered**, and where is DNS managed?
+      Who holds those logins? (Registrar and DNS can be different companies.)
+- [ ] Where is the old WordPress **hosted**, what does it cost, who gets the
+      bill, and are the admin credentials still known?
+- [ ] **Where does info@faithandresults.com actually live?** If mailboxes ride
+      on the old web host, moving the site can kill the organization's only
+      inbox. This must be established before any DNS change.
+- [ ] What are the current MX, SPF, DKIM, and DMARC records? Has email ever
+      gone to spam in bulk?
+- [ ] The phone: landline, Google Voice, someone's cell forwarding? Who
+      answers, who has voicemail access?
+- [ ] Name every subscription the organization pays for: giving app, Zoom,
+      Canva, Mailchimp or Constant Contact, QuickBooks, anything.
+- [ ] Which **spreadsheets** are the real operational databases? Ask by
       function: applicants, donors, conference contacts, clergy networks,
       corridor contacts.
-- [ ] Has the ANTHROPIC_API_KEY secret ever been set on the GitHub repo? Have
+- [ ] Does the old site still receive traffic or form submissions? Is
+      faithcdc.org separate, and whose is it?
+- [ ] Has the `ANTHROPIC_API_KEY` secret ever been set on the GitHub repo? Have
       the McCluster OS or corridor-research agents ever actually run?
-- [ ] Who is comfortable with the git-commit publish flow today? Which
-      publishing steps must become one-tap for the operation to survive?
-- [ ] What is in the physical filing cabinet? What should be scanned first?
-- [ ] If the admin's laptop died today, what would be unrecoverable?
-- [ ] Budget and placement reality for the Shiloh box (about $3-4k plus UPS and
-      backup drive): where would it physically sit, with power and internet?
+- [ ] What is in the physical filing cabinet, and what should be scanned first?
+- [ ] If the administrator's laptop died today, what would be unrecoverable?
+- [ ] Budget and placement for the Shiloh box eventually (about $3-4k plus UPS
+      and backup drive): where would it sit, with power and internet?
 
 **Collect:**
-- [ ] Registrar, DNS, and hosting details for both domains (secured handover,
+- [ ] Registrar, DNS, hosting, and WordPress account details (secured handover,
       never into the repo)
-- [ ] The complete list of paid subscriptions with monthly costs
+- [ ] A fresh full backup of the old site: content export, files and database,
+      and a crawl of the public pages
+- [ ] The complete subscription list with monthly costs
 - [ ] Every operational spreadsheet, as files
-- [ ] Phone system details for (203) 549-8703
-- [ ] A full WordPress export if any content was never migrated
-- [ ] Priority contents of the filing cabinet, scanned or listed
+- [ ] Google Search Console access, or its top-pages and top-queries export,
+      for the redirect map
+- [ ] Priority filing-cabinet contents, scanned or listed
 
 ---
 
-### Domain 2: Intake and applications (their daily bread)
+### Domain 2: Intake and applications
 
 **We know:** Six intake types: Workforce Readiness (4-week cohorts, trade
 interests, partner pathways), Homebuyer Education (journey stage), Foreclosure
-Prevention (flagged urgent, situation ranges from "current but worried" to
-"sale date scheduled"), Financial Empowerment (topic), the MLK corridor city
-intake (9 org-level questions), and Capacity Building for organizations. Every
-form: name, email, phone, city, org, notes, consent checkbox, FR- reference
-ID. Admin can approve or decline with a note. The confirmation screen promises
-review "usually within a few business days." Nothing notifies anyone today.
+Prevention (urgent; situation ranges from "current but worried" to "sale date
+scheduled"), Financial Empowerment (topic), MLK corridor city intake (9
+org-level questions), Capacity Building. Every form captures name, email,
+phone, city, org, notes, consent, and issues an FR- reference. Admin can
+approve or decline with a note. The confirmation promises review "usually
+within a few business days."
 
 **Ask:**
-- [ ] Who opens admin.html today, on what device, how often? Weekends?
-- [ ] Walk me through the last foreclosure case with a sale date scheduled:
-      who touched it, in what order, within how many hours, and what exactly
-      did they send or say?
+- [ ] Who opens the admin today, on what device, how often? Weekends?
+- [ ] Walk me through the last foreclosure case with a sale date scheduled: who
+      touched it, in what order, within how many hours, and what did they send?
 - [ ] Are you a HUD-certified counseling agency, or do you refer out? To which
-      agency and which named counselor? Warm handoff or just a phone number?
+      agency, which named counselor, warm handoff or phone number?
+- [ ] **Who is the named person, with a mobile number, who should be texted
+      within minutes when a foreclosure intake arrives?** Who is the backup?
 - [ ] What does "approve" actually mean per intake type? Enrolled in a cohort?
       Scheduled for counseling? What literally happens after the button?
-- [ ] Workforce cohorts: how are the 4-week cohorts scheduled against employer
-      hiring calendars, who sets start dates, and what is the pre-screening
-      checklist (mock interviews, life skills, background check)?
+- [ ] Workforce cohorts: how are they scheduled against employer hiring
+      calendars, who sets start dates, what is the pre-screening checklist?
 - [ ] What paper or PDF forms still exist, who hands them in, who re-keys them?
-- [ ] Which of the six intakes gets real volume? Actual monthly counts per
-      type. Which have never received one application?
+- [ ] Which of the six intakes gets real volume? Monthly counts per type. Which
+      have never received one?
 - [ ] What is the real response-time standard, and how often is it missed?
-- [ ] What intake happens today with NO form in the app: walk-ins after Sunday
-      service, phone intakes? Who writes those down and where?
+- [ ] What intake happens with **no form** today: walk-ins after service, phone
+      intakes? Who writes those down, where?
 - [ ] What do funders (HUD, FDIC, FHLB, NeighborWorks) require you to report
-      about served clients? What fields is the current form missing (income,
-      household size, HUD 9902 demographics)?
+      about clients served? What is the current form missing (income, household
+      size, HUD 9902 demographics)?
 - [ ] Who may decline an application, and has a decline ever been reversed?
 
 **Collect:**
-- [ ] The current tracking spreadsheet or notebook for applicants
+- [ ] The current applicant tracking spreadsheet or notebook
 - [ ] Paper and PDF intake forms, especially anything HUD 9902 related
 - [ ] The actual replies sent to the last 5 approved and 5 declined applicants
       (these become the email templates)
-- [ ] The last completed cohort calendar and class schedule
-- [ ] The foreclosure counseling checklist or script, plus the referral list
+- [ ] The last completed cohort calendar
+- [ ] The foreclosure counseling checklist or script, and the referral list
 - [ ] Any client report submitted to a funder
-- [ ] Everyone who applied in the last 12 months, any channel (seeds the DB)
+- [ ] Everyone who applied in the last 12 months, any channel
 
 ---
 
 ### Domain 3: Jobs pipeline and employer partners
 
-**We know:** jobs-partners.json holds Hartford HealthCare (Deborah Lee,
+**We know:** The partner registry holds Hartford HealthCare (Deborah Lee,
 deborah.lee@hhchealth.org, head of hiring), Faith CDC as job-fair host, and
-unnamed "collaborating agencies" entries (municipal housing authorities,
-Bridgeport Landing Development, Corves Development). Every partner program is
-a pathway option on the workforce application. The admin's one-click "Forward
-to partner" builds the referral email. Pipeline: Submitted, Forwarded,
-Interview, Placed, with a 7-day staleness flag. Every trackingLink field is
+unnamed "collaborating agencies" (municipal housing authorities, Bridgeport
+Landing Development, Corves Development). Pipeline: Submitted, Forwarded,
+Interview, Placed, with a 7-day staleness flag. Every tracking-link field is
 empty. Precedent: the 2022 HHC / St. Vincent's Opportunity Fair.
 
 **Ask:**
-- [ ] Is Deborah Lee still the right HHC contact, and is the email current?
-      Who is the backup? Does HHC prefer a portal or ATS over email referrals?
-- [ ] Has any partner ever issued a tracking link crediting the Collaborative?
-      Who at each partner could?
-- [ ] Named human contacts for every unnamed partner entry: which housing
-      authority, who at Bridgeport Landing, who at Corves? Paper agreements or
-      pure relationship?
-- [ ] How do you find out someone got hired? What share of forwarded
-      candidates do you never hear about again?
-- [ ] Who runs placements day to day, and how many hours a week does the
-      referral and follow-up work take?
+- [ ] Is Deborah Lee still the right contact, and is that email current? Who is
+      the backup? Does HHC prefer a portal or ATS over email referrals?
+- [ ] Has any partner ever issued a **tracking link** crediting the
+      Collaborative? Who at each partner could?
+- [ ] Named human contacts for every unnamed partner: which housing authority,
+      who at Bridgeport Landing, who at Corves? Paper agreements or
+      relationship?
+- [ ] How do you find out someone got hired? What share of forwarded candidates
+      do you never hear about again?
+- [ ] Who runs placements day to day, and how many hours a week does it take?
 - [ ] The 2022 fair, logistically: who booked the venue, who staffed sign-in,
-      how were candidates registered, and does that sign-in data still exist?
+      how were candidates registered, does that data still exist?
 - [ ] The 125 graduates/year capacity: actual throughput last year, and where
-      is the graduate roster kept?
-- [ ] Which employers contribute anything (sponsorship, per-placement, in-kind)?
+      is the graduate roster?
+- [ ] Which employers contribute anything (sponsorship, per-placement,
+      in-kind)?
 - [ ] How do the clergy coalitions feed candidates in, and who are the named
       coordinators?
 - [ ] What breaks most often between application and placement?
 
 **Collect:**
-- [ ] Any MOU or partnership letter for HHC and every other employer
+- [ ] Any MOU or partnership letter, per employer
 - [ ] Real referral emails sent to Deborah Lee (the format partners answer)
 - [ ] The 2022 fair sign-in sheets and any later fair's
-- [ ] Graduate rosters and any DOL apprenticeship paperwork
+- [ ] Graduate rosters and any apprenticeship compliance paperwork
 - [ ] The Collaborative's full agency list
 - [ ] Any placement outcomes report
 - [ ] Clergy coalition coordinator contacts
@@ -226,35 +282,32 @@ empty. Precedent: the 2022 HHC / St. Vincent's Opportunity Fair.
 
 ### Domain 4: MLK Corridors pipeline
 
-**We know:** Five stages: Received, Research, Outreach, Proposal, Funded. The
-corridor-research agent (GitHub Actions, manual dispatch) produces a dossier:
-street condition, officials, funding landscape, draft outreach letter. The
-Connecticut precedent is documented: Norwalk, Middletown, New Britain named;
-program outline to CT DECD; Jan 18, 2019 Spear Park launch; Black Ministers
-Alliance of New Britain organizing. The app generates a draft funding proposal
-from the applicant's own answers. All outreach is human-reviewed by design.
+**We know:** Five stages: Received, Research, Outreach, Proposal, Funded. A
+research agent produces a dossier (street condition, officials, funding
+landscape, draft outreach letter). The Connecticut precedent is documented:
+Norwalk, Middletown, New Britain named; program outline to CT DECD; Jan 18,
+2019 Spear Park launch; Black Ministers Alliance of New Britain organizing. The
+app generates a draft funding proposal from the applicant's answers.
 
 **Ask:**
 - [ ] Who owns Corridors operationally besides Rev. McCluster? Is the Black
-      Ministers Alliance still the engine, and who is the living point of
-      contact?
+      Ministers Alliance still the engine, and who is the living contact?
 - [ ] What happened after the 2019 DECD submission? Was funding received, how
       much, and where is the paper trail?
 - [ ] Norwalk, Middletown, New Britain today: current municipal and clergy
-      contacts, and when did Freedom, Inc. last speak to each? Active or
-      dormant?
-- [ ] Has anyone outside Connecticut ever submitted the corridor intake? Which
-      pipeline stages have never actually run?
+      contacts, last conversation, active or dormant?
+- [ ] Has anyone outside Connecticut ever applied? Which pipeline stages have
+      never actually run?
 - [ ] Who may sign a letter to a mayor's office? Must it be Rev. McCluster
       personally? Where is the letterhead file?
 - [ ] Is there a past proposal (the DECD outline) to use as the gold-standard
       template for AI-generated proposals?
 - [ ] How long may a city sit in Research before it is a no? What disqualifies
       a city?
-- [ ] Who has GitHub access to run the research workflow today?
 - [ ] When a corridor gets funded, who administers the money? Any fee or
-      consulting arrangement for Freedom, Inc.?
-- [ ] What is the applicant org expected to do during Research and Outreach?
+      consulting arrangement?
+- [ ] What is the applicant organization expected to do during Research and
+      Outreach?
 
 **Collect:**
 - [ ] The original DECD program outline (the master document)
@@ -269,103 +322,101 @@ from the applicant's own answers. All outreach is human-reviewed by design.
 
 ### Domain 5: Events, RSVPs, and the FCDC conference
 
-**We know:** One calendar file, future events rise, past self-archive. The
-flagship is the FCDC Annual Meeting and Conference (current entry is an
-explicit sample date; sponsor RSVPs promised "the package is on its way" but
-nothing sends it). Rosters with email and text blast links exist in admin.
-Publishing an event requires downloading events.json and committing to GitHub.
-McCluster OS can draft events but may not publish them as confirmed.
+**We know:** One calendar; future events rise, past self-archive. The flagship
+is the FCDC Annual Meeting and Conference (current date is a placeholder;
+sponsor RSVPs are promised a package that nothing actually sends). Publishing
+an event today requires downloading a file and committing it to GitHub — a
+chore that disappears entirely on WordPress.
 
 **Ask:**
-- [ ] Does a sponsorship package document exist? Get the latest: levels,
+- [ ] Does a **sponsorship package** document exist? Get the latest: levels,
       prices, benefits. Who wrote it?
-- [ ] Who sold 2023 sponsorships, to whom, at what amounts, and how were they
-      invoiced and paid? Into which entity's account?
-- [ ] Which entity legally runs the conference, and where does the revenue land?
-- [ ] Real 2023 attendance, registration method, and does the attendee list
-      exist anywhere?
-- [ ] Who owns the venue relationship, and what is the real 2026 date?
-- [ ] What do you actually use for blasts today, and has bcc ever failed on a
-      big list?
-- [ ] How do elders without smartphones register, who transcribes it, and
-      where does it go?
-- [ ] Whose personal phone sends the texts, and would a dedicated org number
-      be accepted?
+- [ ] Who sold 2023 sponsorships, to whom, at what amounts, invoiced and paid
+      how? Into which entity's account?
+- [ ] Which entity legally runs the conference, and where does revenue land?
+- [ ] Real 2023 attendance and registration method. Does the attendee list
+      exist?
+- [ ] Who owns the venue relationship, and what is the real next date?
+- [ ] What do you use for blasts today, and has bcc ever failed on a big list?
+- [ ] How do elders without smartphones register? Who transcribes it, where
+      does it go?
+- [ ] Whose phone sends the texts, and would a dedicated org number be
+      accepted?
 - [ ] Which events recur annually beyond the conference, and who leads each?
-- [ ] Can the admin alone publish to the public calendar, or does Rev.
+- [ ] Can the administrator alone publish to the public calendar, or does Rev.
       McCluster confirm dates first?
 
 **Collect:**
 - [ ] The sponsorship package PDF with pricing
-- [ ] The 2023 program book, agenda, and sponsor list
+- [ ] The 2023 program book, agenda, sponsor list
 - [ ] Sponsor invoices and payment records
-- [ ] Attendee and registration lists from the last conference and two summits
-- [ ] Any event-tool account exports (Eventbrite, Constant Contact)
+- [ ] Attendee lists from the last conference and two summits
+- [ ] Any event-tool account exports
 - [ ] Venue contract or booking correspondence
 - [ ] A photo of the paper sign-up sheets used at Shiloh
 
 ---
 
-### Domain 6: Communications (email, SMS, newsletter, press)
+### Domain 6: Communications
 
-**We know:** Everything funnels to info@faithandresults.com and the phone. The
-newsletter signup is a mailto link with no list behind it in the repo. News
-lives in data/news.json with a curated press list. McCluster OS drafts up to
-two news items per run and a Monday brief. The org does real press work (the
-monopole fight got sustained coverage). Agent drafts sign as "Freedom, Inc.
-digital operations," never as a person.
+**We know:** Everything funnels to one inbox and the phone. The newsletter
+signup is a mailto link with no list behind it. News and a curated press list
+live in data files. The organization does real press work — the monopole fight
+drew sustained coverage. Agent drafts sign as "Freedom, Inc. digital
+operations," never as a person.
 
 **Ask:**
-- [ ] Does a newsletter exist in any form today? Last edition, tool, list size?
-- [ ] How many contacts exist across all lists, and in what containers?
-- [ ] Who is allowed to speak as Freedom, Inc. in writing? What categories can
-      go out without Rev. McCluster's personal review?
+- [ ] Does a newsletter exist in any form? Last edition, tool, list size?
+- [ ] How many contacts exist across all lists, in what containers?
+- [ ] Who may speak as Freedom, Inc. in writing? What can go out without Rev.
+      McCluster's personal review?
 - [ ] The monopole fight: who wrote the releases, who are the go-to reporters
-      by name and outlet, and are the releases on file?
+      by name and outlet, are the releases on file?
 - [ ] Whose cell has been used for text blasts? Appetite for a dedicated
       texting number with real opt-out compliance?
-- [ ] Voice rules: what makes a draft feel wrong to this audience? (The repo
-      already bans em dashes and requires elder-readable formatting.)
+- [ ] Voice rules: what makes a draft feel wrong to this audience?
 - [ ] Who manages the Shiloh Facebook page? Coordinate or stay separate?
-- [ ] Should McCluster OS news items keep publishing autonomously, or do you
-      want a human gate on public news too?
+- [ ] Should agent-drafted news publish autonomously, or with a human gate?
 - [ ] What needs to go out in Spanish?
 
 **Collect:**
-- [ ] Mailbox inventory for info@ (provider, folders, canned responses in use)
+- [ ] Mailbox inventory for info@ (provider, folders, canned responses)
 - [ ] Every list export available, any format
 - [ ] The last three newsletters or bulletin inserts
 - [ ] Press releases and the reporter contact list
 - [ ] Reusable templates living in drafts folders or Word docs
-- [ ] Brand assets: logos, letterhead, photo library beyond the repo
+- [ ] Brand assets: logos, letterhead, photo library
 
 ---
 
 ### Domain 7: Giving and finance
 
 **We know:** Giving on the site is a mailto link. No processor, no donation
-page, no giving table in the schema. The doctrine is already written: AI
-tracks, reconciles, flags, and drafts, but never moves money; humans approve
-every transaction; full audit logging; receipts carry tax consequences.
-Entities in play: Freedom, Inc., Faith CDC, Shiloh Baptist Church, and the
-Louisiana affiliate Vision Financial Services.
+page, no receipts. The doctrine is already written: AI tracks, reconciles,
+flags, and drafts, but never moves money; humans approve every transaction;
+full audit logging; receipts carry tax consequences. Entities: Freedom, Inc.,
+Faith CDC, Shiloh Baptist Church, and a Louisiana affiliate.
 
 **Ask (with the treasurer present):**
-- [ ] What happens today when someone wants to give? Check to whom? Or is
-      there a platform (Givelify, Tithe.ly, PayPal, Cash App) not on this site?
-- [ ] Which entity receives which money? Are all entities 501(c)(3) in good
-      standing, and under which EINs are receipts issued?
-- [ ] Who is the treasurer or bookkeeper for each entity, on what software,
-      and who reconciles the bank accounts?
+- [ ] What happens today when someone wants to give? Check to whom? Or is there
+      a platform (Givelify, Tithe.ly, PayPal, Cash App) not on the site?
+- [ ] Which entity receives which money? Are all 501(c)(3) in good standing,
+      and under which EINs are receipts issued?
+- [ ] Who is treasurer or bookkeeper per entity, on what software, and who
+      reconciles the accounts?
 - [ ] Authorized signers per account, and the threshold for board approval?
-- [ ] Are the books audited or reviewed? Last 990 filed for each entity?
+- [ ] Are the books audited or reviewed? Last 990 per entity?
 - [ ] How are year-end donation receipts produced today?
-- [ ] Active grants: funder, amount, restrictions, reporting deadlines, and
-      who writes the financial reports?
+- [ ] Active grants: funder, amount, restrictions, deadlines, who writes the
+      financial reports?
 - [ ] How did 2023 sponsorship money get invoiced, collected, recorded?
-- [ ] Shiloh's Sunday counting protocol: who counts, who deposits, who
-      records? (Church OS must mirror it exactly.)
+- [ ] Shiloh's Sunday counting protocol: who counts, who deposits, who records?
 - [ ] What financial task eats the most hours, and what has gone wrong before?
+
+**Note for the room:** card processing runs roughly 2.9% + $0.30. On $100k of
+annual online giving that is about $2,900 — an order of magnitude more than the
+entire software stack. Applying for Stripe's nonprofit rate is the single
+highest-value negotiation in this project.
 
 **Collect:**
 - [ ] Chart of accounts and a recent P&L per entity
@@ -373,25 +424,25 @@ Louisiana affiliate Vision Financial Services.
 - [ ] A sample year-end statement and acknowledgment letter as actually sent
 - [ ] 990s and determination letters per entity
 - [ ] Active grant agreements with reporting deadlines
-- [ ] The written (or described) Sunday counting and deposit procedure
+- [ ] The Sunday counting and deposit procedure
 - [ ] Bank account inventory: institution, purpose, signers (descriptive only)
 
 ---
 
 ### Domain 8: People, membership, and pastoral care
 
-**We know:** The app has device-local profiles feeding applications. Church OS
-plans the full member CRM: directory with tiered roles, attendance,
-engagement ("these twelve families have not been seen in a month"), pastoral
-care on the tightest access tier, volunteers, sermons. The pitch admits
-today's reality: a spreadsheet, a giving app, a mailing list, a filing
-cabinet, and the pastor's memory.
+**We know:** The current app has device-local profiles. Church OS plans the
+full member CRM: directory with tiered roles, attendance, engagement ("these
+twelve families have not been seen in a month"), pastoral care on the tightest
+tier, volunteers. **Read Part 6 of this document before this conversation** —
+the pastoral-care question has a hard answer and it changes what you ask for.
 
 **Ask:**
 - [ ] Where is the Shiloh membership roll right now, in what format, how many
-      active members and families, and when was it last cleaned?
-- [ ] Who may see the full membership list? Who must NOT see giving amounts?
-      Who must NOT see care notes? Name actual people first, then derive roles.
+      active members and families, when was it last cleaned?
+- [ ] Who may see the full membership list? Who must **not** see giving
+      amounts? Who must **not** see care notes? Name actual people first, then
+      derive roles.
 - [ ] Is attendance counted at all today? Would the congregation accept
       check-in if framed as caring?
 - [ ] Tell me about the last member who fell through the cracks. What signal
@@ -411,39 +462,39 @@ cabinet, and the pastor's memory.
 **Collect:**
 - [ ] The membership roll in whatever format exists
 - [ ] Any church-management software export or account inventory
-- [ ] Sign-in sheets, pew cards, visitor cards in current use
+- [ ] Sign-in sheets, pew cards, visitor cards in use
 - [ ] The deacon and ministry assignment list
 - [ ] Volunteer rosters and phone-tree lists
-- [ ] The clerk's records templates (new members, baptisms, funerals)
+- [ ] The clerk's records templates
 
 ---
 
 ### Domain 9: Partners, collaboratives, and program leads
 
 **We know:** Four collaboratives (NFLC, CFLC, CT Faith Jobs, Faith CDC) and a
-deep institutional partner list per program (FDIC, HUD, FHLB x3, Freddie Mac,
-NeighborWorks, state agencies, HHC, and city partners across 19 cities). The
-repo names two living contacts total. This domain is the continuity risk
-McCluster OS exists to close.
+deep institutional partner list (FDIC, HUD, FHLB, Freddie Mac, NeighborWorks,
+state agencies, HHC, and city partners across 19 cities). The repo names
+exactly two living contacts. This domain is the continuity risk the whole
+project exists to close.
 
 **Ask (Rev. McCluster's section):**
-- [ ] Pillar by pillar: who besides you can run each program today? Name,
-      role, phone, email. If the answer is nobody, say so plainly.
-- [ ] Each collaborative: who is on it now, how often does it actually meet,
-      who convenes it, where are the member list and minutes?
-- [ ] Current named contacts at FDIC, HUD, FHLB, Freddie Mac, NeighborWorks,
-      CT DECD, CT Dept of Banking, CT Green Bank, HHC. Which are stale?
+- [ ] Pillar by pillar: who besides you can run each program today? Name, role,
+      phone, email. If the answer is nobody, say so plainly.
+- [ ] Each collaborative: who is on it now, how often does it meet, who
+      convenes it, where are the member list and minutes?
+- [ ] Current named contacts at FDIC, HUD, FHLB, Freddie Mac, NeighborWorks, CT
+      DECD, CT Dept of Banking, CT Green Bank, HHC. Which are stale?
 - [ ] Which partnerships have paper (MOU, affiliate agreement) versus pure
       relationship?
 - [ ] How does a NeighborWorks engagement come in, what is the fee structure,
       and who else could deliver that training?
-- [ ] For each of the 19 cities: the living anchor contact, and active versus
+- [ ] For each of the 19 cities: the living anchor contact, active versus
       historical.
-- [ ] Where does your address book live, and can we do a supervised export of
-      the organizational contacts? (This is the most valuable artifact in the
-      entire engagement.)
+- [ ] **Where does your address book live, and can we do a supervised export of
+      the organizational contacts?** This is the most valuable artifact in the
+      entire engagement.
 - [ ] Who is the successor-designate for the key relationships, and have any
-      partners met them yet?
+      partners met them?
 - [ ] Which single relationship, if it lapsed, would hurt most? When did you
       last speak?
 
@@ -459,32 +510,33 @@ McCluster OS exists to close.
 
 ### Domain 10: Governance, approvals, and continuity
 
-**We know:** The McCluster OS charter already codifies the pattern: agents may
+**We know:** The agent charter already codifies the pattern: agents may
 research, score, and draft; humans must approve anything external, any event
-confirmation, any commitment or signature, anything involving money. The admin
-gate today is a shared passcode with no per-person identity. The stated goal:
-"whoever holds the phone that week can be anyone the family trusts."
+confirmation, any commitment or signature, anything involving money. The
+current admin gate is a shared passcode with no per-person identity. On
+WordPress, every one of those rules becomes an enforced capability instead of a
+promise.
 
 **Ask:**
-- [ ] Build the approval matrix live (the table in Part 4): for each action
-      type, who can approve, who must be told, what needs a board vote?
+- [ ] Build the **approval matrix** live (Part 5): for each action type, who
+      can approve, who must be told, what needs a board vote?
 - [ ] Officers and directors of Freedom, Inc. and Faith CDC right now? State
       filings current? Who files them?
 - [ ] Who is the designated administrator after the current one, and what do
       they already know how to do?
-- [ ] Where do credentials live right now: GitHub, registrar, DNS, email
+- [ ] Where do credentials live: WordPress, GitHub, registrar, DNS, email
       admin, any keys? Password manager or envelope in a drawer?
 - [ ] Which decisions has Rev. McCluster said only he can make, in his own
       words? Which is he genuinely willing to delegate to one-tap approval?
-- [ ] The emergency protocol if he is unreachable for a month: who approves
-      the pipeline?
-- [ ] Insurance (D&O, liability) per entity, and the registered agents?
+- [ ] The emergency protocol if he is unreachable for a month: who approves the
+      pipeline?
+- [ ] Insurance (D&O, liability, cyber) per entity, and registered agents?
 - [ ] Has the board formally blessed the AI-agent operation? Does it need to
       for the money-adjacent phases?
 
 **Collect:**
 - [ ] Bylaws, incorporation certificates, officer lists for both entities
-- [ ] The credential inventory (collected securely, never into the repo)
+- [ ] The credential inventory (secured, never into the repo)
 - [ ] A year of board minutes for both entities
 - [ ] Any delegation-of-authority or check-signing policy
 - [ ] The succession plan or letter of wishes, however informal
@@ -492,23 +544,25 @@ gate today is a shared passcode with no per-person identity. The stated goal:
 
 ---
 
-### Domain 11: Privacy, consent, and security (close with this)
+### Domain 11: Privacy, consent, and security
 
-**We know:** Consent is structural on every form. The Church OS doctrine:
-local-first, consent-first, tiered access, encryption, audited access. Current
-gaps are real: PII in localStorage, a passcode committed to a public repo,
-blast tools that expose full rosters in mailto links, foreclosure data that is
-financial-distress information, an elder population, and SMS consent rules.
+**We know:** Consent is structural on every form today. The Church OS doctrine
+is local-first, consent-first, tiered access, encryption, audited access. **The
+WordPress research produced a hard finding here that Part 6 covers in full.**
+Bring it into this conversation deliberately.
 
 **Ask:**
 - [ ] Has anyone ever asked to be removed or deleted, and what did you do?
-- [ ] What confidentiality rules bind the counseling work (HUD standards,
-      state requirements, partner agreements)? Any privacy notice in use?
+- [ ] What confidentiality rules bind the counseling work (HUD housing
+      counseling standards require electronic client files be kept
+      confidential; state requirements; partner agreements)? Any privacy notice
+      in use?
 - [ ] Who has known the admin passcode, and which devices hold real applicant
       data in their browsers right now?
 - [ ] Did the people you text ever agree to receive texts? Any complaints?
-- [ ] Does "data never leaves the building" bind now, or at Church OS launch?
-      (Supabase cloud is the bridge; the on-prem box is the destination.)
+- [ ] **Does "your data never leaves the building" bind now, or at Church OS
+      launch?** The organization has said it publicly. WordPress in the cloud
+      is the interim; the box is the destination. Get their words on the record.
 - [ ] The tiers, concretely: who may see foreclosure details, giving amounts,
       care notes, everything? Names first, roles second.
 - [ ] Are minors ever in the data (youth mentoring), and what parental consent
@@ -517,72 +571,67 @@ financial-distress information, an elder population, and SMS consent rules.
       controls match the real stakes.
 
 **Collect:**
-- [ ] Any privacy notice, confidentiality agreement, or intake disclosure in
-      use
-- [ ] The device list that has used admin.html
+- [ ] Any privacy notice, confidentiality agreement, or intake disclosure in use
+- [ ] The device list that has used the current admin panel
 - [ ] Partner data-handling requirements (HHC, HUD, state)
 - [ ] Consent language on paper forms if different from the app's
 - [ ] Existing opt-out and do-not-contact notes, wherever kept
 
 ---
 
-## Part 3: What every answer becomes (the automation blueprint)
+## Part 4: What every answer becomes
 
-Every flow follows one shape. Memorize it, because it is the answer to "what
-will the AI do with this":
+Every flow has one shape, and on WordPress each stage has a real mechanism:
 
-**Trigger → AI does the work → Approval in the admin panel → Execution →
+**Trigger → AI does the work → Approval inside WordPress → Execution →
 Notification.**
 
-The high-value flows, in build order:
+The flows, in build order. Full mechanism detail is in WORDPRESS-BUILD.md.
 
-1. **Urgent foreclosure alert.** Application arrives with a late stage or sale
-   date → AI classifies severity, alerts the on-duty counselor by SMS within
-   minutes (internal alerts need no approval), sends the applicant an
-   acknowledgment with the hotline number → counselor approves any outbound
-   advice. *Days cost homes here. This flow ships first.*
-2. **Applicant acknowledgment and decision emails.** Every submission gets an
-   instant receipt with its FR- reference. Approve or Decline drafts the
-   personalized decision email from the reviewer's note → one tap releases it.
-3. **Partner referral.** Workforce approval → AI matches the pathway, composes
-   the referral to the named partner contact → admin's Forward tap releases a
-   tracked send, stage auto-advances, silence gets nudged after N days, and
-   partner replies are parsed into proposed stage changes.
-4. **Corridor auto-pipeline.** Corridor application → research agent
-   dispatches itself with the applicant's city → dossier lands → admin
-   advances to Outreach → AI letters go out only on explicit approval →
-   proposal assembles from the DECD gold standard.
-5. **Sponsor pipeline.** Sponsor RSVP → package sends immediately (it was
-   already promised in-app) → conference lead gets pinged (this is revenue) →
-   AI drafts the level pitch and invoice for approval.
-6. **RSVP confirmations and reminders.** Confirmation with calendar attachment
-   on RSVP, SMS reminders day-before and day-of, headcount briefs to the
-   organizer.
-7. **Newsletter.** Real signup form → ESP audience with consent recorded → AI
-   drafts each edition from the news, events, and briefs → admin edits and
-   approves → send, with an archive.
-8. **Giving.** Payment lands on the chosen platform → AI records, drafts the
-   receipt with tax language, flags anomalies → treasurer approves in batch →
-   year-end statements generate themselves. The AI never touches the money.
-9. **Care intelligence (Church OS phase).** Attendance recorded → "not seen in
-   N weeks" list drafts privately to the pastor alone → he decides who to
-   reach and how. This list never automates outward.
-10. **The Monday brief, delivered.** The McCluster OS brief arrives as an
-    email or text instead of waiting for someone to open the admin.
+1. **Urgent foreclosure alert.** Form submission fires an instant SMS to the
+   named counselor *and* a webhook to the automation layer that escalates to a
+   second number if nobody acknowledges within fifteen minutes. Two independent
+   paths, because one is not enough when the deadline is a foreclosure sale.
+   Internal alerts need no approval. *This ships first.*
+2. **Applicant acknowledgment and decision emails.** Instant receipt with the
+   reference number on every submission. Approve or Decline drafts the
+   personalized decision email; one tap releases it.
+3. **Partner referral.** Approval matches the pathway to the named partner
+   contact and drafts the referral. The administrator's Forward tap sends a
+   *tracked* email, auto-advances the stage, logs the send, and chases silence
+   after N days.
+4. **Corridor pipeline.** Application triggers the research agent
+   automatically; the dossier lands as a draft; the administrator advances to
+   Outreach; the letter to city hall sends only on explicit approval.
+5. **Sponsor pipeline.** A sponsor RSVP sends the package immediately (it was
+   already promised on screen) and pings the conference lead, because that is
+   revenue. The level pitch and invoice are drafted for approval.
+6. **RSVP confirmations and reminders.** Confirmation with calendar
+   attachment, SMS reminders day-before and day-of, headcount briefs.
+7. **Newsletter.** A real signup form with consent recorded, AI drafts each
+   edition from news and events, the administrator edits and approves.
+8. **Giving.** Payment lands, AI records it, drafts the receipt with tax
+   language, flags anomalies; the treasurer approves in batch. The AI never
+   touches money.
+9. **Care intelligence.** *Deferred by design — see Part 6.*
+10. **The weekly brief, delivered.** It arrives as an email or text instead of
+    waiting for someone to log in. Nobody logs into a dashboard that has never
+    notified them of anything.
 
 ---
 
-## Part 4: The approval matrix (fill this in live, in the room)
+## Part 5: The approval matrix (fill this in live, in the room)
 
-The single most important artifact of the governance session. Categories the
-agents already respect: anything external, anything confirmed public, anything
-committed or signed, anything money.
+The most important artifact of the governance session. On WordPress each row
+becomes an actual capability, so this table is a specification, not a policy
+document.
 
 | Action | AI drafts? | Who approves | Who is told | Board vote? |
 |---|---|---|---|---|
 | Acknowledgment email to applicant | Yes | Pre-approved template | Admin digest | No |
 | Decision email (approve/decline) | Yes | Admin | Pillar lead | No |
 | Referral to employer partner | Yes | Admin (Forward tap) | Partner, applicant | No |
+| Urgent foreclosure internal alert | Yes | None (internal) | Counselor + backup | No |
 | Letter to a city official | Yes | __________ | __________ | ______ |
 | Publish an event as confirmed | Yes | __________ | __________ | ______ |
 | Publish a news item | Yes | __________ | __________ | ______ |
@@ -596,96 +645,106 @@ committed or signed, anything money.
 | Sign an MOU | No | __________ | __________ | ______ |
 | Anything in Rev. McCluster's name | Yes | Him alone | __________ | ______ |
 
-Rules that never bend, already codified in the charter and the Church OS
-doctrine: the AI never moves money, never signs, never publishes an event as
-confirmed, never sends anything external without its category's approval, and
-never speaks as a person.
+Rules that never bend: the AI never moves money, never signs, never publishes
+an event as confirmed, never sends anything external without its category's
+approval, and never speaks as a person. On WordPress the agent's account
+literally lacks the capability to publish or approve, so these stop depending
+on the agent behaving.
 
 ---
 
-## Part 5: The endpoint map
+## Part 6: The hard conversation (have this before migrating any sensitive data)
 
-What exists today: the outbound webhook contract (built, unconfigured), the
-Supabase schema (written, undeployed), the GitHub Actions agents (built,
-secret status unknown), the Pages deploy pipeline (live), and mailto/sms
-patterns standing in for real sends.
+The security research returned a finding that must reach the administrator
+plainly, because it changes what the organization should collect.
 
-What the build needs, in priority order. Each is an interview decision (which
-provider, which account, who pays):
+**In WordPress, a role controls what the dashboard displays. It does not
+control what the database contains or who can reach it.** Anyone who can
+install a plugin, run an export, or download a backup can read every row —
+regardless of what their screen shows. Installing one plugin dumps the
+database.
 
-| # | Endpoint | What it unlocks | Candidates |
-|---|---|---|---|
-| 1 | Production database + auth | Submissions leave the browser; real admin accounts; audit trail | Supabase (SQL already written) |
-| 2 | Automation hub (webhook receiver) | The catcher that branches every event; urgent-intake filter; auto-dispatch of corridor research | n8n, Make, Zapier, or an Edge Function |
-| 3 | Transactional email | Every acknowledgment, decision, referral, confirmation, package | Resend, Postmark, SES |
-| 4 | SMS | Urgent alerts, event reminders, roster texts with opt-out (A2P 10DLC registration for a US nonprofit) | Twilio, Telnyx |
-| 5 | Internal alerting | Instant pings: urgent intake, sponsor RSVP, agent run needs a decision | Slack webhook, ntfy, Pushover |
-| 6 | ESP / newsletter | The real "Stay close" list with consent | Mailchimp, Constant Contact, Resend Audiences |
-| 7 | Giving / payments | The Give door becomes a checkout with automatic receipts | Stripe, Givebutter, Tithe.ly, Zeffy |
-| 8 | Accounting | Draft journal entries, receipts, year-end statements | QuickBooks Online, Aplos |
-| 9 | Calendar | Auto-updating ICS feed; bookable counseling slots | Google Calendar API, Cal.com |
-| 10 | E-signature | MOUs, sponsorship contracts, consent forms | DocuSign, Dropbox Sign, SignWell |
-| 11 | GitHub API (PR publish gate) | Agents publish via pull request; merge = approval | GitHub App / fine-grained PAT |
-| 12 | PDF generation | Persisted branded proposals and referral packets | Puppeteer in an Action, pdf-lib |
-| 13 | CRM of record | One person, one record, full history | Sheets day one; HubSpot/Salesforce NP later |
-| 14 | Civic data lookup | Structured officials data for corridor research | Google Civic Info, Cicero, OpenStates |
-| 15 | Voice / hotline | Ring groups, voicemail transcription into intake, after-hours urgent routing | Twilio Voice, Google Voice NP, OpenPhone |
-| 16 | Referral tracking links | Placements attributable to the Collaborative | Dub.co, Short.io, UTM conventions |
+That means the sentence *"pastoral care notes are visible only to the tightest
+tier"* cannot be made true on WordPress. The organization has already promised
+publicly that its members' data stays private and eventually never leaves the
+building. Putting crisis notes in a cloud WordPress database makes that promise
+false on day one.
 
----
+Two data classes are affected:
 
-## Part 6: The agent roster (Gemini and Anthropic, working the same queue)
+**Pastoral care notes** — hospitalizations, bereavements, mental-health
+crises, addiction, marital collapse. The most damaging record a church holds,
+and a church generally has no regulatory shield forcing discipline. The
+recommendation is direct: **do not build this module on cloud WordPress.**
+Leave care notes where they are (paper, or an encrypted file on a
+church-owned laptop) until the on-premises box exists with encryption at rest
+and real row-level security. Building a WordPress version you intend to throw
+away is worse than waiting, because it will not get thrown away.
 
-The architecture is a **gateway**: one endpoint, a router that reads each job
-and dispatches to the right provider. Both agents write into the same approval
-queue in the admin panel; the admin never needs to know or care which brain
-drafted what. The split by strength and by cost:
+**Foreclosure case detail** — sale dates, arrears, lender, income. These are
+financial-distress records on counseled clients, and sale dates are precisely
+the targeting list used for equity-stripping and rescue scams against an
+elderly congregation. The recommendation is to **split the record**: WordPress
+collects the intake ticket only (name, phone, email, best time to call,
+consent, and a single non-detailed urgency flag), then alerts the counselor and
+does not retain the detail. WordPress becomes the doorbell, not the filing
+cabinet. The counselor takes the financial detail by phone into whatever
+confidential case system the counseling work already uses.
 
-**Anthropic (Claude) agents, already in place, extend them:**
-- The McCluster OS weekly engine: partnership prospecting, news, the Monday
-  brief (built)
-- The corridor researcher: dossiers with web search (built)
-- New: the drafting desk. Decision emails, referral letters, proposals,
-  newsletter editions, board packets. The jobs where judgment and voice
-  carry the most weight.
+**What to ask in the room:**
+- [ ] Given that, do you want pastoral care in this system at all right now, or
+      should it wait for the box?
+- [ ] Are you comfortable with foreclosure intake capturing only contact and
+      urgency, with the case detail handled off-platform?
+- [ ] Who has the authority to make this call — the administrator, Rev.
+      McCluster, or the board?
 
-**Gemini agents, new lane:**
-- High-volume, low-cost triage: classify every inbound event, route it, score
-  urgency (the free tier absorbs this traffic)
-- Vision: read the paper forms, sign-in sheets, giving envelopes, and filing
-  cabinet scans the interview will surrender
-- Long-context digestion: transcribed interviews, board minutes, grant
-  agreements, the WordPress archive
-
-**Structural rules regardless of provider:** every agent writes drafts into
-the same persisted approval queue; every send goes through the same gated
-send path; every action logs who (or what) did it and who approved it; keys
-live in repo secrets or the box's vault, never client-side; and if one
-provider is down, the router fails over to the other, because the queue
-outlives any vendor.
-
-The 13 build gaps the audit confirmed (no approval-queue persistence, no
-roles, no SMS, no email send, no payments, no audit log, no provider router,
-no inbound webhook surface, no reliable outbound webhook, no scheduler beyond
-one cron, no secrets pattern, no Church OS data model, no agent observability)
-are the engineering backlog. The interview's answers set their order.
+Everything else — applications, jobs, corridors, events, giving, membership
+contact data, communications — is appropriate for WordPress with the controls
+in the build document.
 
 ---
 
-## Part 7: Walking out
+## Part 7: What this costs (bring real numbers to the room)
 
-You are done when you can answer yes to all five:
+Roughly, per year, verified against current vendor pricing during the research
+(and worth confirming live before purchase):
 
+- **Lean but fully functional: about $850–1,000/yr.** Platform, forms, CRM,
+  donations, email sending, SMS, with the rest on free tiers.
+- **Recommended: about $1,450–1,650/yr.** Adds the directory and approval-queue
+  layer, security, and better transactional email deliverability.
+- **Fully loaded: about $2,000–2,300/yr.**
+
+**Excluded and much larger:** payment processing at roughly 2.9% + $0.30 per
+card gift. On $100k of online giving that is about $2,900 a year — more than
+the entire software stack. Nonprofit processing rates are the highest-value
+thing to negotiate.
+
+Set this against what they pay today across the scattered subscriptions
+inventoried in Domain 1. That comparison is the budget conversation.
+
+---
+
+## Part 8: Walking out
+
+You are done when you can answer yes to all seven:
+
+- [ ] **Which WordPress is confirmed by capability** — SFTP/SSH and cron
+      verified present, not inferred from a plan name or a plugins menu.
+- [ ] **The three technical unknowns are tested:** authenticated REST write
+      from outside, a scheduled job that actually runs on time, and outbound
+      HTTP from the site.
 - [ ] The approval matrix is filled in, in their words, with named people.
-- [ ] The go-live decision is made: database on, webhook set, and the urgent
-      foreclosure alert has a named recipient with a phone number.
-- [ ] The artifact folder holds the templates, lists, and the address-book
-      export, and every artifact has an owner and a scan date.
+- [ ] **The foreclosure alert has a named recipient with a mobile number**, and
+      a named backup.
+- [ ] The sensitive-data decision from Part 6 is made and recorded, by whoever
+      has the authority to make it.
+- [ ] The artifact folder holds the templates, lists, exports, and the address
+      book, each with an owner.
 - [ ] Every pillar, program, and collaborative has a named living contact, or
       an honest "nobody," written down.
-- [ ] The administrator can describe, in one sentence each, what the AI will
-      do, what they will approve, and what will never happen without them.
 
-Then the build session starts, and it starts with flow #1: the family with a
-sale date scheduled, who tonight would generate zero alerts, and next month
-never will again.
+Then the build starts, and it starts where it should: with the family whose
+sale date is scheduled, who tonight generates no alert at all, and who next
+month will generate one within minutes.
