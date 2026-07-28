@@ -18,7 +18,7 @@ church install is actually worth to you per year:
 | Rank | Line | Why it matters | Rough scale |
 |---|---|---|---|
 | 1 | **Managed service retainer** | Recurring, defensible, yours alone | $200–800/mo per org |
-| 2 | **Hosting margin on your own fleet** | Marginal cost of one more container is near zero | ~100% margin |
+| 2 | **Hosting margin** | Marginal cost of one more container is near zero *if you own the metal* — see the assumption note below | ~100% margin owned, ~40–60% rented |
 | 3 | **Build fee** | One-time, but funds the next install | $5k–25k |
 | 4 | **Payment processing revenue share** | Scales with their donation volume, not their software budget | See below |
 | 5 | **Reseller margin** | You bill, you set the price (20–40% typical) | $100–400/yr |
@@ -29,6 +29,24 @@ about $25 a year. Fifteen of those is $375 — less than one month of a retainer
 Affiliate income is real but it is a rounding error next to hosting and
 support. Build the business on rows 1–3 and treat rows 5–6 as free money that
 arrives whether you chase it or not.
+
+> **Assumption to confirm before quoting anyone.** This document was drafted
+> against a hypothetical fleet of about twenty older Dell 1U servers. That
+> hardware has never been confirmed as owned, powered, and racked. It changes
+> the math materially, so settle it first:
+>
+> - **If the metal is genuinely yours and already running:** row 2 is close to
+>   pure margin, and the per-install economics in Part 4 hold.
+> - **If it is not yet acquired, or has no home with power and cooling:** price
+>   the first several installs on rented infrastructure (a $20–60/mo VPS per
+>   client, or one larger box running several) and treat the fleet as a later
+>   margin upgrade rather than the foundation. The stack below runs identically
+>   either way, which is the point of choosing it.
+>
+> Twenty 1U servers is roughly 3–5 kW under load: dedicated circuits, real
+> cooling, loud fans, and on the order of $500–1,000/month in power alone
+> before a single client is billed. Owned hardware is only cheap once those
+> costs are actually being paid by someone.
 
 **The one exception is payments.** Stripe's partner ecosystem shares revenue
 based on the *payment volume* of businesses you refer, not on a subscription
@@ -135,11 +153,11 @@ The requirements this has to satisfy, all at once:
 5. AI agents need clean API access to read and write
 6. Nothing proprietary to escape from later
 
-### Layer 0 — Infrastructure (your fleet)
+### Layer 0 — Infrastructure (owned fleet, or rented until there is one)
 
 | Component | Choice | Why |
 |---|---|---|
-| Virtualization | **Proxmox** | Runs on the existing hardware, mature, free |
+| Virtualization | **Proxmox** | Runs on commodity or older enterprise hardware, mature, free |
 | Deploy layer | **Coolify** | Explicitly built for agencies running dozens of client sites, isolates each in Docker, 290+ one-click services, preview deployments. Dokploy is the lighter alternative if you prefer Swarm and a leaner UI |
 | TLS + routing | **Caddy** or Traefik | Automatic certificates, no manual renewal |
 | Public access | **Cloudflare Tunnel** | No open inbound ports, no static IP. Same mechanism the church box will use |
@@ -221,10 +239,18 @@ Everything else on this list is genuinely better owned.
 
 Rough shape, per church, per year:
 
-**Your marginal cost:** one more container on hardware you already own is close
-to zero. The real cost is the software you correctly chose not to self-host —
-transactional email, SMS usage, and any paid tier of the CMS. Call it
-$25–50/month, most of it usage-based.
+**Your marginal cost, two scenarios:**
+
+- *Owned fleet, already powered:* one more container is close to zero. The only
+  real cost is the software you correctly chose not to self-host —
+  transactional email, SMS usage, and any paid CMS tier. Call it $25–50/month,
+  most of it usage-based.
+- *Rented infrastructure:* add $20–60/month per client for a VPS, or amortize
+  one larger box across several. Call it $50–110/month all in.
+
+Quote from the second number until the first one is verifiably true. Margin
+improves when the fleet lands; a quote built on hardware that does not exist yet
+does not survive contact with the first invoice.
 
 **Their alternative:** the scattered subscriptions inventoried during the
 interview, plus whatever they were paying for WordPress hosting, plus the hours
