@@ -5,11 +5,13 @@ and then turning that machine into a product other churches can install. Shiloh
 Baptist Church is the front runner. Everything here is built to be powerful and
 to be trusted, because a tool churches do not trust never gets installed twice.
 
-This is not a new project. It is the Faith CDC / FREEDOM app you are already
-running, plus a local brain in the building, plus the back-office modules a
-church actually runs on. The member profiles, applications, RSVPs, event
-tracking, admin review, and the McCluster concierge already exist. Church OS is
-that, grown up.
+This is not a new project. It is the Faith CDC / FREEDOM app built for the
+organization — today a demo on GitHub Pages, not yet adopted and with no domain
+pointed at it — plus a local brain in the building, plus the back-office modules
+a church actually runs on. The member profiles, applications, RSVPs, event
+tracking, admin review, and the McCluster concierge are built, **but they run in
+demo mode: each submission is visible only in the browser that made it, and
+nobody is notified of anything.** Church OS is that, grown up and switched on.
 
 ---
 
@@ -65,10 +67,18 @@ does not need the 512GB Mac. Size the box to the congregation.
 There are two different machines in this business and they are easy to confuse.
 Keeping them separate is what makes the whole thing work.
 
-### Tier A: the central fleet (yours)
+### Tier A: the central fleet (yours, once it exists)
+
+> **Assumption, flagged.** The fleet described here is roughly fifteen older
+> Dell 1U servers that have never been confirmed as racked, powered, or
+> connected. **docs/INFRASTRUCTURE.md concludes that renting wins on economics
+> today** — that fleet would burn about $10,000/year in Connecticut power and
+> cooling to deliver less compute than one rented dedicated server. Until and
+> unless it is colocated, read every "fleet" reference below as "rented
+> infrastructure," which changes none of the architecture and all of the cost.
 
 This is your infrastructure, in one place, that you run and manage. A rack of
-older enterprise servers is a genuinely good fit here. A fleet of twenty Dell
+older enterprise servers can fit here, with the caveat above. A fleet of twenty Dell
 PowerEdge R610s, for example, gives you roughly 240 CPU cores and one to four
 terabytes of aggregate RAM: plenty for everything a datacenter does, as long as
 you do not ask it to be the frontier-model brain.
@@ -104,7 +114,8 @@ Reality checks on a fleet like this: twenty R610s draw roughly 3 to 5
 kilowatts, which is dedicated circuits, real cooling, loud 1U fans, and a power
 bill around $500 to $1000 a month. And the hardware is fifteen years old and
 out of warranty, so plan for drive and PSU failures and keep spares. It is
-excellent value for compute you already own; it is not free to run.
+excellent value for compute already owned and already powered; it is not free to
+run, and at Connecticut rates it is not cheap.
 
 ### Tier B: the per-church appliance (theirs)
 

@@ -1,6 +1,6 @@
 # The Administrator Interview
 ### The operational audit of Freedom, Inc. / Faith CDC, and the map for automating everything that can be automated
-### Destination: WordPress
+### Destination: WordPress (client-stated; confirm before building)
 
 This is the instrument for interviewing the final administrator. It was built
 from two full audits: one of the existing platform (every screen, form, data
@@ -8,8 +8,12 @@ file, agent, and doc in this repo) and one of WordPress as the destination
 (plan constraints, plugin ecosystem, flow mapping, migration path, and the
 security of putting this particular data in this particular place).
 
-The organization is transferring everything to WordPress. That decision is
-taken. This document interviews for it.
+WordPress is the client's stated destination and this instrument assumes it.
+**No artifact records that decision, so confirm it in Domain 0 and note who
+made it and when.** If it is still open, docs/AGENCY-STACK.md and
+docs/INFRASTRUCTURE.md set out the self-hosted alternative, which is cheaper to
+build once than to build twice, and is the only path on which the pastoral-care
+module is ever safe.
 
 **The goal, said once:** every action a person takes by hand today becomes a
 flow where AI does the work, the administrator taps Approve inside WordPress,
@@ -707,8 +711,9 @@ in the build document.
 
 ## Part 7: What this costs (bring real numbers to the room)
 
-Roughly, per year, verified against current vendor pricing during the research
-(and worth confirming live before purchase):
+Roughly, per year, **from list prices that could NOT be verified during the
+research because the vendor sites were unreachable. Price every line live before
+quoting anyone:**
 
 - **Lean but fully functional: about $850–1,000/yr.** Platform, forms, CRM,
   donations, email sending, SMS, with the rest on free tiers.

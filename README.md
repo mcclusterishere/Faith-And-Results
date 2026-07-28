@@ -1,7 +1,8 @@
 # Faith and Results — the Freedom, Inc. app
 
 The new faithandresults.com, rebuilt as an installable mobile app: Freedom, Inc.'s
-credentials (FDIC · HUD · Federal Home Loan Bank · NeighborWorks America) on the front
+consulting and training record (consulting for the FDIC, HUD and the Federal Home Loan
+Banks; trainer for NeighborWorks America) on the front
 door, five big tabs on the bottom, the seventeen cities as a tappable constellation,
 and four ways to say yes — installable to any phone's home screen, working offline.
 

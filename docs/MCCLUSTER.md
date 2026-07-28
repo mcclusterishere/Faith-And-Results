@@ -1,8 +1,15 @@
 # McCluster OS
 
 The operating system of the operation, named for the man who built it. Version 1, codename "Shiloh". Its job is continuity: the
-operation Rev. Carl McCluster built keeps researching, prospecting, drafting,
-and reporting whether or not anyone is watching it that week.
+operation Rev. Carl McCluster built is designed to keep researching,
+prospecting, drafting, and reporting whether or not anyone is watching it that
+week.
+
+> **Status: built, never run.** The run counter in state.json is zero and no
+> `ANTHROPIC_API_KEY` has been confirmed on the repository, so the agents have
+> never executed. The app is also still in demo mode, which means an intake
+> today reaches nobody. Everything below describes what the system does once it
+> is switched on, not what is happening now.
 
 ## The architecture, honestly
 

@@ -91,7 +91,7 @@ Verify current terms at signup; commission structures churn constantly.
 
 | Vendor | Type | Notes |
 |---|---|---|
-| **Your own fleet** | — | The best margin you will ever have. Everything below is overflow or things you should not self-host |
+| **Your own fleet (once it exists)** | — | The best margin you will ever have; until then this row is rented capacity at ~40–60% margin. See docs/INFRASTRUCTURE.md, which concludes rented wins on economics today |
 | Cloudflare (Registrar, DNS, Tunnel) | Partner | Registrar sells domains at cost, so no margin — but it makes *your* costs the lowest available, and Tunnel is how you expose the fleet safely |
 | OpenSRS / Tucows, Enom, ResellerClub | **Reseller** | True domain reselling where you set retail price. Use one of these if you want domain margin |
 | DigitalOcean, Vultr, Hetzner | Affiliate | Referral credits. Useful for overflow capacity and staging |
@@ -209,7 +209,8 @@ content-only and needs no app behavior.
 **n8n, self-hosted.** This is the workhorse that replaces Zapier or Make: it
 catches every event, branches on it, retries, escalates when nobody
 acknowledges, and fans out to email, SMS, and the CRM. Self-hosted means no
-per-task fees as volume grows, and it runs on the fleet you already own.
+per-task fees as volume grows, and it runs on infrastructure you control,
+whether that is an owned fleet or a rented box.
 
 ### Layer 5 — AI
 
@@ -320,7 +321,8 @@ far cheaper to decide now than after several listings exist.
 
 The margin is structural rather than clever: the stack is open source, hosting
 is commodity, and the only recurring costs are the three or four services that
-genuinely should be somebody else's problem.
+genuinely should be somebody else's problem. It does not depend on owning
+hardware, which is what makes it real today rather than after a rack exists.
 
 ---
 
