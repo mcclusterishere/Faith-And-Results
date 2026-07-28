@@ -256,12 +256,70 @@ does not survive contact with the first invoice.
 interview, plus whatever they were paying for WordPress hosting, plus the hours
 staff spend doing by hand what the automation does.
 
-**Your revenue:** build fee, then a monthly managed fee that covers hosting,
-updates, backups, monitoring, support, and the AI operations. Plus the payment
-revenue share, which grows on its own as their giving grows.
+### The price
 
-The margin is structural rather than clever: you own the hardware, the stack is
-open source, and the only recurring costs are the three or four services that
+**Church OS, Full Operations: $400/month. Setup and migration: $400.**
+
+Year one is $5,200 against roughly $700 in hard costs, so about **86% gross
+margin**. It holds up against the market because the product replaces four to
+six tools at once:
+
+| What it replaces | Their price |
+|---|---|
+| Church management (Breeze / Tithely) | $67–119/mo |
+| Church management (Planning Center, mid-size) | ~$200/mo |
+| Managed nonprofit website hosting | $100–300/mo |
+| Email marketing platform | $30–50/mo |
+| Form and intake tooling | $15–30/mo |
+| AI operations layer | nothing comparable exists |
+
+### Three rules that protect the price
+
+**1. The first invoice sets the ceiling for the whole network.** These
+organizations talk to each other. Never quote a low price — quote the real
+price and show the discount as a line item:
+
+> Church OS — Full Operations — $400/mo
+> Setup & migration — $400 *(founding partner rate)*
+> Mobile app, iOS + Android — $1,200 value, included as founding partner
+> 12-month initial term
+
+Customer five then sees $400 as the price, with a story about why the first one
+was different. This costs nothing and is the single highest-leverage line in
+the document.
+
+**2. A low install fee requires a minimum term.** $400 prices roughly two hours
+against a job that runs twenty to sixty, and the interview alone is three
+sessions. The recurring fee closes that gap in about two months, so the
+strategy is sound — but only if the client stays. Use a 12-month initial term,
+or make the annual plan the default. And invest early in making install
+repeatable (container template, data importer, DNS runbook, training deck),
+because that is what turns the install fee from a loss leader into margin.
+
+**3. Annual discounts run 15–17%, not 40%.** "Pay for ten months, get twelve"
+is the standard. A steeper discount tells the buyer the monthly price was never
+real.
+
+### Passed through, never absorbed
+
+- Payment processing fees (~2.9% + $0.30 per card gift)
+- SMS usage above an included bundle
+- Apple Developer account, $99/year, recurring for as long as the app lives
+- Custom development beyond the standard build
+
+### The mobile app decision, before there are five of them
+
+- **One app, many churches** (user picks their congregation): one Apple
+  account, one review cycle, one update pipeline forever.
+- **One app per church** (branded individually): a much stronger pitch, but N
+  listings, N review cycles, N rejection risks, and N updates every time a
+  mobile OS or store policy changes.
+
+For a product meant to replicate across a network, this compounds fast and is
+far cheaper to decide now than after several listings exist.
+
+The margin is structural rather than clever: the stack is open source, hosting
+is commodity, and the only recurring costs are the three or four services that
 genuinely should be somebody else's problem.
 
 ---
