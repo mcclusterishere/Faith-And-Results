@@ -31,6 +31,18 @@ create table if not exists public.profiles (
   "updatedAt" timestamptz default now()
 );
 
+create table if not exists public.church_plans (
+  id            text primary key,
+  "churchName"  text not null,
+  size          text default 'small',
+  features      jsonb default '[]'::jsonb,
+  totals        jsonb default '{}'::jsonb,
+  notes         text,
+  "createdBy"   text,
+  "createdAt"   timestamptz default now(),
+  "updatedAt"   timestamptz default now()
+);
+
 create table if not exists public.rsvps (
   id            text primary key,
   event         text not null,
@@ -45,7 +57,14 @@ create table if not exists public.rsvps (
 
 alter table public.applications enable row level security;
 alter table public.profiles     enable row level security;
+alter table public.church_plans enable row level security;
 alter table public.rsvps        enable row level security;
+
+-- Church OS planner is an internal admin tool: no public/anon access at all,
+-- only signed-in admins may read, write, or delete a church's plan.
+create policy "admins manage church plans"
+  on public.church_plans for all
+  to authenticated using (true) with check (true);
 
 create policy "anyone can rsvp"
   on public.rsvps for insert

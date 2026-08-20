@@ -83,6 +83,16 @@ The catalog is data, not markup. Edit these and push — the app re-renders itse
   tracking links, and the routing contact used by Admin's "Forward to partner"
 - `data/news.json` — news (entries older than 18 months self-hide)
 
+## Church OS planner
+
+`church-upgrade.html` is the Smart Church Upgrade pitch-plan builder — hardware,
+automations, and the 5-year savings case for a prospect church. It's gated behind
+the same admin login as `admin.html` (nothing public), and every plan saves to the
+`church_plans` table (created by `supabase-setup.sql`, admin-only RLS) so a signed-in
+admin sees their saved plans persist across devices and sessions. In demo mode plans
+save to this browser's localStorage instead. Admin → **Church OS** lists every saved
+plan with its investment, savings, and payback; **+ New plan** opens the planner.
+
 ## The corridor research agent
 
 `.github/workflows/corridor-research.yml` is a Claude-powered research agent for the

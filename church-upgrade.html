@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Church OS Planner · Freedom, Inc.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root {
+  --bg: #0a0a0f;
+  --bg-card: rgba(15,15,25,0.85);
+  --bg-glass: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+  --text: #e8e8f0;
+  --text-dim: #8888a0;
+  --accent: #00d4aa;
+  --accent-glow: rgba(0,212,170,0.3);
+  --accent2: #ff6b35;
+  --accent2-glow: rgba(255,107,53,0.3);
+  --accent3: #7c3aed;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+a { color:var(--accent); }
+[hidden] { display:none !important; }
+
+/* -------- gate -------- */
+.gate {
+  min-height:100vh; display:grid; place-items:center; padding:24px;
+  background:var(--bg);
+  position:relative; z-index:5;
+}
+.gatecard {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:20px;
+  padding:36px 32px; max-width:26rem; width:100%; backdrop-filter:blur(20px);
+}
+.gatecard h1 {
+  font-family:'Space Grotesk',sans-serif; font-size:1.6rem; margin-bottom:6px;
+}
+.gatecard p { color:var(--text-dim); font-size:0.92rem; margin-bottom:18px; }
+.gatecard label { display:block; font-weight:600; margin:14px 0 6px; font-size:0.85rem; color:var(--text-dim); }
+.gatecard input {
+  width:100%; font-family:inherit; font-size:1rem; padding:12px 14px;
+  background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; color:var(--text);
+}
+.gatecard input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+.gatecard .err { color:var(--danger); font-weight:600; font-size:0.88rem; display:none; margin-top:10px; }
+.gatecard .btn { width:100%; margin-top:20px; }
+.gatecard .back { display:inline-block; margin-bottom:18px; font-size:0.85rem; color:var(--text-dim); text-decoration:none; }
+.gatecard .back:hover { color:var(--accent); }
+
+.bg-mesh {
+  position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0,212,170,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 50% 80%, rgba(255,107,53,0.05) 0%, transparent 50%);
+  animation:meshPulse 8s ease-in-out infinite alternate;
+}
+@keyframes meshPulse {
+  0% { opacity:0.6; transform:scale(1); }
+  100% { opacity:1; transform:scale(1.05); }
+}
+.grid-overlay {
+  position:fixed; inset:0; z-index:1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+.topbar {
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  flex-wrap:wrap; padding:16px 24px; border-bottom:1px solid var(--border);
+  background:rgba(10,10,15,0.7); backdrop-filter:blur(10px);
+}
+.topbar a.brand { font-family:'Space Grotesk',sans-serif; font-weight:700; text-decoration:none; color:var(--text); font-size:0.95rem; }
+.topbar a.brand span { color:var(--accent); }
+.topbar .who { font-size:0.82rem; color:var(--text-dim); }
+.topbar .out {
+  background:none; border:1px solid var(--border); color:var(--text);
+  font-family:inherit; font-weight:600; font-size:0.85rem; border-radius:100px; padding:8px 18px; cursor:pointer;
+}
+.topbar .out:hover { border-color:rgba(255,255,255,0.2); }
+.container {
+  position:relative; z-index:2;
+  max-width:1400px; margin:0 auto; padding:40px 24px;
+}
+.hero {
+  text-align:center; padding:60px 0 40px;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 20px; background:var(--bg-glass);
+  border:1px solid var(--border); border-radius:100px;
+  font-size:13px; font-weight:500; color:var(--accent);
+  margin-bottom:24px; backdrop-filter:blur(10px);
+}
+.hero-badge::before {
+  content:''; width:8px; height:8px;
+  background:var(--accent); border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; box-shadow:0 0 0 0 var(--accent-glow); }
+  50% { opacity:0.7; box-shadow:0 0 0 8px transparent; }
+}
+.hero h1 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.5rem,6vw,5rem); font-weight:700;
+  line-height:1.05; margin-bottom:16px;
+  background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent3) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero p {
+  font-size:1.15rem; color:var(--text-dim);
+  max-width:600px; margin:0 auto 32px;
+}
+.hero-stats {
+  display:flex; justify-content:center; gap:40px;
+  flex-wrap:wrap; margin-top:32px;
+}
+.stat { text-align:center; }
+.stat-value {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.5rem; font-weight:700; color:var(--accent);
+}
+.stat-label {
+  font-size:0.85rem; color:var(--text-dim);
+  text-transform:uppercase; letter-spacing:0.1em; margin-top:4px;
+}
+.dashboard {
+  display:grid; grid-template-columns:1fr 380px; gap:24px; margin-top:48px;
+}
+@media (max-width:1100px) {
+  .dashboard { grid-template-columns:1fr; }
+}
+.card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:20px; padding:28px; backdrop-filter:blur(20px);
+  transition:all 0.3s ease;
+}
+.card:hover {
+  border-color:rgba(255,255,255,0.15); transform:translateY(-2px);
+}
+.card-header {
+  display:flex; align-items:center; gap:12px; margin-bottom:20px;
+}
+.card-icon {
+  width:44px; height:44px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; background:var(--bg-glass); border:1px solid var(--border);
+}
+.card-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.15rem; font-weight:600;
+}
+.card-subtitle {
+  font-size:0.8rem; color:var(--text-dim);
+}
+.budget-panel { position:sticky; top:24px; }
+.budget-display {
+  text-align:center; padding:24px;
+  background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, rgba(124,58,237,0.1) 100%);
+  border-radius:16px; border:1px solid var(--accent); margin-bottom:20px;
+}
+.budget-amount {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:3.5rem; font-weight:700; color:var(--accent); line-height:1;
+}
+.budget-label {
+  font-size:0.85rem; color:var(--text-dim); margin-top:8px;
+  text-transform:uppercase; letter-spacing:0.1em;
+}
+.budget-bar {
+  width:100%; height:8px; background:rgba(255,255,255,0.05);
+  border-radius:4px; margin-top:16px; overflow:hidden;
+}
+.budget-bar-fill {
+  height:100%; border-radius:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent3));
+  transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.savings-card {
+  background:linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(0,212,170,0.05) 100%);
+  border:1px solid rgba(34,197,94,0.3); border-radius:16px; padding:20px; margin-bottom:20px;
+}
+.savings-value {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2rem; font-weight:700; color:var(--success);
+}
+.savings-label {
+  font-size:0.8rem; color:var(--text-dim); margin-top:4px;
+}
+.payback-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 14px; background:rgba(245,158,11,0.15);
+  border:1px solid var(--warning); border-radius:100px;
+  font-size:0.8rem; font-weight:600; color:var(--warning); margin-top:12px;
+}
+.feature-list { display:flex; flex-direction:column; gap:12px; }
+.feature-item {
+  display:flex; align-items:center; gap:14px; padding:16px;
+  background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:14px; cursor:pointer; transition:all 0.25s ease;
+  position:relative; overflow:hidden;
+}
+.feature-item::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,var(--accent),transparent); opacity:0; transition:opacity 0.3s;
+}
+.feature-item:hover::before { opacity:0.05; }
+.feature-item:hover { border-color:rgba(255,255,255,0.15); }
+.feature-item.active {
+  border-color:var(--accent);
+  background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%);
+}
+.feature-item.active::before { opacity:0.1; }
+.feature-toggle {
+  width:48px; height:26px; border-radius:13px;
+  background:rgba(255,255,255,0.1); position:relative; flex-shrink:0; transition:all 0.3s;
+}
+.feature-item.active .feature-toggle {
+  background:var(--accent); box-shadow:0 0 16px var(--accent-glow);
+}
+.feature-toggle::after {
+  content:''; position:absolute; width:20px; height:20px;
+  background:#fff; border-radius:50%; top:3px; left:3px;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.feature-item.active .feature-toggle::after { left:25px; }
+.feature-info { flex:1; position:relative; z-index:1; }
+.feature-name { font-weight:600; font-size:0.95rem; }
+.feature-desc { font-size:0.78rem; color:var(--text-dim); margin-top:2px; }
+.feature-price {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem;
+  color:var(--accent); position:relative; z-index:1;
+}
+.capability-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:20px;
+}
+.capability-item {
+  padding:20px; background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:14px; transition:all 0.3s;
+}
+.capability-item.active {
+  border-color:var(--accent);
+  background:linear-gradient(135deg, rgba(0,212,170,0.06) 0%, transparent 100%);
+}
+.capability-header {
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;
+}
+.capability-name { font-weight:600; font-size:0.9rem; }
+.capability-score {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem;
+}
+.capability-bar {
+  width:100%; height:6px; background:rgba(255,255,255,0.05);
+  border-radius:3px; overflow:hidden;
+}
+.capability-bar-fill {
+  height:100%; border-radius:3px;
+  transition:width 0.6s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+}
+.capability-item.active .capability-bar-fill {
+  background:linear-gradient(90deg,var(--accent),var(--accent3));
+}
+.capability-item:not(.active) .capability-bar-fill {
+  background:rgba(255,255,255,0.1);
+}
+.arch-diagram {
+  display:flex; flex-direction:column; gap:16px; margin-top:20px;
+}
+.arch-layer {
+  display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+}
+.arch-node {
+  padding:14px 22px; background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:12px; font-size:0.85rem; font-weight:500;
+  text-align:center; transition:all 0.3s; position:relative;
+}
+.arch-node.active {
+  border-color:var(--accent);
+  background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, transparent 100%);
+  box-shadow:0 0 20px var(--accent-glow);
+}
+.arch-node.donated {
+  border-color:var(--accent3);
+  background:linear-gradient(135deg, rgba(124,58,237,0.1) 0%, transparent 100%);
+}
+.arch-node.donated::after {
+  content:'DONATED'; position:absolute; top:-6px; right:-6px;
+  font-size:0.55rem; font-weight:800; padding:2px 6px;
+  background:var(--accent3); color:#fff; border-radius:4px;
+}
+.arch-connector {
+  text-align:center; color:var(--text-dim); font-size:1.2rem; line-height:1;
+}
+.size-selector {
+  display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;
+}
+.size-btn {
+  flex:1; min-width:120px; padding:16px;
+  background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:14px; color:var(--text); font-family:'Inter',sans-serif;
+  font-size:0.9rem; font-weight:600; cursor:pointer;
+  transition:all 0.3s; text-align:center;
+}
+.size-btn:hover { border-color:rgba(255,255,255,0.2); }
+.size-btn.active {
+  border-color:var(--accent);
+  background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, transparent 100%);
+  box-shadow:0 0 20px var(--accent-glow);
+}
+.size-btn .size-members {
+  display:block; font-size:0.75rem; color:var(--text-dim);
+  font-weight:400; margin-top:4px;
+}
+.plan-row {
+  display:flex; align-items:center; gap:12px; padding:14px 16px;
+  background:var(--bg-glass); border:1px solid var(--border); border-radius:14px;
+  cursor:pointer; transition:all 0.25s ease;
+}
+.plan-row:hover { border-color:rgba(255,255,255,0.2); }
+.plan-row.active { border-color:var(--accent); background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%); }
+.plan-row .info { flex:1; min-width:0; }
+.plan-row .name { font-weight:600; font-size:0.92rem; }
+.plan-row .meta { font-size:0.76rem; color:var(--text-dim); margin-top:2px; }
+.plan-row .del {
+  background:none; border:1px solid var(--border); color:var(--text-dim);
+  border-radius:100px; padding:6px 12px; font-size:0.75rem; cursor:pointer; font-family:inherit;
+}
+.plan-row .del:hover { border-color:var(--danger); color:var(--danger); }
+.action-bar {
+  display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;
+}
+.btn {
+  flex:1; min-width:160px; padding:16px 28px;
+  border-radius:14px; font-family:'Inter',sans-serif;
+  font-size:0.95rem; font-weight:600; cursor:pointer;
+  transition:all 0.3s; border:none; text-align:center;
+  text-decoration:none; display:inline-flex;
+  align-items:center; justify-content:center; gap:8px;
+}
+.btn-primary {
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#000; box-shadow:0 4px 24px var(--accent-glow);
+}
+.btn-primary:hover {
+  transform:translateY(-2px); box-shadow:0 8px 32px var(--accent-glow);
+}
+.btn-secondary {
+  background:var(--bg-glass); border:1px solid var(--border); color:var(--text);
+}
+.btn-secondary:hover {
+  border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.05);
+}
+.btn[disabled] { opacity:0.5; cursor:default; }
+.save-status { font-size:0.8rem; color:var(--text-dim); margin-top:10px; text-align:center; }
+.save-status.dirty { color:var(--warning); }
+.save-status.saved { color:var(--success); }
+input[type=text].church-input {
+  width:100%; font-family:inherit; font-size:1rem; padding:14px 16px;
+  background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; color:var(--text);
+}
+input[type=text].church-input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.animate-in { animation:slideUp 0.6s ease forwards; }
+.delay-1 { animation-delay:0.1s; opacity:0; }
+.delay-2 { animation-delay:0.2s; opacity:0; }
+.delay-3 { animation-delay:0.3s; opacity:0; }
+::-webkit-scrollbar { width:8px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.2); }
+@media (max-width:768px) {
+  .hero h1 { font-size:2.2rem; }
+  .hero-stats { gap:24px; }
+  .stat-value { font-size:1.8rem; }
+  .budget-amount { font-size:2.5rem; }
+  .card { padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <form class="gatecard" id="gateForm">
+    <a class="back" href="admin.html">← Back to Admin</a>
+    <h1>Church OS <span style="color:var(--accent)">Planner</span></h1>
+    <p id="gateBlurb">Sign in to build and save Smart Church Upgrade plans.</p>
+    <div id="gateDemo" hidden>
+      <label for="gatePass">Passcode</label>
+      <input id="gatePass" type="password" autocomplete="current-password">
+    </div>
+    <div id="gateSb" hidden>
+      <label for="gateEmail">Email</label>
+      <input id="gateEmail" type="email" autocomplete="email">
+      <label for="gatePw">Password</label>
+      <input id="gatePw" type="password" autocomplete="current-password">
+    </div>
+    <p class="err" id="gateErr">That didn't work. Try again.</p>
+    <button class="btn btn-primary" type="submit">Open the planner</button>
+  </form>
+</div>
+
+<div id="plannerRoot" hidden>
+
+<div class="bg-mesh"></div>
+<div class="grid-overlay"></div>
+
+<div class="topbar">
+  <a class="brand" href="admin.html">← FREEDOM<span>,</span> INC. Admin</a>
+  <div style="display:flex; align-items:center; gap:16px;">
+    <span class="who" id="modeTag"></span>
+    <button class="out" id="signOut" type="button">Sign out</button>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="hero animate-in">
+  <div class="hero-badge">One Brain. Ten Bodies. Zero Monthly Bills.</div>
+  <h1>Smart Church Upgrade</h1>
+  <p>Build a persistent AI that runs your entire building — streaming, sound, security, and more. Own your tech. Cut the software rent.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-value" id="heroSavings">$0</div>
+      <div class="stat-label">Yearly Savings</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="heroPayback">–</div>
+      <div class="stat-label">Payback Period</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="heroChurches">10</div>
+      <div class="stat-label">Churches Served</div>
+    </div>
+  </div>
+</div>
+
+<div class="card animate-in delay-1">
+  <div class="card-header">
+    <div class="card-icon">⛪</div>
+    <div>
+      <div class="card-title">Church &amp; Saved Plans</div>
+      <div class="card-subtitle">Every plan is saved to the database under your admin account.</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+    <input id="churchNameInput" class="church-input" type="text" placeholder="Church name (e.g. Shiloh Baptist Church)" style="flex:2; min-width:220px;">
+    <button class="btn btn-primary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="saveBtn" type="button">💾 Save Plan</button>
+    <button class="btn btn-secondary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="newPlanBtn" type="button">+ New Plan</button>
+  </div>
+  <div id="savedPlansList" style="display:flex; flex-direction:column; gap:10px;"></div>
+</div>
+
+<div class="card animate-in delay-1" style="margin-top:32px;">
+  <div class="card-header">
+    <div class="card-icon">🏛️</div>
+    <div>
+      <div class="card-title">Church Size</div>
+      <div class="card-subtitle">Pick your starting point. We'll scale the recommendation.</div>
+    </div>
+  </div>
+  <div class="size-selector">
+    <button class="size-btn active" data-size="small" onclick="setSize('small')">
+      Small Church
+      <span class="size-members">Under 100 members</span>
+    </button>
+    <button class="size-btn" data-size="medium" onclick="setSize('medium')">
+      Medium Church
+      <span class="size-members">100–500 members</span>
+    </button>
+    <button class="size-btn" data-size="large" onclick="setSize('large')">
+      Large Church
+      <span class="size-members">500+ members</span>
+    </button>
+  </div>
+</div>
+
+<div class="dashboard">
+
+<div class="left-col">
+
+<div class="card animate-in delay-2">
+  <div class="card-header">
+    <div class="card-icon">🧠</div>
+    <div>
+      <div class="card-title">The Brain &amp; Body</div>
+      <div class="card-subtitle">Core hardware that powers everything</div>
+    </div>
+  </div>
+  <div class="feature-list" id="hardwareFeatures"></div>
+</div>
+
+<div class="card animate-in delay-2" style="margin-top:24px;">
+  <div class="card-header">
+    <div class="card-icon">⚡</div>
+    <div>
+      <div class="card-title">Automation &amp; Intelligence</div>
+      <div class="card-subtitle">What the brain actually does for you</div>
+    </div>
+  </div>
+  <div class="feature-list" id="softwareFeatures"></div>
+</div>
+
+<div class="card animate-in delay-2" style="margin-top:24px;">
+  <div class="card-header">
+    <div class="card-icon">🌐</div>
+    <div>
+      <div class="card-title">Community &amp; Emergency</div>
+      <div class="card-subtitle">WiFi, mesh networks, and safety nets</div>
+    </div>
+  </div>
+  <div class="feature-list" id="networkFeatures"></div>
+</div>
+
+<div class="card animate-in delay-3" style="margin-top:24px;">
+  <div class="card-header">
+    <div class="card-icon">📊</div>
+    <div>
+      <div class="card-title">Building Capabilities</div>
+      <div class="card-subtitle">What your church can do with selected features</div>
+    </div>
+  </div>
+  <div class="capability-grid" id="capabilityGrid"></div>
+</div>
+
+<div class="card animate-in delay-3" style="margin-top:24px;">
+  <div class="card-header">
+    <div class="card-icon">🏗️</div>
+    <div>
+      <div class="card-title">Your Architecture</div>
+      <div class="card-subtitle">How everything connects</div>
+    </div>
+  </div>
+  <div class="arch-diagram" id="archDiagram"></div>
+</div>
+
+</div>
+
+<div class="right-col">
+  <div class="budget-panel card animate-in delay-1">
+
+    <div class="budget-display">
+      <div class="budget-amount" id="budgetTotal">$0</div>
+      <div class="budget-label">Total Investment</div>
+      <div class="budget-bar">
+        <div class="budget-bar-fill" id="budgetBar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="savings-card">
+      <div class="savings-value" id="yearlySavings">$0</div>
+      <div class="savings-label">Saved Every Year</div>
+      <div class="payback-badge" id="paybackBadge">Pays for itself in 6 months</div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">BREAKDOWN</div>
+      <div id="budgetBreakdown" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+
+    <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">5-YEAR PROJECTION</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
+        <span style="font-size:0.85rem; color:var(--text-dim);">Total Spent</span>
+        <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent);" id="totalSpent">$0</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
+        <span style="font-size:0.85rem; color:var(--text-dim);">Total Saved</span>
+        <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--success);" id="totalSaved">$0</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid var(--border); margin-top:8px;">
+        <span style="font-size:0.9rem; font-weight:700;">Net Benefit</span>
+        <span style="font-family:'Space Grotesk'; font-weight:700; font-size:1.2rem; color:var(--success);" id="netBenefit">+$0</span>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="copyPlan()">📋 Copy Plan</button>
+      <button class="btn btn-secondary" onclick="resetAll()">↺ Reset</button>
+    </div>
+    <div class="save-status" id="saveStatus">Not saved yet</div>
+
+  </div>
+</div>
+
+</div>
+
+<div style="text-align:center; padding:60px 0 40px; color:var(--text-dim); font-size:0.85rem;">
+  Built for churches that want to own their future. No subscriptions. No lock-in. Just smart.
+</div>
+
+</div>
+
+</div>
+
+<script src="js/store.js"></script>
+<script>
+const features = {
+  hardware: [
+    { id:'gpu', name:'AI Brain (RTX A6000 48GB)', desc:'The supercomputer that thinks, sees, and codes. 48GB memory runs multiple AI models at once.', price:1500, icon:'🧠', required:true, capabilities:{intelligence:100,vision:80,coding:100,speed:100} },
+    { id:'workstation', name:'Workstation Body (Dell T7910)', desc:'The body that houses the brain. 256GB RAM, quiet, built for 24/7 operation.', price:450, icon:'🖥️', required:true, capabilities:{intelligence:20,vision:0,coding:10,speed:30} },
+    { id:'ram', name:'Extra RAM (128GB DDR3)', desc:'More desk space for the brain to juggle multiple tasks simultaneously.', price:200, icon:'💾', required:false, capabilities:{intelligence:10,vision:0,coding:5,speed:20} },
+    { id:'coral', name:'Vision Accelerator (Coral TPU)', desc:'Dedicated chip for facial recognition and camera analysis. Instant face ID.', price:100, icon:'👁️', required:false, capabilities:{intelligence:0,vision:40,coding:0,speed:30} }
+  ],
+  software: [
+    { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue. Replaces Restream.', price:0, icon:'📡', required:false, capabilities:{streaming:100,automation:60,security:0,community:20} },
+    { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume. Replaces sound engineer.', price:0, icon:'🎛️', required:false, capabilities:{streaming:40,automation:80,security:0,community:10} },
+    { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', required:false, capabilities:{streaming:0,automation:90,security:70,community:30} },
+    { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', required:false, capabilities:{streaming:30,automation:70,security:20,community:40} },
+    { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress. No hosting bills.', price:0, icon:'🌐', required:false, capabilities:{streaming:0,automation:50,security:0,community:60} },
+    { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command. No Canva subscription.', price:0, icon:'🎨', required:false, capabilities:{streaming:0,automation:40,security:0,community:50} }
+  ],
+  network: [
+    { id:'wifi', name:'City Block WiFi (2x Ubiquiti)', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', price:360, icon:'📶', required:false, capabilities:{streaming:0,automation:10,security:30,community:100} },
+    { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', required:false, capabilities:{streaming:0,automation:0,security:50,community:90} },
+    { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', required:false, capabilities:{streaming:0,automation:20,security:40,community:70} }
+  ]
+};
+
+const capabilities = [
+  { id:'intelligence', name:'AI Intelligence', icon:'🧠' },
+  { id:'vision', name:'Computer Vision', icon:'👁️' },
+  { id:'coding', name:'Code Generation', icon:'💻' },
+  { id:'speed', name:'Processing Speed', icon:'⚡' },
+  { id:'streaming', name:'Live Streaming', icon:'📡' },
+  { id:'automation', name:'Building Automation', icon:'🏢' },
+  { id:'security', name:'Security & Access', icon:'🔒' },
+  { id:'community', name:'Community Reach', icon:'🤝' }
+];
+
+const sizePresets = {
+  small: ['gpu','workstation','streaming','sound','voice','website','designer'],
+  medium: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi'],
+  large: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi','mesh','sms']
+};
+
+const yearlyBurn = { streaming:3600, website:600, other:500 };
+
+let activeFeatures = new Set(sizePresets.small);
+let currentSize = 'small';
+let currentPlanId = null;
+let SAVED_PLANS = [];
+let dirty = false;
+let saveTimer = null;
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+function renderFeatureItem(f) {
+  const isActive = activeFeatures.has(f.id);
+  return `<div class="feature-item ${isActive?'active':''}" onclick="toggleFeature('${f.id}')">
+    <div class="feature-toggle"></div>
+    <div class="feature-info">
+      <div class="feature-name">${f.icon} ${f.name}</div>
+      <div class="feature-desc">${f.desc}</div>
+    </div>
+    <div class="feature-price">${f.price===0?'FREE':'$'+f.price.toLocaleString()}</div>
+  </div>`;
+}
+
+function renderFeatures() {
+  document.getElementById('hardwareFeatures').innerHTML = features.hardware.map(renderFeatureItem).join('');
+  document.getElementById('softwareFeatures').innerHTML = features.software.map(renderFeatureItem).join('');
+  document.getElementById('networkFeatures').innerHTML = features.network.map(renderFeatureItem).join('');
+}
+
+function renderCapabilities() {
+  const scores = {};
+  capabilities.forEach(c => scores[c.id] = 0);
+  [...features.hardware, ...features.software, ...features.network].forEach(f => {
+    if (activeFeatures.has(f.id) && f.capabilities) {
+      Object.entries(f.capabilities).forEach(([cap,val]) => { scores[cap] = (scores[cap]||0) + val; });
+    }
+  });
+  Object.keys(scores).forEach(k => { scores[k] = Math.min(100, scores[k]); });
+  document.getElementById('capabilityGrid').innerHTML = capabilities.map(c => {
+    const score = scores[c.id] || 0;
+    const isActive = score > 0;
+    return `<div class="capability-item ${isActive?'active':''}">
+      <div class="capability-header">
+        <span class="capability-name">${c.icon} ${c.name}</span>
+        <span class="capability-score" style="color:${score>70?'var(--accent)':score>30?'var(--warning)':'var(--text-dim)'};">${Math.round(score)}%</span>
+      </div>
+      <div class="capability-bar"><div class="capability-bar-fill" style="width:${score}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderArch() {
+  const has = id => activeFeatures.has(id);
+  const cloudNodes = [
+    {id:'cf',label:'Cloudflare Workers',active:true,donated:true},
+    {id:'sb',label:'Supabase (Free)',active:true,donated:true}
+  ];
+  const brainNodes = [];
+  if (has('workstation')) brainNodes.push({id:'ws',label:'Dell T7910',active:true,donated:false});
+  if (has('gpu')) brainNodes.push({id:'gpu',label:'RTX A6000 48GB',active:true,donated:false});
+  if (has('ram')) brainNodes.push({id:'ram',label:'+128GB RAM',active:true,donated:false});
+  if (has('coral')) brainNodes.push({id:'coral',label:'Coral TPU',active:true,donated:false});
+  const workerNodes = [{id:'r620',label:'10x R620 Servers',active:true,donated:true}];
+  const edgeNodes = [];
+  if (has('wifi')) edgeNodes.push({id:'wifi',label:'2x Ubiquiti APs',active:true,donated:false});
+  if (has('mesh')) edgeNodes.push({id:'mesh',label:'20x Meshtastic',active:true,donated:false});
+  if (has('sms')) edgeNodes.push({id:'sms',label:'SMS Gateway',active:true,donated:false});
+  edgeNodes.push({id:'pi',label:'4x Nebra/Pi Hubs',active:true,donated:true});
+  const serviceNodes = [];
+  if (has('streaming')) serviceNodes.push({id:'stream',label:'📡 Streaming AI',active:true});
+  if (has('sound')) serviceNodes.push({id:'sound',label:'🎛️ Sound AI',active:true});
+  if (has('doors')) serviceNodes.push({id:'door',label:'🚪 Access AI',active:true});
+  if (has('voice')) serviceNodes.push({id:'voice',label:'🎙️ Voice AI',active:true});
+  if (has('website')) serviceNodes.push({id:'web',label:'🌐 Web AI',active:true});
+  if (has('designer')) serviceNodes.push({id:'design',label:'🎨 Design AI',active:true});
+  const renderLayer = nodes => nodes.map(n => `<div class="arch-node ${n.active?'active':''} ${n.donated?'donated':''}">${n.label}</div>`).join('');
+  document.getElementById('archDiagram').innerHTML = `
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Cloud Layer (Free)</div>
+    <div class="arch-layer">${renderLayer(cloudNodes)}</div>
+    <div class="arch-connector">▼</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">The Brain (New Purchase)</div>
+    <div class="arch-layer">${renderLayer(brainNodes)}</div>
+    <div class="arch-connector">▼</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">AI Services</div>
+    <div class="arch-layer">${serviceNodes.length?renderLayer(serviceNodes):'<div class="arch-node">No services selected</div>'}</div>
+    <div class="arch-connector">▼</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Storage & Workers (Donated)</div>
+    <div class="arch-layer">${renderLayer(workerNodes)}</div>
+    <div class="arch-connector">▼</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Edge Devices</div>
+    <div class="arch-layer">${renderLayer(edgeNodes)}</div>
+  `;
+}
+
+function computeTotals() {
+  const allFeatures = [...features.hardware, ...features.software, ...features.network];
+  const total = allFeatures.reduce((sum,f) => activeFeatures.has(f.id)?sum+f.price:sum, 0);
+  let yearlySave = 0;
+  if (activeFeatures.has('streaming')) yearlySave += yearlyBurn.streaming;
+  if (activeFeatures.has('website')) yearlySave += yearlyBurn.website;
+  if (activeFeatures.has('designer') || activeFeatures.has('sound')) yearlySave += yearlyBurn.other;
+  const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
+  const totalSpent5yr = total + (200*5);
+  const totalSaved5yr = yearlySave*5;
+  const netBenefit = totalSaved5yr - totalSpent5yr;
+  return { total, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+}
+
+function renderBudget() {
+  const allFeatures = [...features.hardware, ...features.software, ...features.network];
+  const t = computeTotals();
+  const paybackText = t.paybackMonths<=12?`${t.paybackMonths} mo`:t.paybackMonths<=24?`${Math.round(t.paybackMonths/12)} yr`:'Never';
+  document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
+  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/5000)*100)+'%';
+  document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
+  document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add features to see payback';
+  document.getElementById('totalSpent').textContent = '$'+t.totalSpent5yr.toLocaleString();
+  document.getElementById('totalSaved').textContent = '$'+t.totalSaved5yr.toLocaleString();
+  document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
+  document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
+  document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
+  document.getElementById('heroPayback').textContent = paybackText;
+  const breakdown = allFeatures.filter(f => activeFeatures.has(f.id) && f.price>0);
+  document.getElementById('budgetBreakdown').innerHTML = breakdown.map(f => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+      <span style="font-size:0.85rem;">${f.icon} ${f.name}</span>
+      <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
+    </div>
+  `).join('') || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No paid features selected</div>';
+}
+
+function markDirty() {
+  dirty = true;
+  var el = document.getElementById('saveStatus');
+  el.textContent = 'Unsaved changes — autosaving…';
+  el.className = 'save-status dirty';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(savePlan, 1200);
+}
+
+function toggleFeature(id) {
+  const f = [...features.hardware, ...features.software, ...features.network].find(x => x.id===id);
+  if (f && f.required) return;
+  if (activeFeatures.has(id)) activeFeatures.delete(id); else activeFeatures.add(id);
+  refresh();
+  markDirty();
+}
+
+function setSize(size) {
+  currentSize = size;
+  activeFeatures = new Set(sizePresets[size]);
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size===size);
+  });
+  refresh();
+  markDirty();
+}
+
+function resetAll() { setSize('small'); }
+
+function refresh() {
+  renderFeatures();
+  renderCapabilities();
+  renderArch();
+  renderBudget();
+}
+
+function copyPlan() {
+  const allFeatures = [...features.hardware, ...features.software, ...features.network];
+  const selected = allFeatures.filter(f => activeFeatures.has(f.id));
+  const total = selected.reduce((s,f) => s+f.price, 0);
+  const churchName = document.getElementById('churchNameInput').value.trim() || 'Untitled church';
+  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\n========================\n\nTotal Investment: $${total.toLocaleString()}\n\nSELECTED FEATURES:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}\n\nThis plan replaces $${(activeFeatures.has('streaming')?3600:0)+(activeFeatures.has('website')?600:0)+((activeFeatures.has('designer')||activeFeatures.has('sound'))?500:0)} in yearly software costs.`;
+  navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
+}
+
+/* ---------------- backend persistence ---------------- */
+function planFromState() {
+  const t = computeTotals();
+  return {
+    id: currentPlanId,
+    churchName: document.getElementById('churchNameInput').value.trim() || 'Untitled church',
+    size: currentSize,
+    features: Array.from(activeFeatures),
+    totals: t,
+    createdBy: (FreedomStore.getConfig().mode === 'supabase' ? (window.__adminEmail || '') : 'demo')
+  };
+}
+
+function applyPlanToState(plan) {
+  currentPlanId = plan.id;
+  currentSize = plan.size || 'small';
+  activeFeatures = new Set(plan.features || sizePresets[currentSize]);
+  document.getElementById('churchNameInput').value = plan.churchName || '';
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size === currentSize);
+  });
+  refresh();
+  var el = document.getElementById('saveStatus');
+  el.textContent = 'Saved ✓ ' + (plan.updatedAt ? new Date(plan.updatedAt).toLocaleString() : 'just now');
+  el.className = 'save-status saved';
+  dirty = false;
+}
+
+function newPlan() {
+  currentPlanId = null;
+  currentSize = 'small';
+  activeFeatures = new Set(sizePresets.small);
+  document.getElementById('churchNameInput').value = '';
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size === 'small');
+  });
+  refresh();
+  var el = document.getElementById('saveStatus');
+  el.textContent = 'Not saved yet';
+  el.className = 'save-status';
+  dirty = false;
+  history.replaceState(null, '', 'church-upgrade.html');
+  renderSavedPlans();
+}
+
+function savePlan() {
+  clearTimeout(saveTimer);
+  var el = document.getElementById('saveStatus');
+  el.textContent = 'Saving…';
+  el.className = 'save-status dirty';
+  var plan = planFromState();
+  FreedomStore.saveChurchPlan(plan).then(function (saved) {
+    currentPlanId = saved.id;
+    dirty = false;
+    el.textContent = 'Saved ✓ ' + new Date(saved.updatedAt).toLocaleString();
+    el.className = 'save-status saved';
+    history.replaceState(null, '', 'church-upgrade.html?id=' + encodeURIComponent(saved.id));
+    return FreedomStore.listChurchPlans();
+  }).then(function (list) {
+    SAVED_PLANS = list || [];
+    renderSavedPlans();
+  }).catch(function (e) {
+    el.textContent = 'Save failed: ' + e.message;
+    el.className = 'save-status';
+  });
+}
+
+function renderSavedPlans() {
+  var box = document.getElementById('savedPlansList');
+  if (!SAVED_PLANS.length) {
+    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">No saved plans yet. Build one below, then Save Plan.</div>';
+    return;
+  }
+  box.innerHTML = SAVED_PLANS.map(function (p) {
+    var t = p.totals || {};
+    return '<div class="plan-row' + (p.id === currentPlanId ? ' active' : '') + '" data-id="' + esc(p.id) + '">' +
+      '<div class="info" data-open="' + esc(p.id) + '">' +
+      '<div class="name">' + esc(p.churchName || 'Untitled church') + '</div>' +
+      '<div class="meta">' + esc(p.size || 'small') + ' · $' + (t.total || 0).toLocaleString() +
+      ' · updated ' + (p.updatedAt ? new Date(p.updatedAt).toLocaleDateString() : '') + '</div>' +
+      '</div>' +
+      '<button class="del" data-del="' + esc(p.id) + '" type="button">Delete</button>' +
+      '</div>';
+  }).join('');
+}
+
+document.getElementById('savedPlansList').addEventListener('click', function (e) {
+  var open = e.target.closest('[data-open]');
+  var del = e.target.closest('[data-del]');
+  if (del) {
+    var id = del.getAttribute('data-del');
+    if (!confirm('Delete this saved plan? This cannot be undone.')) return;
+    FreedomStore.deleteChurchPlan(id).then(function () {
+      if (id === currentPlanId) newPlan();
+      return FreedomStore.listChurchPlans();
+    }).then(function (list) { SAVED_PLANS = list || []; renderSavedPlans(); });
+    return;
+  }
+  if (open) {
+    var pid = open.getAttribute('data-open');
+    var plan = SAVED_PLANS.find(function (p) { return p.id === pid; });
+    if (plan) { applyPlanToState(plan); history.replaceState(null, '', 'church-upgrade.html?id=' + encodeURIComponent(pid)); }
+  }
+});
+
+document.getElementById('saveBtn').addEventListener('click', savePlan);
+document.getElementById('newPlanBtn').addEventListener('click', newPlan);
+document.getElementById('churchNameInput').addEventListener('input', markDirty);
+
+/* ---------------- gate + boot ---------------- */
+var UNLOCKED = "freedom.adminUnlocked";
+var config = null;
+
+function openPlanner() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('plannerRoot').hidden = false;
+  document.getElementById('modeTag').textContent = config.mode === 'supabase' ? 'live database' : 'demo mode (this browser only)';
+  refresh();
+  FreedomStore.listChurchPlans().then(function (list) {
+    SAVED_PLANS = list || [];
+    var params = new URLSearchParams(location.search);
+    var wantId = params.get('id');
+    var plan = wantId ? SAVED_PLANS.find(function (p) { return p.id === wantId; }) : null;
+    if (plan) applyPlanToState(plan);
+    renderSavedPlans();
+  });
+}
+
+FreedomStore.init().then(function (c) {
+  config = c;
+  if (config.mode === 'supabase') {
+    document.getElementById('gateSb').hidden = false;
+    document.getElementById('gateBlurb').textContent = 'Sign in with your admin account.';
+    if (FreedomStore.isAdminSignedIn()) openPlanner();
+  } else {
+    document.getElementById('gateDemo').hidden = false;
+    document.getElementById('gateBlurb').textContent = 'Demo mode: enter the passcode from data/config.json.';
+    if (sessionStorage.getItem(UNLOCKED) === 'yes') openPlanner();
+  }
+});
+
+document.getElementById('gateForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var err = document.getElementById('gateErr');
+  err.style.display = 'none';
+  if (config.mode === 'supabase') {
+    var email = document.getElementById('gateEmail').value.trim();
+    FreedomStore.adminSignIn(email, document.getElementById('gatePw').value).then(function () {
+      window.__adminEmail = email;
+      openPlanner();
+    }).catch(function () { err.style.display = 'block'; });
+  } else {
+    if (document.getElementById('gatePass').value === (config.adminPasscode || 'freedom2026')) {
+      sessionStorage.setItem(UNLOCKED, 'yes');
+      openPlanner();
+    } else { err.style.display = 'block'; }
+  }
+});
+
+document.getElementById('signOut').addEventListener('click', function () {
+  FreedomStore.adminSignOut();
+  sessionStorage.removeItem(UNLOCKED);
+  location.href = 'admin.html';
+});
+</script>
+
+</body>
+</html>
