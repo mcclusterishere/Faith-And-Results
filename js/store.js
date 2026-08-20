@@ -1,6 +1,7 @@
 /* Freedom, Inc. — the data layer.
-   One API for the app (index.html) and the admin backend (admin.html),
-   three ways to run it, chosen in data/config.json:
+   One API for the app (index.html), the admin backend (admin.html), and the
+   Church OS planner (church-upgrade.html), three ways to run it, chosen in
+   data/config.json:
 
      mode "demo"      Everything lives in this browser's localStorage.
                       Zero setup — submissions made on this device appear
@@ -23,6 +24,7 @@ window.FreedomStore = (function () {
     apps: "freedom.applications",
     profiles: "freedom.profiles",
     mine: "freedom.myApplications",
+    churchPlans: "freedom.churchPlans",
     rsvps: "freedom.rsvps",
     localEvents: "freedom.localEvents",
     session: "freedom.adminSession"
@@ -125,6 +127,44 @@ window.FreedomStore = (function () {
     return read(LS.apps, []).filter(function (a) { return mine.indexOf(a.id) !== -1; });
   }
 
+  /* ---------------- church plans (Church OS planner, admin-only) ---------------- */
+  function listChurchPlans() {
+    if (config.mode === "supabase" && config.supabaseUrl) {
+      return sb("/rest/v1/church_plans?select=*&order=updatedAt.desc", { token: adminToken() });
+    }
+    return Promise.resolve(read(LS.churchPlans, []));
+  }
+  function getChurchPlan(id) {
+    return listChurchPlans().then(function (list) {
+      return list.find(function (p) { return p.id === id; }) || null;
+    });
+  }
+  function saveChurchPlan(plan) {
+    var now = new Date().toISOString();
+    plan = Object.assign({}, plan);
+    if (!plan.id) { plan.id = uid(); plan.createdAt = now; }
+    plan.updatedAt = now;
+    if (config.mode === "supabase" && config.supabaseUrl) {
+      return sb("/rest/v1/church_plans?on_conflict=id", {
+        method: "POST", body: plan, prefer: "resolution=merge-duplicates", token: adminToken()
+      }).then(function () { return plan; });
+    }
+    var list = read(LS.churchPlans, []);
+    var i = list.findIndex(function (p) { return p.id === plan.id; });
+    if (i >= 0) list[i] = plan; else list.unshift(plan);
+    write(LS.churchPlans, list);
+    return Promise.resolve(plan);
+  }
+  function deleteChurchPlan(id) {
+    if (config.mode === "supabase" && config.supabaseUrl) {
+      return sb("/rest/v1/church_plans?id=eq." + encodeURIComponent(id), {
+        method: "DELETE", token: adminToken()
+      });
+    }
+    write(LS.churchPlans, read(LS.churchPlans, []).filter(function (p) { return p.id !== id; }));
+    return Promise.resolve(true);
+  }
+
   /* ---------------- events + RSVPs ---------------- */
   function submitRsvp(r) {
     r.id = uid();
@@ -222,6 +262,10 @@ window.FreedomStore = (function () {
     saveProfile: saveProfile,
     submitApplication: submitApplication,
     myApplications: myApplications,
+    listChurchPlans: listChurchPlans,
+    getChurchPlan: getChurchPlan,
+    saveChurchPlan: saveChurchPlan,
+    deleteChurchPlan: deleteChurchPlan,
     submitRsvp: submitRsvp,
     listRsvps: listRsvps,
     getLocalEvents: getLocalEvents,

@@ -120,6 +120,7 @@
         <button data-pane="events">Events</button>
         <button data-pane="people">People</button>
         <button data-pane="research">Research</button>
+        <button data-pane="church">Church OS</button>
         <button data-pane="mccluster">McCluster</button>
         <button data-pane="auto">Automations</button>
       </nav>
@@ -218,6 +219,18 @@
         <pre id="dossierView" hidden style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem;white-space:pre-wrap;font-size:0.92rem"></pre>
       </section>
 
+      <!-- church os planner -->
+      <section class="pane" id="pane-church">
+        <h2>Church OS pitch plans</h2>
+        <p class="note" style="margin-bottom:1rem">Every Smart Church Upgrade plan built for a prospect — hardware,
+          automations, and the 5-year savings case — saved to the database under your admin account. Build or edit
+          one in the <a href="church-upgrade.html">Church OS planner</a>.</p>
+        <div class="tools">
+          <a class="btn btn--navy" href="church-upgrade.html">+ New plan</a>
+        </div>
+        <div id="churchPlanList"></div>
+      </section>
+
       <!-- mccluster os -->
       <section class="pane" id="pane-mccluster">
         <h2>McCluster OS</h2>
@@ -258,6 +271,7 @@ Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
       var RSVPS = [];
       var PUBLISHED_EVENTS = [];
       var PARTNERS = [];
+      var CHURCH_PLANS = [];
 
       /* Pipeline stages per intake type; last stage = done (no aging nag). */
       var STAGES = {
@@ -343,18 +357,21 @@ Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
           FreedomStore.listProfiles(),
           FreedomStore.listRsvps(),
           fetch("data/events.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return { events: [] }; }),
-          fetch("data/jobs-partners.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return { partners: [] }; })
+          fetch("data/jobs-partners.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).catch(function () { return { partners: [] }; }),
+          FreedomStore.listChurchPlans().catch(function () { return []; })
         ]).then(function (res) {
           APPS = res[0] || [];
           PEOPLE = res[1] || [];
           RSVPS = res[2] || [];
           PUBLISHED_EVENTS = res[3].events || [];
           PARTNERS = res[4].partners || [];
+          CHURCH_PLANS = res[5] || [];
           renderDash();
           renderApps();
           renderEventsAdmin();
           renderPeople();
           renderResearch();
+          renderChurchPlans();
           renderMcCluster();
           renderAuto();
         }).catch(function (e) {
@@ -377,7 +394,8 @@ Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
           '<div class="tile"><b>' + (by.received || 0) + "</b><span>Waiting for review</span></div>" +
           '<div class="tile"><b>' + stale + "</b><span>Need a follow-up (" + AGING_DAYS + "+ days)</span></div>" +
           '<div class="tile"><b>' + RSVPS.length + "</b><span>RSVPs</span></div>" +
-          '<div class="tile"><b>' + PEOPLE.length + "</b><span>Profiles</span></div>";
+          '<div class="tile"><b>' + PEOPLE.length + "</b><span>Profiles</span></div>" +
+          '<div class="tile"><b>' + CHURCH_PLANS.length + "</b><span>Church OS plans</span></div>";
         var latest = APPS.slice(0, 5);
         document.getElementById("latest").innerHTML = latest.length
           ? latest.map(appCard).join("")
@@ -659,6 +677,27 @@ Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
       document.getElementById("exportPeople").addEventListener("click", function () {
         FreedomStore.downloadCsv(PEOPLE, "freedom-profiles.csv");
       });
+
+      /* ---------------- church os planner ---------------- */
+      function renderChurchPlans() {
+        document.getElementById("churchPlanList").innerHTML = CHURCH_PLANS.length
+          ? CHURCH_PLANS.map(function (p) {
+              var t = p.totals || {};
+              return '<details class="apprec"><summary><b>' + esc(p.churchName || "Untitled church") +
+                '</b><span class="who">' + esc(p.size || "small") + " church</span>" +
+                '<span class="chip">$' + (t.total || 0).toLocaleString() + " investment</span>" +
+                '<span class="chip">$' + (t.yearlySave || 0).toLocaleString() + "/yr saved</span>" +
+                '<span class="when">' + fmtDate(p.updatedAt) + "</span></summary>" +
+                '<div class="appbody"><dl>' +
+                "<dt>Features selected</dt><dd>" + esc((p.features || []).join(", ") || "–") + "</dd>" +
+                "<dt>Payback</dt><dd>" + esc(t.paybackMonths < 999 ? t.paybackMonths + " months" : "no payback yet") + "</dd>" +
+                "<dt>5-year net benefit</dt><dd>" + (t.netBenefit >= 0 ? "+" : "") + "$" + (t.netBenefit || 0).toLocaleString() + "</dd>" +
+                "</dl><div class=\"acts\">" +
+                '<a class="btn btn--navy" href="church-upgrade.html?id=' + encodeURIComponent(p.id) + '">Open in planner</a>' +
+                "</div></div></details>";
+            }).join("")
+          : '<div class="empty">No plans yet. Build one in the <a href="church-upgrade.html">Church OS planner</a> and it lands here.</div>';
+      }
 
       /* ---------------- mccluster os ---------------- */
       function renderMcCluster() {
