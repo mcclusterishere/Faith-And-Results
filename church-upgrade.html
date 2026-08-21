@@ -336,6 +336,7 @@ a { color:var(--accent); }
   background:rgba(124,58,237,0.15); border:1px solid var(--accent3); color:#c4a6f7;
 }
 .package-badge.node { background:rgba(0,212,170,0.15); border-color:var(--accent); color:var(--accent); }
+.package-badge.reseller { background:rgba(255,107,53,0.15); border-color:var(--accent2); color:var(--accent2); }
 .package-name {
   font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem;
 }
@@ -534,9 +535,8 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
   <div id="installQuestionnaire" hidden style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
     <div style="font-weight:600; margin-bottom:4px;">Size the install for this building</div>
     <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:16px;">
-      This building gets the edge server, not the brain — the brain stays at the central node. A few
-      questions so it can price its own install. The number below is an estimate, confirmed after a
-      site visit.
+      A few questions so this building can price its own install — technology and labor both scale
+      with what's actually needed. The number below is an estimate, confirmed after a site visit.
     </p>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;">
       <div class="q-field">
@@ -553,7 +553,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
       </div>
     </div>
     <div style="margin-top:16px; font-size:0.85rem; color:var(--text-dim);">
-      Estimated install: <span id="installEstimateDisplay" style="color:var(--success); font-weight:700; font-family:'Space Grotesk';">$0</span>
+      Estimated total: <span id="installEstimateDisplay" style="color:var(--success); font-weight:700; font-family:'Space Grotesk';">$0</span>
     </div>
   </div>
 </div>
@@ -691,9 +691,10 @@ const features = {
   ],
   software: [
     { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', price:0, icon:'📡', capabilities:{streaming:100,automation:60,security:0,community:20},
-      replaces:[{name:'Restream.io Professional plan', monthly:41},{name:'Weekly livestream / camera operator stipend', monthly:150}] },
+      replaces:[{name:'Restream.io Professional plan', monthly:41}],
+      savingsNote:'Most churches run this with a volunteer, not paid staff. This is the backup for when they can’t make it — no training required, nothing to remember.' },
     { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume.', price:0, icon:'🎛️', capabilities:{streaming:40,automation:80,security:0,community:10},
-      replaces:[{name:'Sunday sound engineer stipend', monthly:200}] },
+      replaces:[], savingsNote:'Most churches run sound with a volunteer, not paid staff. This is the safety net when they’re out sick or running late — the AI doesn’t need training to cover for them.' },
     { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', capabilities:{streaming:0,automation:90,security:70,community:30},
       replaces:[{name:'Smart lock / access control subscription (Kisi, Brivo, PDK)', monthly:40}] },
     { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', capabilities:{streaming:30,automation:70,security:20,community:40},
@@ -709,7 +710,8 @@ const features = {
     { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', capabilities:{streaming:0,automation:0,security:50,community:90},
       replaces:[], savingsNote:'Keeps the church reachable when cell towers fail — a resilience benefit, not counted in the dollar total.' },
     { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', capabilities:{streaming:0,automation:20,security:40,community:70},
-      replaces:[{name:'Text/SMS blast service (Textedly, EZTexting)', monthly:25}] }
+      replaces:[{name:'Text/SMS blast service (Textedly, EZTexting)', monthly:25}] },
+    { id:'cameras', name:'Security Camera System', desc:'AI-monitored PoE cameras. Flags anything unusual and alerts the right person automatically.', price:0, dynamicPrice:true, icon:'📹', capabilities:{streaming:0,automation:20,security:60,community:0} }
   ]
 };
 const ALL_FEATURES = [...features.hardware, ...features.software, ...features.network];
@@ -726,16 +728,24 @@ const capabilities = [
   { id:'community', name:'Community Reach', icon:'🤝' }
 ];
 
-/* Package 1 & 2: the central node — this building holds the AI Brain.
+/* Package 1 & 2: the central node — this building holds the AI Brain, sold
+   at cost (Shiloh's price, no markup — this is our own build).
    Package 3: a satellite building this node controls — no brain, just an
-   edge server talking back to the central node, plus a real install job. */
+   edge server talking back to the central node, plus a real install job.
+   Package 4: install the Brain at another church and license them to run
+   their own node — onboarding and controlling other churches under it,
+   same as Shiloh, but not at cost: technology resold at 1.5x what we paid,
+   installation labor priced at cost (equal to the equipment's raw cost),
+   landing around 2.5x cost total for anyone who isn't Shiloh. */
 const packages = [
   { id:1, name:'The Foundation', tagline:'Everything your central node needs to run itself — owned, not rented.', kind:'node',
     features:['gpu','workstation','streaming','sound','voice','website','designer'] },
   { id:2, name:'Foundation + Community WiFi', tagline:'Adds gated WiFi for the block around the building.', kind:'node',
     features:['gpu','workstation','streaming','sound','voice','website','designer','wifi'] },
   { id:3, name:'Full Node Install', tagline:'For a building your node controls. Everything except the brain — that stays central.', kind:'satellite',
-    features:['edgeserver','streaming','sound','voice','website','designer','doors','wifi','mesh','sms'] }
+    features:['edgeserver','streaming','sound','voice','website','designer','doors','wifi','mesh','sms','cameras'] },
+  { id:4, name:'Become a Node', tagline:'Install the Brain here. This church becomes its own node, licensed to onboard and control others — the same proprietary technology Shiloh runs.', kind:'reseller',
+    features:['gpu','workstation','streaming','sound','voice','website','designer','doors','wifi','mesh','sms','cameras'] }
 ];
 
 let currentPackageId = 1;
@@ -753,34 +763,62 @@ function esc(s) {
 }
 function currentPackage() { return packages.find(p => p.id === currentPackageId) || packages[0]; }
 
-function computeInstallEstimate() {
-  const cameraCost = (installAnswers.cameras || 0) * 150;
-  const extraDoors = Math.max(0, (installAnswers.doors || 0) - 1);
-  const doorCost = extraDoors * 200;
-  const apsNeeded = Math.max(0, Math.ceil((installAnswers.sqft || 0) / 2500) - 2);
-  const wifiApCost = apsNeeded * 300;
-  return cameraCost + doorCost + wifiApCost;
+/* What we actually pay, at cost. Camera/door/WiFi-AP counts come from the
+   install questionnaire; everything else is a flat per-unit cost. */
+const UNIT_COST = { camera: 120, door: 150, wifiAp: 180 };
+
+function equipmentAtCost(pkg) {
+  let cost = 0;
+  pkg.features.forEach(function (fid) {
+    if (fid === 'doors' || fid === 'wifi' || fid === 'cameras') return;
+    const f = findFeature(fid);
+    if (f) cost += (f.price || 0);
+  });
+  if (pkg.features.includes('cameras')) cost += (installAnswers.cameras || 0) * UNIT_COST.camera;
+  if (pkg.features.includes('doors')) cost += Math.max(1, installAnswers.doors || 0) * UNIT_COST.door;
+  if (pkg.features.includes('wifi')) {
+    const aps = pkg.kind === 'node' ? 2 : Math.max(2, Math.ceil((installAnswers.sqft || 0) / 2500));
+    cost += aps * UNIT_COST.wifiAp;
+  }
+  return cost;
 }
+
+/* Shiloh's own packages (kind "node") are sold at cost — no markup, since
+   it's our own build. Everyone else pays technology resold at 1.5x cost,
+   plus installation labor priced at cost — 2.5x cost total. */
+function computeTotalsForPackage(pkg) {
+  const atCost = equipmentAtCost(pkg);
+  var equipmentTotal, laborTotal;
+  if (pkg.kind === 'node') {
+    equipmentTotal = atCost;
+    laborTotal = 0;
+  } else {
+    equipmentTotal = Math.round(atCost * 1.5);
+    laborTotal = Math.round(atCost * 1.0);
+  }
+  return { atCost: atCost, equipmentTotal: equipmentTotal, laborTotal: laborTotal, total: equipmentTotal + laborTotal };
+}
+
+const PACKAGE_BADGES = {
+  node: '<span class="package-badge node">Central Node · at cost</span>',
+  satellite: '<span class="package-badge">Satellite Building</span>',
+  reseller: '<span class="package-badge reseller">Reseller Node</span>'
+};
 
 function renderPackages() {
   document.getElementById('packageGrid').innerHTML = packages.map(pkg => {
-    const equipmentPrice = pkg.features.reduce((sum,fid) => { const f = findFeature(fid); return sum + (f ? f.price : 0); }, 0);
-    const installEstimate = pkg.kind === 'satellite' ? computeInstallEstimate() : 0;
-    const displayPrice = equipmentPrice + installEstimate;
+    const t = computeTotalsForPackage(pkg);
     const includes = pkg.features.map(fid => { const f = findFeature(fid); return f ? '<li>' + esc(f.name) + '</li>' : ''; }).join('');
     const isActive = currentPackageId === pkg.id;
-    const badge = pkg.kind === 'satellite'
-      ? '<span class="package-badge">Satellite Building</span>'
-      : '<span class="package-badge node">Central Node</span>';
     return '<div class="package-card ' + (isActive?'active':'') + '" onclick="selectPackage(' + pkg.id + ')">' +
-      badge +
+      (PACKAGE_BADGES[pkg.kind] || '') +
       '<div class="package-name">Package ' + pkg.id + ' — ' + esc(pkg.name) + '</div>' +
       '<div class="package-tagline">' + esc(pkg.tagline) + '</div>' +
-      '<div class="package-price">$' + displayPrice.toLocaleString() + (pkg.kind==='satellite' ? '<span style="font-size:0.9rem; color:var(--text-dim);">*</span>' : '') + '</div>' +
+      '<div class="package-price">$' + t.total.toLocaleString() + (pkg.kind!=='node' ? '<span style="font-size:0.9rem; color:var(--text-dim);">*</span>' : '') + '</div>' +
       '<ul class="package-includes">' + includes + '</ul>' +
       '</div>';
   }).join('');
-  document.getElementById('installQuestionnaire').hidden = currentPackage().kind !== 'satellite';
+  document.getElementById('installQuestionnaire').hidden = currentPackage().kind === 'node';
 }
 
 function selectPackage(id) {
@@ -791,13 +829,16 @@ function selectPackage(id) {
 }
 
 function renderFeatureItem(f) {
+  const pkg = currentPackage();
+  const sizedBelow = pkg.kind !== 'node' && (f.id === 'doors' || f.id === 'wifi' || f.id === 'cameras');
+  const priceLabel = (f.dynamicPrice || sizedBelow) ? 'Sized below' : (f.price===0?'FREE':'$'+f.price.toLocaleString());
   return '<div class="feature-item included">' +
     '<div class="feature-check">✓</div>' +
     '<div class="feature-info">' +
     '<div class="feature-name">' + f.icon + ' ' + esc(f.name) + '</div>' +
     '<div class="feature-desc">' + esc(f.desc) + '</div>' +
     '</div>' +
-    '<div class="feature-price">' + (f.price===0?'FREE':'$'+f.price.toLocaleString()) + '</div>' +
+    '<div class="feature-price">' + priceLabel + '</div>' +
     '</div>';
 }
 
@@ -839,9 +880,9 @@ function renderArch() {
     {label:'Supabase (Free)',active:true,donated:true}
   ];
   const brainNodes = [];
-  if (pkg.kind === 'node') {
+  if (pkg.kind !== 'satellite') {
     if (has('workstation')) brainNodes.push({label:'Dell T7910',active:true,donated:false});
-    if (has('gpu')) brainNodes.push({label:'RTX A6000 48GB',active:true,donated:false});
+    if (has('gpu')) brainNodes.push({label:'RTX A6000 48GB' + (pkg.kind==='reseller' ? ' (this church’s own node)' : ''),active:true,donated:false});
   } else {
     brainNodes.push({label:'Hosted at the central node — not installed here',active:true,remote:true});
   }
@@ -881,54 +922,69 @@ function renderArch() {
 }
 
 function computeTotals() {
-  const equipmentTotal = ALL_FEATURES.reduce((sum,f) => activeFeatures.has(f.id)?sum+f.price:sum, 0);
-  const installEstimate = currentPackage().kind === 'satellite' ? computeInstallEstimate() : 0;
-  const total = equipmentTotal + installEstimate;
+  const pkg = currentPackage();
+  const priceParts = computeTotalsForPackage(pkg);
   let yearlySave = 0;
   [...features.software, ...features.network].forEach(f => {
     if (activeFeatures.has(f.id) && f.replaces) {
       f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
     }
   });
-  const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
-  const totalSpent5yr = total + (200*5);
+  const paybackMonths = yearlySave > 0 ? Math.ceil((priceParts.total/yearlySave)*12) : 999;
+  const totalSpent5yr = priceParts.total + (200*5);
   const totalSaved5yr = yearlySave*5;
   const netBenefit = totalSaved5yr - totalSpent5yr;
-  return { total, equipmentTotal, installEstimate, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+  return Object.assign({}, priceParts, { yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit });
 }
 
 function renderBudget() {
+  const pkg = currentPackage();
   const t = computeTotals();
   const paybackText = t.paybackMonths<=12?`${t.paybackMonths} mo`:t.paybackMonths<=24?`${Math.round(t.paybackMonths/12)} yr`:'Never';
   document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
-  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/5000)*100)+'%';
+  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/8000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
-  document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add features to see payback';
+  if (pkg.kind === 'reseller') {
+    document.getElementById('paybackBadge').textContent = 'Return comes from onboarding other churches — not modeled here yet';
+  } else {
+    document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add features to see payback';
+  }
   document.getElementById('totalSpent').textContent = '$'+t.totalSpent5yr.toLocaleString();
   document.getElementById('totalSaved').textContent = '$'+t.totalSaved5yr.toLocaleString();
   document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
-  document.getElementById('heroPayback').textContent = paybackText;
+  document.getElementById('heroPayback').textContent = pkg.kind === 'reseller' ? '—' : paybackText;
   if (document.getElementById('installEstimateDisplay')) {
-    document.getElementById('installEstimateDisplay').textContent = '$'+t.installEstimate.toLocaleString();
+    document.getElementById('installEstimateDisplay').textContent =
+      '$' + t.total.toLocaleString() + ' (technology $' + t.equipmentTotal.toLocaleString() + ' + labor $' + t.laborTotal.toLocaleString() + ')';
   }
-  const breakdown = ALL_FEATURES.filter(f => activeFeatures.has(f.id) && f.price>0);
-  let rows = breakdown.map(f => `
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-      <span style="font-size:0.85rem;">${f.icon} ${f.name}</span>
-      <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
-    </div>
-  `).join('');
-  if (t.installEstimate > 0) {
-    rows += `
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-      <span style="font-size:0.85rem;">🔧 Estimated install labor*</span>
-      <span style="font-family:'Space Grotesk'; font-weight:600;">$${t.installEstimate.toLocaleString()}</span>
-    </div>
-    <div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:2px;">*Confirmed after a site visit.</div>`;
+  let rows;
+  if (pkg.kind === 'node') {
+    const breakdown = ALL_FEATURES.filter(f => activeFeatures.has(f.id) && f.price>0);
+    rows = breakdown.map(f => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-size:0.85rem;">${f.icon} ${f.name}</span>
+        <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
+      </div>
+    `).join('') || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No equipment selected</div>';
+  } else {
+    rows = `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-size:0.85rem;">⚙️ Technology — equipment resold at 1.5× our cost</span>
+        <span style="font-family:'Space Grotesk'; font-weight:600;">$${t.equipmentTotal.toLocaleString()}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-size:0.85rem;">🔧 Installation & labor — priced at our cost</span>
+        <span style="font-family:'Space Grotesk'; font-weight:600;">$${t.laborTotal.toLocaleString()}</span>
+      </div>
+      <div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:4px;">Camera, door, and WiFi counts come from the install questionnaire above. Final numbers confirmed after a site visit.</div>
+    `;
   }
-  document.getElementById('budgetBreakdown').innerHTML = rows || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No equipment selected</div>';
+  document.getElementById('budgetBreakdown').innerHTML = rows;
+  if (pkg.kind === 'reseller') {
+    document.getElementById('budgetBreakdown').innerHTML += '<div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:8px;">5-year projection below doesn’t include reseller income from onboarding other churches — that model isn’t built yet.</div>';
+  }
 }
 
 function renderSavingsBreakdown() {
@@ -990,8 +1046,12 @@ function copyPlan() {
       f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
     }
   });
-  const installLine = t.installEstimate > 0 ? `\n\nESTIMATED INSTALL LABOR: $${t.installEstimate.toLocaleString()} (confirmed after a site visit)\n- Building size: ${installAnswers.sqft.toLocaleString()} sq ft\n- Cameras: ${installAnswers.cameras}\n- Exterior doors: ${installAnswers.doors}` : '';
-  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\nPackage ${pkg.id} — ${pkg.name}\n========================\n\nTotal Investment: $${t.total.toLocaleString()}\n\nINCLUDED:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}${installLine}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
+  const priceLine = pkg.kind === 'node' ? f => (f.price===0?'FREE':'$'+f.price.toLocaleString())
+    : f => (f.dynamicPrice || f.id==='doors' || f.id==='wifi') ? 'sized in install' : (f.price===0?'FREE':'$'+f.price.toLocaleString());
+  const pricingBlock = pkg.kind === 'node'
+    ? `Total Investment (at cost): $${t.total.toLocaleString()}`
+    : `Technology (1.5x cost): $${t.equipmentTotal.toLocaleString()}\nInstallation & labor (at cost): $${t.laborTotal.toLocaleString()}\nTotal Investment: $${t.total.toLocaleString()}\n\nInstall sizing — building: ${installAnswers.sqft.toLocaleString()} sq ft, cameras: ${installAnswers.cameras}, exterior doors: ${installAnswers.doors} (estimate, confirmed after a site visit)`;
+  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\nPackage ${pkg.id} — ${pkg.name}\n========================\n\n${pricingBlock}\n\nINCLUDED:\n${selected.map(f => `- ${f.icon} ${f.name}: ${priceLine(f)}`).join('\n')}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 
