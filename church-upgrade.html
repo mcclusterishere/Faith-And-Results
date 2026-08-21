@@ -532,6 +532,10 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     </div>
   </div>
   <div class="package-grid" id="packageGrid"></div>
+  <div style="display:flex; align-items:flex-start; gap:10px; margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+    <input type="checkbox" id="atCostToggle" onchange="toggleAtCost()" style="width:20px; height:20px; margin-top:1px; flex-shrink:0; accent-color:var(--accent);">
+    <label for="atCostToggle" style="font-size:0.86rem; color:var(--text-dim);">⛪ <b style="color:var(--text);">This is Shiloh</b> — the founding, at-cost install. First in line, the only one that isn't marked up. Every other church pays technology at 1.5× cost plus labor at cost.</label>
+  </div>
   <div id="installQuestionnaire" hidden style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
     <div style="font-weight:600; margin-bottom:4px;">Size the install for this building</div>
     <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:16px;">
@@ -728,27 +732,32 @@ const capabilities = [
   { id:'community', name:'Community Reach', icon:'🤝' }
 ];
 
-/* Package 1 & 2: the central node — this building holds the AI Brain, sold
-   at cost (Shiloh's price, no markup — this is our own build).
-   Package 3: a satellite building this node controls — no brain, just an
-   edge server talking back to the central node, plus a real install job.
-   Package 4: install the Brain at another church and license them to run
-   their own node — onboarding and controlling other churches under it,
-   same as Shiloh, but not at cost: technology resold at 1.5x what we paid,
-   installation labor priced at cost (equal to the equipment's raw cost),
-   landing around 2.5x cost total for anyone who isn't Shiloh. */
+/* Three packages, by what's installed — not by who's buying:
+   Package 1 "Bare Bones": the Brain and Body only.
+   Package 2 "Full Node Install": everything except the Brain — for a
+     building an existing node controls (edge server, not a GPU).
+   Package 3 "Become a Node" (the MLM / reseller package): the Brain plus
+     everything else. This church becomes another Shiloh — its own node,
+     licensed to onboard and control others under it.
+
+   Pricing is a separate axis: "at cost" vs "marked up." Shiloh is the only
+   at-cost install — first in line, the only one that's blessed with it.
+   Every other church, on any of the three packages, pays technology resold
+   at 1.5x our cost plus installation labor priced at cost — 2.5x cost
+   total. atCostDefault is just the sane starting toggle per package
+   (Shiloh's own build defaults to at-cost; anything installed at another
+   church defaults to marked up) — the toggle below can override either way. */
 const packages = [
-  { id:1, name:'The Foundation', tagline:'Everything your central node needs to run itself — owned, not rented.', kind:'node',
+  { id:1, name:'Bare Bones', tagline:'The Brain and Body only — the minimum to run itself.', kind:'bare', atCostDefault:true,
     features:['gpu','workstation','streaming','sound','voice','website','designer'] },
-  { id:2, name:'Foundation + Community WiFi', tagline:'Adds gated WiFi for the block around the building.', kind:'node',
-    features:['gpu','workstation','streaming','sound','voice','website','designer','wifi'] },
-  { id:3, name:'Full Node Install', tagline:'For a building your node controls. Everything except the brain — that stays central.', kind:'satellite',
+  { id:2, name:'Full Node Install', tagline:'Everything except the Brain — for a building your node controls.', kind:'full', atCostDefault:false,
     features:['edgeserver','streaming','sound','voice','website','designer','doors','wifi','mesh','sms','cameras'] },
-  { id:4, name:'Become a Node', tagline:'Install the Brain here. This church becomes its own node, licensed to onboard and control others — the same proprietary technology Shiloh runs.', kind:'reseller',
+  { id:3, name:'Become a Node', tagline:'The Brain, plus everything else. This church becomes another Shiloh — licensed to onboard and control others.', kind:'mlm', atCostDefault:false,
     features:['gpu','workstation','streaming','sound','voice','website','designer','doors','wifi','mesh','sms','cameras'] }
 ];
 
 let currentPackageId = 1;
+let isAtCost = packages[0].atCostDefault;
 let installAnswers = { sqft:5000, cameras:4, doors:1 };
 let activeFeatures = new Set(packages[0].features);
 let currentPlanId = null;
@@ -777,60 +786,87 @@ function equipmentAtCost(pkg) {
   if (pkg.features.includes('cameras')) cost += (installAnswers.cameras || 0) * UNIT_COST.camera;
   if (pkg.features.includes('doors')) cost += Math.max(1, installAnswers.doors || 0) * UNIT_COST.door;
   if (pkg.features.includes('wifi')) {
-    const aps = pkg.kind === 'node' ? 2 : Math.max(2, Math.ceil((installAnswers.sqft || 0) / 2500));
+    const aps = Math.max(2, Math.ceil((installAnswers.sqft || 0) / 2500));
     cost += aps * UNIT_COST.wifiAp;
   }
   return cost;
 }
 
-/* Shiloh's own packages (kind "node") are sold at cost — no markup, since
-   it's our own build. Everyone else pays technology resold at 1.5x cost,
-   plus installation labor priced at cost — 2.5x cost total. */
-function computeTotalsForPackage(pkg) {
-  const atCost = equipmentAtCost(pkg);
+/* Line items for the quantity-driven equipment (doors/wifi/cameras) — used
+   for display so the at-cost breakdown doesn't silently drop them (their
+   catalog price is 0; the real cost only exists here). */
+function dynamicEquipmentLines(pkg) {
+  const lines = [];
+  if (pkg.features.includes('cameras')) {
+    const qty = installAnswers.cameras || 0;
+    lines.push({ icon: '📹', name: 'Security Camera System (' + qty + ' camera' + (qty===1?'':'s') + ')', cost: qty * UNIT_COST.camera });
+  }
+  if (pkg.features.includes('doors')) {
+    const qty = Math.max(1, installAnswers.doors || 0);
+    lines.push({ icon: '🚪', name: 'Smart Access System (' + qty + ' door' + (qty===1?'':'s') + ')', cost: qty * UNIT_COST.door });
+  }
+  if (pkg.features.includes('wifi')) {
+    const aps = Math.max(2, Math.ceil((installAnswers.sqft || 0) / 2500));
+    lines.push({ icon: '📶', name: 'City Block WiFi (' + aps + ' APs)', cost: aps * UNIT_COST.wifiAp });
+  }
+  return lines;
+}
+
+/* atCost true = Shiloh's own build, no markup. atCost false = everyone
+   else: technology resold at 1.5x cost, labor priced at cost — 2.5x total. */
+function computeTotalsForPackage(pkg, atCost) {
+  const cost = equipmentAtCost(pkg);
   var equipmentTotal, laborTotal;
-  if (pkg.kind === 'node') {
-    equipmentTotal = atCost;
+  if (atCost) {
+    equipmentTotal = cost;
     laborTotal = 0;
   } else {
-    equipmentTotal = Math.round(atCost * 1.5);
-    laborTotal = Math.round(atCost * 1.0);
+    equipmentTotal = Math.round(cost * 1.5);
+    laborTotal = Math.round(cost * 1.0);
   }
-  return { atCost: atCost, equipmentTotal: equipmentTotal, laborTotal: laborTotal, total: equipmentTotal + laborTotal };
+  return { atCost: cost, equipmentTotal: equipmentTotal, laborTotal: laborTotal, total: equipmentTotal + laborTotal };
 }
 
 const PACKAGE_BADGES = {
-  node: '<span class="package-badge node">Central Node · at cost</span>',
-  satellite: '<span class="package-badge">Satellite Building</span>',
-  reseller: '<span class="package-badge reseller">Reseller Node</span>'
+  bare: '<span class="package-badge node">Central Node</span>',
+  full: '<span class="package-badge">Satellite Building</span>',
+  mlm: '<span class="package-badge reseller">MLM / Reseller Node</span>'
 };
 
 function renderPackages() {
   document.getElementById('packageGrid').innerHTML = packages.map(pkg => {
-    const t = computeTotalsForPackage(pkg);
+    const t = computeTotalsForPackage(pkg, pkg.atCostDefault);
     const includes = pkg.features.map(fid => { const f = findFeature(fid); return f ? '<li>' + esc(f.name) + '</li>' : ''; }).join('');
     const isActive = currentPackageId === pkg.id;
     return '<div class="package-card ' + (isActive?'active':'') + '" onclick="selectPackage(' + pkg.id + ')">' +
       (PACKAGE_BADGES[pkg.kind] || '') +
       '<div class="package-name">Package ' + pkg.id + ' — ' + esc(pkg.name) + '</div>' +
       '<div class="package-tagline">' + esc(pkg.tagline) + '</div>' +
-      '<div class="package-price">$' + t.total.toLocaleString() + (pkg.kind!=='node' ? '<span style="font-size:0.9rem; color:var(--text-dim);">*</span>' : '') + '</div>' +
+      '<div class="package-price">$' + t.total.toLocaleString() + (!pkg.atCostDefault ? '<span style="font-size:0.9rem; color:var(--text-dim);">*</span>' : '') + '</div>' +
       '<ul class="package-includes">' + includes + '</ul>' +
       '</div>';
   }).join('');
-  document.getElementById('installQuestionnaire').hidden = currentPackage().kind === 'node';
+  const pkg = currentPackage();
+  document.getElementById('installQuestionnaire').hidden = !(pkg.features.includes('doors') || pkg.features.includes('wifi') || pkg.features.includes('cameras'));
+  document.getElementById('atCostToggle').checked = isAtCost;
 }
 
 function selectPackage(id) {
   currentPackageId = id;
+  isAtCost = currentPackage().atCostDefault;
   activeFeatures = new Set(currentPackage().features);
   refresh();
   markDirty();
 }
 
+function toggleAtCost() {
+  isAtCost = document.getElementById('atCostToggle').checked;
+  refresh();
+  markDirty();
+}
+
 function renderFeatureItem(f) {
-  const pkg = currentPackage();
-  const sizedBelow = pkg.kind !== 'node' && (f.id === 'doors' || f.id === 'wifi' || f.id === 'cameras');
+  const sizedBelow = (f.id === 'doors' || f.id === 'wifi' || f.id === 'cameras');
   const priceLabel = (f.dynamicPrice || sizedBelow) ? 'Sized below' : (f.price===0?'FREE':'$'+f.price.toLocaleString());
   return '<div class="feature-item included">' +
     '<div class="feature-check">✓</div>' +
@@ -880,14 +916,14 @@ function renderArch() {
     {label:'Supabase (Free)',active:true,donated:true}
   ];
   const brainNodes = [];
-  if (pkg.kind !== 'satellite') {
+  if (has('gpu') || has('workstation')) {
     if (has('workstation')) brainNodes.push({label:'Dell T7910',active:true,donated:false});
-    if (has('gpu')) brainNodes.push({label:'RTX A6000 48GB' + (pkg.kind==='reseller' ? ' (this church’s own node)' : ''),active:true,donated:false});
+    if (has('gpu')) brainNodes.push({label:'RTX A6000 48GB' + (pkg.kind==='mlm' ? ' (this church’s own node)' : ''),active:true,donated:false});
   } else {
     brainNodes.push({label:'Hosted at the central node — not installed here',active:true,remote:true});
   }
   const workerNodes = [{label:'10x R620 Servers (central fleet)',active:true,donated:true}];
-  if (pkg.kind === 'satellite' && has('edgeserver')) {
+  if (has('edgeserver')) {
     workerNodes.push({label:'1x R620 Edge Server (this building)',active:true,donated:false});
   }
   const edgeNodes = [];
@@ -923,7 +959,7 @@ function renderArch() {
 
 function computeTotals() {
   const pkg = currentPackage();
-  const priceParts = computeTotalsForPackage(pkg);
+  const priceParts = computeTotalsForPackage(pkg, isAtCost);
   let yearlySave = 0;
   [...features.software, ...features.network].forEach(f => {
     if (activeFeatures.has(f.id) && f.replaces) {
@@ -944,7 +980,7 @@ function renderBudget() {
   document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
   document.getElementById('budgetBar').style.width = Math.min(100,(t.total/8000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
-  if (pkg.kind === 'reseller') {
+  if (pkg.kind === 'mlm' && !isAtCost) {
     document.getElementById('paybackBadge').textContent = 'Return comes from onboarding other churches — not modeled here yet';
   } else {
     document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add features to see payback';
@@ -954,18 +990,22 @@ function renderBudget() {
   document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
-  document.getElementById('heroPayback').textContent = pkg.kind === 'reseller' ? '—' : paybackText;
+  document.getElementById('heroPayback').textContent = (pkg.kind === 'mlm' && !isAtCost) ? '—' : paybackText;
   if (document.getElementById('installEstimateDisplay')) {
-    document.getElementById('installEstimateDisplay').textContent =
-      '$' + t.total.toLocaleString() + ' (technology $' + t.equipmentTotal.toLocaleString() + ' + labor $' + t.laborTotal.toLocaleString() + ')';
+    document.getElementById('installEstimateDisplay').textContent = isAtCost
+      ? '$' + t.total.toLocaleString() + ' (at cost)'
+      : '$' + t.total.toLocaleString() + ' (technology $' + t.equipmentTotal.toLocaleString() + ' + labor $' + t.laborTotal.toLocaleString() + ')';
   }
   let rows;
-  if (pkg.kind === 'node') {
-    const breakdown = ALL_FEATURES.filter(f => activeFeatures.has(f.id) && f.price>0);
-    rows = breakdown.map(f => `
+  if (isAtCost) {
+    const flatLines = ALL_FEATURES
+      .filter(f => activeFeatures.has(f.id) && f.price>0)
+      .map(f => ({ icon: f.icon, name: f.name, cost: f.price }));
+    const breakdown = flatLines.concat(dynamicEquipmentLines(pkg));
+    rows = breakdown.map(line => `
       <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-        <span style="font-size:0.85rem;">${f.icon} ${f.name}</span>
-        <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
+        <span style="font-size:0.85rem;">${line.icon} ${line.name}</span>
+        <span style="font-family:'Space Grotesk'; font-weight:600;">$${line.cost.toLocaleString()}</span>
       </div>
     `).join('') || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No equipment selected</div>';
   } else {
@@ -982,7 +1022,7 @@ function renderBudget() {
     `;
   }
   document.getElementById('budgetBreakdown').innerHTML = rows;
-  if (pkg.kind === 'reseller') {
+  if (pkg.kind === 'mlm' && !isAtCost) {
     document.getElementById('budgetBreakdown').innerHTML += '<div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:8px;">5-year projection below doesn’t include reseller income from onboarding other churches — that model isn’t built yet.</div>';
   }
 }
@@ -1046,10 +1086,10 @@ function copyPlan() {
       f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
     }
   });
-  const priceLine = pkg.kind === 'node' ? f => (f.price===0?'FREE':'$'+f.price.toLocaleString())
-    : f => (f.dynamicPrice || f.id==='doors' || f.id==='wifi') ? 'sized in install' : (f.price===0?'FREE':'$'+f.price.toLocaleString());
-  const pricingBlock = pkg.kind === 'node'
-    ? `Total Investment (at cost): $${t.total.toLocaleString()}`
+  const dynamicIds = ['doors','wifi','cameras'];
+  const priceLine = f => dynamicIds.includes(f.id) ? 'sized in install' : (f.price===0?'FREE':'$'+f.price.toLocaleString());
+  const pricingBlock = isAtCost
+    ? `Total Investment (at cost — Shiloh): $${t.total.toLocaleString()}`
     : `Technology (1.5x cost): $${t.equipmentTotal.toLocaleString()}\nInstallation & labor (at cost): $${t.laborTotal.toLocaleString()}\nTotal Investment: $${t.total.toLocaleString()}\n\nInstall sizing — building: ${installAnswers.sqft.toLocaleString()} sq ft, cameras: ${installAnswers.cameras}, exterior doors: ${installAnswers.doors} (estimate, confirmed after a site visit)`;
   const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\nPackage ${pkg.id} — ${pkg.name}\n========================\n\n${pricingBlock}\n\nINCLUDED:\n${selected.map(f => `- ${f.icon} ${f.name}: ${priceLine(f)}`).join('\n')}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
@@ -1066,6 +1106,7 @@ function planFromState() {
     totals: Object.assign({}, t, {
       packageId: currentPackageId,
       packageName: currentPackage().name,
+      isAtCost: isAtCost,
       installAnswers: Object.assign({}, installAnswers)
     }),
     createdBy: (FreedomStore.getConfig().mode === 'supabase' ? (window.__adminEmail || '') : 'demo')
@@ -1082,6 +1123,7 @@ function applyPlanToState(plan) {
   currentPlanId = plan.id;
   const t = plan.totals || {};
   currentPackageId = t.packageId || parseInt(String(plan.size||'package-1').replace('package-','')) || 1;
+  isAtCost = t.isAtCost !== undefined ? t.isAtCost : currentPackage().atCostDefault;
   activeFeatures = new Set((plan.features && plan.features.length) ? plan.features : currentPackage().features);
   installAnswers = Object.assign({ sqft:5000, cameras:4, doors:1 }, t.installAnswers || {});
   document.getElementById('churchNameInput').value = plan.churchName || '';
@@ -1096,6 +1138,7 @@ function applyPlanToState(plan) {
 function newPlan() {
   currentPlanId = null;
   currentPackageId = 1;
+  isAtCost = packages[0].atCostDefault;
   activeFeatures = new Set(packages[0].features);
   installAnswers = { sqft:5000, cameras:4, doors:1 };
   document.getElementById('churchNameInput').value = '';
@@ -1143,7 +1186,7 @@ function renderSavedPlans() {
     return '<div class="plan-row' + (p.id === currentPlanId ? ' active' : '') + '" data-id="' + esc(p.id) + '">' +
       '<div class="info" data-open="' + esc(p.id) + '">' +
       '<div class="name">' + esc(p.churchName || 'Untitled church') + '</div>' +
-      '<div class="meta">' + esc(pkgLabel) + ' · $' + (t.total || 0).toLocaleString() +
+      '<div class="meta">' + esc(pkgLabel) + (t.isAtCost ? ' · at cost' : ' · marked up') + ' · $' + (t.total || 0).toLocaleString() +
       ' · updated ' + (p.updatedAt ? new Date(p.updatedAt).toLocaleDateString() : '') + '</div>' +
       '</div>' +
       '<button class="del" data-del="' + esc(p.id) + '" type="button">Delete</button>' +
