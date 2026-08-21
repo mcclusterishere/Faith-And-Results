@@ -280,6 +280,15 @@ a { color:var(--accent); }
 .capability-item:not(.active) .capability-bar-fill {
   background:rgba(255,255,255,0.1);
 }
+.vision-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;
+}
+.vision-point {
+  padding:18px; background:var(--bg-glass); border:1px solid var(--border); border-radius:14px;
+}
+.vision-icon { font-size:22px; margin-bottom:8px; }
+.vision-name { font-weight:600; font-size:0.92rem; margin-bottom:4px; }
+.vision-desc { font-size:0.8rem; color:var(--text-dim); }
 .arch-diagram {
   display:flex; flex-direction:column; gap:16px; margin-top:20px;
 }
@@ -455,6 +464,40 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
 </div>
 
 <div class="card animate-in delay-1">
+  <div class="card-header">
+    <div class="card-icon">🌱</div>
+    <div>
+      <div class="card-title">Why This Starts With Churches</div>
+      <div class="card-subtitle">The first market, not the only one.</div>
+    </div>
+  </div>
+  <p style="color:var(--text-dim); font-size:0.95rem; max-width:70ch; margin-bottom:20px;">
+    This starts as a church tool because the fit is right: proprietary, hard to copy, and trusted by
+    people who already believe in stewardship. It's built to grow past that — into Connecticut's wider
+    business community, backed by relationships that include a seat on the Governor's Workforce Council.
+    The churches that adopt this first aren't just early customers. They're the story — and, for the
+    ones who want it, the introduction — that opens the next door.
+  </p>
+  <div class="vision-grid">
+    <div class="vision-point">
+      <div class="vision-icon">🌱</div>
+      <div class="vision-name">First Market</div>
+      <div class="vision-desc">Churches prove it works before it goes further.</div>
+    </div>
+    <div class="vision-point">
+      <div class="vision-icon">🔒</div>
+      <div class="vision-name">Proprietary</div>
+      <div class="vision-desc">Built and owned — not something a competitor can just copy.</div>
+    </div>
+    <div class="vision-point">
+      <div class="vision-icon">🤝</div>
+      <div class="vision-name">You Grow With It</div>
+      <div class="vision-desc">As this reaches further, your church is part of how it got there.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card animate-in delay-1" style="margin-top:32px;">
   <div class="card-header">
     <div class="card-icon">⛪</div>
     <div>
