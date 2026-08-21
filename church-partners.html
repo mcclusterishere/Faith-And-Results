@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Shiloh Build Planner · Freedom, Inc.</title>
+<title>Partner &amp; Reseller Pricing · Freedom, Inc.</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 :root {
@@ -60,9 +60,9 @@ a { color:var(--accent); }
 .bg-mesh {
   position:fixed; inset:0; z-index:0;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0,212,170,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 50% 80%, rgba(255,107,53,0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(124,58,237,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(255,107,53,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 50% 80%, rgba(0,212,170,0.05) 0%, transparent 50%);
   animation:meshPulse 8s ease-in-out infinite alternate;
 }
 @keyframes meshPulse { 0% { opacity:0.6; transform:scale(1); } 100% { opacity:1; transform:scale(1.05); } }
@@ -80,7 +80,7 @@ a { color:var(--accent); }
   background:rgba(10,10,15,0.7); backdrop-filter:blur(10px);
 }
 .topbar a.brand { font-family:'Space Grotesk',sans-serif; font-weight:700; text-decoration:none; color:var(--text); font-size:0.95rem; }
-.topbar a.brand span { color:var(--accent); }
+.topbar a.brand span { color:var(--accent2); }
 .topbar .who { font-size:0.82rem; color:var(--text-dim); }
 .topbar .out {
   background:none; border:1px solid var(--border); color:var(--text);
@@ -93,22 +93,22 @@ a { color:var(--accent); }
   display:inline-flex; align-items:center; gap:8px;
   padding:8px 20px; background:var(--bg-glass);
   border:1px solid var(--border); border-radius:100px;
-  font-size:13px; font-weight:500; color:var(--accent);
+  font-size:13px; font-weight:500; color:var(--accent2);
   margin-bottom:24px; backdrop-filter:blur(10px);
 }
-.hero-badge::before { content:''; width:8px; height:8px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity:1; box-shadow:0 0 0 0 var(--accent-glow); } 50% { opacity:0.7; box-shadow:0 0 0 8px transparent; } }
+.hero-badge::before { content:''; width:8px; height:8px; background:var(--accent2); border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(255,107,53,0.3); } 50% { opacity:0.7; box-shadow:0 0 0 8px transparent; } }
 .hero h1 {
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(2.5rem,6vw,5rem); font-weight:700;
   line-height:1.05; margin-bottom:16px;
-  background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent3) 100%);
+  background:linear-gradient(135deg,#fff 0%,var(--accent2) 50%,var(--accent3) 100%);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
 }
-.hero p { font-size:1.15rem; color:var(--text-dim); max-width:600px; margin:0 auto 32px; }
+.hero p { font-size:1.15rem; color:var(--text-dim); max-width:640px; margin:0 auto 32px; }
 .hero-stats { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; margin-top:32px; }
 .stat { text-align:center; }
-.stat-value { font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; color:var(--accent); }
+.stat-value { font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; color:var(--accent2); }
 .stat-label { font-size:0.85rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
 .dashboard { display:grid; grid-template-columns:1fr 380px; gap:24px; margin-top:48px; }
 @media (max-width:1100px) { .dashboard { grid-template-columns:1fr; } }
@@ -129,13 +129,13 @@ a { color:var(--accent); }
 .budget-panel { position:sticky; top:24px; }
 .budget-display {
   text-align:center; padding:24px;
-  background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, rgba(124,58,237,0.1) 100%);
-  border-radius:16px; border:1px solid var(--accent); margin-bottom:20px;
+  background:linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(124,58,237,0.1) 100%);
+  border-radius:16px; border:1px solid var(--accent2); margin-bottom:20px;
 }
-.budget-amount { font-family:'Space Grotesk',sans-serif; font-size:3.5rem; font-weight:700; color:var(--accent); line-height:1; }
+.budget-amount { font-family:'Space Grotesk',sans-serif; font-size:3.5rem; font-weight:700; color:var(--accent2); line-height:1; }
 .budget-label { font-size:0.85rem; color:var(--text-dim); margin-top:8px; text-transform:uppercase; letter-spacing:0.1em; }
 .budget-bar { width:100%; height:8px; background:rgba(255,255,255,0.05); border-radius:4px; margin-top:16px; overflow:hidden; }
-.budget-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--accent),var(--accent3)); transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
+.budget-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--accent2),var(--accent3)); transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
 .savings-card {
   background:linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(0,212,170,0.05) 100%);
   border:1px solid rgba(34,197,94,0.3); border-radius:16px; padding:20px; margin-bottom:20px;
@@ -148,49 +148,61 @@ a { color:var(--accent); }
   border:1px solid var(--warning); border-radius:100px;
   font-size:0.8rem; font-weight:600; color:var(--warning); margin-top:12px;
 }
+.recoup-card {
+  background:linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(255,107,53,0.05) 100%);
+  border:1px solid var(--accent3); border-radius:16px; padding:20px; margin-bottom:20px;
+}
+.recoup-card .title { font-weight:700; font-size:0.95rem; margin-bottom:8px; }
+.recoup-card .line { display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0; color:var(--text-dim); }
+.recoup-card .line b { color:var(--text); font-family:'Space Grotesk'; }
+.recoup-card .caveat { font-size:0.76rem; color:var(--text-dim); font-style:italic; margin-top:8px; }
 .feature-list { display:flex; flex-direction:column; gap:12px; }
 .feature-item {
   display:flex; align-items:center; gap:14px; padding:16px;
   background:var(--bg-glass); border:1px solid var(--border);
-  border-radius:14px; transition:all 0.25s ease; position:relative; overflow:hidden;
+  border-radius:14px; cursor:pointer; transition:all 0.25s ease; position:relative; overflow:hidden;
 }
-.feature-item.toggleable { cursor:pointer; }
-.feature-item::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,var(--accent),transparent); opacity:0; transition:opacity 0.3s; }
-.feature-item.toggleable:hover { border-color:rgba(255,255,255,0.15); }
-.feature-item.active { border-color:var(--accent); background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%); }
+.feature-item::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,var(--accent2),transparent); opacity:0; transition:opacity 0.3s; }
+.feature-item:hover { border-color:rgba(255,255,255,0.15); }
+.feature-item.active { border-color:var(--accent2); background:linear-gradient(135deg, rgba(255,107,53,0.08) 0%, transparent 100%); }
 .feature-item.active::before { opacity:0.1; }
 .feature-toggle {
   width:48px; height:26px; border-radius:13px;
   background:rgba(255,255,255,0.1); position:relative; flex-shrink:0; transition:all 0.3s;
 }
-.feature-item.active .feature-toggle { background:var(--accent); box-shadow:0 0 16px var(--accent-glow); }
+.feature-item.active .feature-toggle { background:var(--accent2); box-shadow:0 0 16px rgba(255,107,53,0.35); }
 .feature-toggle::after {
   content:''; position:absolute; width:20px; height:20px;
   background:#fff; border-radius:50%; top:3px; left:3px;
   transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 .feature-item.active .feature-toggle::after { left:25px; }
-.feature-check {
-  width:32px; height:32px; border-radius:50%; flex-shrink:0;
-  background:rgba(0,212,170,0.15); border:1px solid var(--accent); color:var(--accent);
-  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.95rem;
-}
 .feature-info { flex:1; position:relative; z-index:1; }
 .feature-name { font-weight:600; font-size:0.95rem; }
 .feature-desc { font-size:0.78rem; color:var(--text-dim); margin-top:2px; }
-.feature-price { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; color:var(--accent); position:relative; z-index:1; white-space:nowrap; }
+.feature-price { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; color:var(--accent2); position:relative; z-index:1; white-space:nowrap; }
 .included-list { display:flex; flex-direction:column; gap:8px; }
 .included-row { display:flex; align-items:center; gap:10px; font-size:0.88rem; color:var(--text-dim); }
 .included-row b { color:var(--text); font-weight:600; }
+.level-grid { display:flex; gap:12px; margin-bottom:8px; flex-wrap:wrap; }
+.level-btn {
+  flex:1; min-width:180px; padding:16px;
+  background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:14px; color:var(--text); font-family:'Inter',sans-serif;
+  font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.3s; text-align:left;
+}
+.level-btn:hover { border-color:rgba(255,255,255,0.2); }
+.level-btn.active { border-color:var(--accent2); background:linear-gradient(135deg, rgba(255,107,53,0.1) 0%, transparent 100%); box-shadow:0 0 20px rgba(255,107,53,0.2); }
+.level-btn .level-desc { display:block; font-size:0.76rem; color:var(--text-dim); font-weight:400; margin-top:4px; }
 .capability-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:20px; }
 .capability-item { padding:20px; background:var(--bg-glass); border:1px solid var(--border); border-radius:14px; transition:all 0.3s; }
-.capability-item.active { border-color:var(--accent); background:linear-gradient(135deg, rgba(0,212,170,0.06) 0%, transparent 100%); }
+.capability-item.active { border-color:var(--accent2); background:linear-gradient(135deg, rgba(255,107,53,0.06) 0%, transparent 100%); }
 .capability-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .capability-name { font-weight:600; font-size:0.9rem; }
 .capability-score { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; }
 .capability-bar { width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; }
 .capability-bar-fill { height:100%; border-radius:3px; transition:width 0.6s cubic-bezier(0.4,0,0.2,1), background 0.3s; }
-.capability-item.active .capability-bar-fill { background:linear-gradient(90deg,var(--accent),var(--accent3)); }
+.capability-item.active .capability-bar-fill { background:linear-gradient(90deg,var(--accent2),var(--accent3)); }
 .capability-item:not(.active) .capability-bar-fill { background:rgba(255,255,255,0.1); }
 .arch-diagram { display:flex; flex-direction:column; gap:16px; margin-top:20px; }
 .arch-layer { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
@@ -198,9 +210,11 @@ a { color:var(--accent); }
   padding:14px 22px; background:var(--bg-glass); border:1px solid var(--border);
   border-radius:12px; font-size:0.85rem; font-weight:500; text-align:center; transition:all 0.3s; position:relative;
 }
-.arch-node.active { border-color:var(--accent); background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, transparent 100%); box-shadow:0 0 20px var(--accent-glow); }
+.arch-node.active { border-color:var(--accent2); background:linear-gradient(135deg, rgba(255,107,53,0.1) 0%, transparent 100%); box-shadow:0 0 20px rgba(255,107,53,0.25); }
 .arch-node.donated { border-color:var(--accent3); background:linear-gradient(135deg, rgba(124,58,237,0.1) 0%, transparent 100%); }
 .arch-node.donated::after { content:'DONATED'; position:absolute; top:-6px; right:-6px; font-size:0.55rem; font-weight:800; padding:2px 6px; background:var(--accent3); color:#fff; border-radius:4px; }
+.arch-node.remote { border-color:var(--warning); background:linear-gradient(135deg, rgba(245,158,11,0.1) 0%, transparent 100%); }
+.arch-node.remote::after { content:'REMOTE'; position:absolute; top:-6px; right:-6px; font-size:0.55rem; font-weight:800; padding:2px 6px; background:var(--warning); color:#000; border-radius:4px; }
 .arch-connector { text-align:center; color:var(--text-dim); font-size:1.2rem; line-height:1; }
 .plan-row {
   display:flex; align-items:center; gap:12px; padding:14px 16px;
@@ -208,7 +222,7 @@ a { color:var(--accent); }
   cursor:pointer; transition:all 0.25s ease;
 }
 .plan-row:hover { border-color:rgba(255,255,255,0.2); }
-.plan-row.active { border-color:var(--accent); background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%); }
+.plan-row.active { border-color:var(--accent2); background:linear-gradient(135deg, rgba(255,107,53,0.08) 0%, transparent 100%); }
 .plan-row .info { flex:1; min-width:0; }
 .plan-row .name { font-weight:600; font-size:0.92rem; }
 .plan-row .meta { font-size:0.76rem; color:var(--text-dim); margin-top:2px; }
@@ -225,8 +239,8 @@ a { color:var(--accent); }
   transition:all 0.3s; border:none; text-align:center;
   text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;
 }
-.btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent3)); color:#000; box-shadow:0 4px 24px var(--accent-glow); }
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px var(--accent-glow); }
+.btn-primary { background:linear-gradient(135deg,var(--accent2),var(--accent3)); color:#000; box-shadow:0 4px 24px rgba(255,107,53,0.3); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(255,107,53,0.3); }
 .btn-secondary { background:var(--bg-glass); border:1px solid var(--border); color:var(--text); }
 .btn-secondary:hover { border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); }
 .btn[disabled] { opacity:0.5; cursor:default; }
@@ -237,11 +251,9 @@ input[type=text].church-input, input[type=number].church-input {
   width:100%; font-family:inherit; font-size:1rem; padding:14px 16px;
   background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; color:var(--text);
 }
-input[type=text].church-input:focus, input[type=number].church-input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+input[type=text].church-input:focus, input[type=number].church-input:focus { outline:2px solid var(--accent2); border-color:var(--accent2); }
 .q-field label { display:block; font-size:0.82rem; color:var(--text-dim); margin-bottom:6px; font-weight:600; }
-.crosslink {
-  margin-top:40px; padding:24px; text-align:center; border:1px dashed var(--border); border-radius:16px;
-}
+.crosslink { margin-top:40px; padding:24px; text-align:center; border:1px dashed var(--border); border-radius:16px; }
 .crosslink p { color:var(--text-dim); font-size:0.92rem; margin-bottom:12px; }
 .crosslink a.btn { display:inline-flex; max-width:22rem; }
 @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
@@ -267,8 +279,8 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 <div class="gate" id="gate">
   <form class="gatecard" id="gateForm">
     <a class="back" href="admin.html">← Back to Admin</a>
-    <h1>Shiloh <span style="color:var(--accent)">Build Planner</span></h1>
-    <p id="gateBlurb">Sign in to build and save Shiloh's own at-cost install.</p>
+    <h1>Partner <span style="color:var(--accent2)">&amp; Reseller Pricing</span></h1>
+    <p id="gateBlurb">Sign in to build and save a partner church's plan.</p>
     <div id="gateDemo" hidden>
       <label for="gatePass">Passcode</label>
       <input id="gatePass" type="password" autocomplete="current-password">
@@ -300,9 +312,9 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 <div class="container">
 
 <div class="hero animate-in">
-  <div class="hero-badge">Shiloh · The Founding, At-Cost Install</div>
-  <h1>Shiloh Build Planner</h1>
-  <p>The Brain and every free automation come bundled. Click on the equipment Shiloh actually needs — everything here is priced at what we paid, no markup.</p>
+  <div class="hero-badge">Priced Fairly — Not At Cost</div>
+  <h1>Partner &amp; Reseller Pricing</h1>
+  <p>Shiloh is the only at-cost install — first in line, the only one that's blessed with it. Every other building pays technology resold at 1.5× our cost, plus installation labor priced at cost. Start from a level, then customize whatever this building actually needs.</p>
   <div class="hero-stats">
     <div class="stat">
       <div class="stat-value" id="heroSavings">$0</div>
@@ -324,15 +336,39 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     <div class="card-icon">⛪</div>
     <div>
       <div class="card-title">Church &amp; Saved Plans</div>
-      <div class="card-subtitle">Every build saves to the database under your admin account.</div>
+      <div class="card-subtitle">Every plan saves to the database under your admin account.</div>
     </div>
   </div>
   <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
-    <input id="churchNameInput" class="church-input" type="text" placeholder="Building name (e.g. Shiloh Baptist Church — Main Campus)" style="flex:2; min-width:220px;">
-    <button class="btn btn-primary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="saveBtn" type="button">💾 Save Build</button>
-    <button class="btn btn-secondary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="newPlanBtn" type="button">+ New Build</button>
+    <input id="churchNameInput" class="church-input" type="text" placeholder="Church name (e.g. Second Baptist Church)" style="flex:2; min-width:220px;">
+    <button class="btn btn-primary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="saveBtn" type="button">💾 Save Plan</button>
+    <button class="btn btn-secondary" style="flex:0 0 auto; min-width:auto; padding:14px 22px;" id="newPlanBtn" type="button">+ New Plan</button>
   </div>
   <div id="savedPlansList" style="display:flex; flex-direction:column; gap:10px;"></div>
+</div>
+
+<div class="card animate-in delay-1" style="margin-top:32px;">
+  <div class="card-header">
+    <div class="card-icon">📦</div>
+    <div>
+      <div class="card-title">Start From a Level</div>
+      <div class="card-subtitle">A starting point, not a lock — every toggle below stays adjustable after you pick one.</div>
+    </div>
+  </div>
+  <div class="level-grid">
+    <button class="level-btn" data-level="bare" onclick="applyLevel('bare')">
+      Level 1 — Bare Bones
+      <span class="level-desc">Just the free automations, on an edge server. No add-on equipment.</span>
+    </button>
+    <button class="level-btn" data-level="full" onclick="applyLevel('full')">
+      Level 2 — Full Install
+      <span class="level-desc">Everything except the Brain — access, WiFi, mesh, SMS, cameras.</span>
+    </button>
+    <button class="level-btn" data-level="mlm" onclick="applyLevel('mlm')">
+      Level 3 — Become a Node
+      <span class="level-desc">The Brain, plus everything else. This church becomes another Shiloh.</span>
+    </button>
+  </div>
 </div>
 
 <div class="dashboard">
@@ -343,8 +379,19 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
   <div class="card-header">
     <div class="card-icon">🧠</div>
     <div>
+      <div class="card-title">The Brain</div>
+      <div class="card-subtitle">Own node, or controlled by the church that onboarded this one</div>
+    </div>
+  </div>
+  <div class="feature-list" id="brainToggle"></div>
+</div>
+
+<div class="card animate-in delay-2" style="margin-top:24px;">
+  <div class="card-header">
+    <div class="card-icon">✨</div>
+    <div>
       <div class="card-title">Always Included</div>
-      <div class="card-subtitle">The Brain, plus every automation — bundled, not toggled</div>
+      <div class="card-subtitle">Bundled with every level — no extra charge</div>
     </div>
   </div>
   <div class="included-list" id="includedList"></div>
@@ -354,14 +401,15 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
   <div class="card-header">
     <div class="card-icon">➕</div>
     <div>
-      <div class="card-title">Add Capabilities</div>
-      <div class="card-subtitle">Click to add — priced at what we actually paid</div>
+      <div class="card-title">Equipment</div>
+      <div class="card-subtitle">Click to add or remove — technology at 1.5× cost, labor at cost</div>
     </div>
   </div>
   <div class="feature-list" id="equipmentList"></div>
   <div id="installQuestionnaire" hidden style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
     <div style="font-weight:600; margin-bottom:4px; font-size:0.92rem;">Size what you just added</div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:12px;">
+    <p style="font-size:0.78rem; color:var(--text-dim); margin:6px 0 12px;">A few questions so this building prices its own install. Final number confirmed after a site visit.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;">
       <div class="q-field">
         <label for="qSqft">Building size (sq ft)</label>
         <input type="number" id="qSqft" class="church-input" min="0" step="500">
@@ -383,7 +431,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     <div class="card-icon">📊</div>
     <div>
       <div class="card-title">Building Capabilities</div>
-      <div class="card-subtitle">What Shiloh can do with this build</div>
+      <div class="card-subtitle">What this church can do with what's selected</div>
     </div>
   </div>
   <div class="capability-grid" id="capabilityGrid"></div>
@@ -407,7 +455,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 
     <div class="budget-display">
       <div class="budget-amount" id="budgetTotal">$0</div>
-      <div class="budget-label">Total Investment (At Cost)</div>
+      <div class="budget-label">Total Investment</div>
       <div class="budget-bar">
         <div class="budget-bar-fill" id="budgetBar" style="width:0%"></div>
       </div>
@@ -417,6 +465,12 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
       <div class="savings-value" id="yearlySavings">$0</div>
       <div class="savings-label">Saved Every Year</div>
       <div class="payback-badge" id="paybackBadge">Pays for itself in 6 months</div>
+    </div>
+
+    <div id="recoupCard" class="recoup-card" hidden>
+      <div class="title">🔁 Recoup Calculation — Reseller Node</div>
+      <div class="line"><span>Recoups via software savings in</span><b id="recoupMonths">–</b></div>
+      <div class="caveat">Additional recoup from onboarding other churches under this node isn't modeled yet — that's the reseller upside on top of this.</div>
     </div>
 
     <div style="margin-bottom:20px;">
@@ -433,7 +487,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
       <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">5-YEAR PROJECTION</div>
       <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
         <span style="font-size:0.85rem; color:var(--text-dim);">Total Spent</span>
-        <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent);" id="totalSpent">$0</span>
+        <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent2);" id="totalSpent">$0</span>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
         <span style="font-size:0.85rem; color:var(--text-dim);">Total Saved</span>
@@ -457,8 +511,8 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 </div>
 
 <div class="crosslink animate-in">
-  <p>Installing this technology at another building? Shiloh's the only at-cost install — everyone else is priced fairly, not free.</p>
-  <a class="btn btn-secondary" href="church-partners.html">→ Partner &amp; Reseller Pricing</a>
+  <p>Building for Shiloh itself? That's the one at-cost install.</p>
+  <a class="btn btn-secondary" href="church-upgrade.html">← Shiloh Build Planner</a>
 </div>
 
 <div style="text-align:center; padding:40px 0; color:var(--text-dim); font-size:0.85rem;">
@@ -471,27 +525,27 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 
 <script src="js/store.js"></script>
 <script>
-const brain = { id:'brain', name:'AI Brain + Body', desc:'RTX A6000 48GB + Dell T7910 workstation. Everything downstream runs on this.', price:1950, icon:'🧠',
-  capabilities:{intelligence:100,vision:80,coding:100,speed:100} };
-
 const automations = [
-  { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', icon:'📡',
+  { id:'streaming', name:'Streaming Automation', icon:'📡',
     capabilities:{streaming:100,automation:60,security:0,community:20},
     replaces:[{name:'Restream.io Professional plan', monthly:41}],
     savingsNote:'Most churches run this with a volunteer, not paid staff. This is the backup for when they can’t make it — no training required, nothing to remember.' },
-  { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume.', icon:'🎛️',
+  { id:'sound', name:'Sound Board AI', icon:'🎛️',
     capabilities:{streaming:40,automation:80,security:0,community:10},
     replaces:[], savingsNote:'Most churches run sound with a volunteer, not paid staff. This is the safety net when they’re out sick or running late — the AI doesn’t need training to cover for them.' },
-  { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', icon:'🎙️',
+  { id:'voice', name:'Voice Command Assistant', icon:'🎙️',
     capabilities:{streaming:30,automation:70,security:20,community:40},
     replaces:[], savingsNote:'Cuts down on staff interruptions for routine questions — a time savings, not counted in the dollar total.' },
-  { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress.', icon:'🌐',
+  { id:'website', name:'AI Webmaster', icon:'🌐',
     capabilities:{streaming:0,automation:50,security:0,community:60},
     replaces:[{name:'Website builder & hosting (Squarespace, Wix, or WordPress + host)', monthly:50}] },
-  { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command.', icon:'🎨',
+  { id:'designer', name:'AI Graphic Designer', icon:'🎨',
     capabilities:{streaming:0,automation:40,security:0,community:50},
     replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] }
 ];
+
+const brainOption = { id:'brain', name:'Include the Brain (RTX A6000 48GB + Dell T7910)', desc:'This church becomes its own node — licensed to onboard and control others under it. Without this, the Brain stays with whoever onboarded this church.', icon:'🧠', price:1950 };
+const edgeServer = { id:'edgeserver', name:'Edge Server (Dell R620, configured & installed)', price:250 };
 
 const equipment = [
   { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', icon:'🚪',
@@ -527,9 +581,16 @@ const capabilities = [
   { id:'community', name:'Community Reach', icon:'🤝' }
 ];
 
+const levelPresets = {
+  bare: { brain:false, doors:false, wifi:false, mesh:false, sms:false, cameras:false },
+  full: { brain:false, doors:true, wifi:true, mesh:true, sms:true, cameras:true },
+  mlm:  { brain:true,  doors:true, wifi:true, mesh:true, sms:true, cameras:true }
+};
+
 let active = new Set();
 let installAnswers = { sqft:5000, cameras:4, doors:1 };
 let currentPlanId = null;
+let currentLevel = null;
 let SAVED_PLANS = [];
 let dirty = false;
 let saveTimer = null;
@@ -553,32 +614,56 @@ function itemLabel(item) {
   return item.name;
 }
 
+function applyLevel(name) {
+  currentLevel = name;
+  const preset = levelPresets[name];
+  active = new Set(Object.keys(preset).filter(k => preset[k]));
+  document.querySelectorAll('.level-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.level === name));
+  refresh();
+  markDirty();
+}
+
+function renderBrainToggle() {
+  const isActive = active.has('brain');
+  document.getElementById('brainToggle').innerHTML =
+    '<div class="feature-item ' + (isActive?'active':'') + '" onclick="toggleItem(\'brain\')">' +
+    '<div class="feature-toggle"></div>' +
+    '<div class="feature-info">' +
+    '<div class="feature-name">' + brainOption.icon + ' ' + esc(brainOption.name) + '</div>' +
+    '<div class="feature-desc">' + esc(brainOption.desc) + '</div>' +
+    '</div>' +
+    '<div class="feature-price">$' + brainOption.price.toLocaleString() + '</div>' +
+    '</div>';
+}
+
 function renderIncluded() {
-  const rows = [{icon:brain.icon, name:brain.name, note:'$'+brain.price.toLocaleString()}]
-    .concat(automations.map(a => ({icon:a.icon, name:a.name, note:'included'})));
+  const rows = automations.map(a => ({icon:a.icon, name:a.name}))
+    .concat(active.has('brain') ? [] : [{icon:edgeServer.name.match(/^\S+/) ? '🖧' : '', name:edgeServer.name}]);
   document.getElementById('includedList').innerHTML = rows.map(r =>
-    '<div class="included-row"><span>' + r.icon + '</span><b>' + esc(r.name) + '</b><span style="margin-left:auto; color:var(--text-dim);">' + r.note + '</span></div>'
+    '<div class="included-row"><span>' + r.icon + '</span><b>' + esc(r.name) + '</b><span style="margin-left:auto; color:var(--text-dim);">' + (r.name===edgeServer.name?'$'+edgeServer.price.toLocaleString():'included') + '</span></div>'
   ).join('');
 }
 
 function renderEquipment() {
   document.getElementById('equipmentList').innerHTML = equipment.map(item => {
     const isActive = active.has(item.id);
-    return '<div class="feature-item toggleable ' + (isActive?'active':'') + '" onclick="toggleEquipment(\'' + item.id + '\')">' +
+    return '<div class="feature-item ' + (isActive?'active':'') + '" onclick="toggleItem(\'' + item.id + '\')">' +
       '<div class="feature-toggle"></div>' +
       '<div class="feature-info">' +
       '<div class="feature-name">' + item.icon + ' ' + esc(item.name) + '</div>' +
       '<div class="feature-desc">' + esc(item.desc) + '</div>' +
       '</div>' +
-      '<div class="feature-price">' + (isActive ? '$'+itemCost(item).toLocaleString() : 'from $'+item.unitCost+(item.unit?'/'+item.unit:'')) + '</div>' +
+      '<div class="feature-price">' + (isActive ? '$'+Math.round(itemCost(item)*1.5+itemCost(item)).toLocaleString() : 'from $'+Math.round(item.unitCost?item.unitCost*2.5:item.price*2.5)+(item.unit?'/'+item.unit:'')) + '</div>' +
       '</div>';
   }).join('');
   const anyQtyDriven = ['doors','wifi','cameras'].some(id => active.has(id));
   document.getElementById('installQuestionnaire').hidden = !anyQtyDriven;
 }
 
-function toggleEquipment(id) {
+function toggleItem(id) {
   if (active.has(id)) active.delete(id); else active.add(id);
+  currentLevel = null;
+  document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
   refresh();
   markDirty();
 }
@@ -586,7 +671,9 @@ function toggleEquipment(id) {
 function renderCapabilities() {
   const scores = {};
   capabilities.forEach(c => scores[c.id] = 0);
-  const all = [brain].concat(automations).concat(equipment.filter(e => active.has(e.id)));
+  const activeEquipment = equipment.filter(e => active.has(e.id));
+  const all = automations.concat(activeEquipment);
+  if (active.has('brain')) all.push({capabilities:{intelligence:100,vision:80,coding:100,speed:100}});
   all.forEach(f => {
     if (f.capabilities) Object.entries(f.capabilities).forEach(([cap,val]) => { scores[cap] = (scores[cap]||0) + val; });
   });
@@ -597,7 +684,7 @@ function renderCapabilities() {
     return `<div class="capability-item ${isActive?'active':''}">
       <div class="capability-header">
         <span class="capability-name">${c.icon} ${c.name}</span>
-        <span class="capability-score" style="color:${score>70?'var(--accent)':score>30?'var(--warning)':'var(--text-dim)'};">${Math.round(score)}%</span>
+        <span class="capability-score" style="color:${score>70?'var(--accent2)':score>30?'var(--warning)':'var(--text-dim)'};">${Math.round(score)}%</span>
       </div>
       <div class="capability-bar"><div class="capability-bar-fill" style="width:${score}%"></div></div>
     </div>`;
@@ -610,8 +697,11 @@ function renderArch() {
     {label:'Cloudflare Workers',active:true,donated:true},
     {label:'Supabase (Free)',active:true,donated:true}
   ];
-  const brainNodes = [{label:'Dell T7910',active:true,donated:false},{label:'RTX A6000 48GB',active:true,donated:false}];
+  const brainNodes = has('brain')
+    ? [{label:'Dell T7910',active:true,donated:false},{label:'RTX A6000 48GB (this church’s own node)',active:true,donated:false}]
+    : [{label:'Hosted at the onboarding church’s node — not installed here',active:true,remote:true}];
   const workerNodes = [{label:'10x R620 Servers (central fleet)',active:true,donated:true}];
+  if (!has('brain')) workerNodes.push({label:'1x R620 Edge Server (this building)',active:true,donated:false});
   const edgeNodes = [];
   if (has('wifi')) edgeNodes.push({label:'Ubiquiti APs',active:true,donated:false});
   if (has('mesh')) edgeNodes.push({label:'20x Meshtastic',active:true,donated:false});
@@ -619,7 +709,7 @@ function renderArch() {
   edgeNodes.push({label:'4x Nebra/Pi Hubs',active:true,donated:true});
   const serviceNodes = ['📡 Streaming AI','🎛️ Sound AI','🎙️ Voice AI','🌐 Web AI','🎨 Design AI'].map(label => ({label,active:true}));
   if (has('doors')) serviceNodes.push({label:'🚪 Access AI',active:true});
-  const renderLayer = nodes => nodes.map(n => `<div class="arch-node ${n.active?'active':''} ${n.donated?'donated':''}">${n.label}</div>`).join('');
+  const renderLayer = nodes => nodes.map(n => `<div class="arch-node ${n.active?'active':''} ${n.donated?'donated':''} ${n.remote?'remote':''}">${n.label}</div>`).join('');
   document.getElementById('archDiagram').innerHTML = `
     <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Cloud Layer (Free)</div>
     <div class="arch-layer">${renderLayer(cloudNodes)}</div>
@@ -640,8 +730,11 @@ function renderArch() {
 
 function computeTotals() {
   const activeEquipment = equipment.filter(e => active.has(e.id));
-  const equipmentTotal = activeEquipment.reduce((sum,e) => sum + itemCost(e), 0);
-  const total = brain.price + equipmentTotal;
+  let atCost = activeEquipment.reduce((sum,e) => sum + itemCost(e), 0);
+  atCost += active.has('brain') ? brainOption.price : edgeServer.price;
+  const equipmentTotal = Math.round(atCost * 1.5);
+  const laborTotal = Math.round(atCost * 1.0);
+  const total = equipmentTotal + laborTotal;
   let yearlySave = 0;
   automations.concat(activeEquipment).forEach(f => {
     if (f.replaces) f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
@@ -650,14 +743,14 @@ function computeTotals() {
   const totalSpent5yr = total + (200*5);
   const totalSaved5yr = yearlySave*5;
   const netBenefit = totalSaved5yr - totalSpent5yr;
-  return { total, equipmentTotal, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+  return { atCost, equipmentTotal, laborTotal, total, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
 }
 
 function renderBudget() {
   const t = computeTotals();
   const paybackText = t.paybackMonths<=12?`${t.paybackMonths} mo`:t.paybackMonths<=24?`${Math.round(t.paybackMonths/12)} yr`:'Never';
   document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
-  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/5000)*100)+'%';
+  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/10000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add equipment to see payback';
   document.getElementById('totalSpent').textContent = '$'+t.totalSpent5yr.toLocaleString();
@@ -666,18 +759,37 @@ function renderBudget() {
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('heroPayback').textContent = paybackText;
+
+  const recoupCard = document.getElementById('recoupCard');
+  if (active.has('brain')) {
+    recoupCard.hidden = false;
+    document.getElementById('recoupMonths').textContent = t.paybackMonths<999 ? paybackText : 'not yet — add equipment';
+  } else {
+    recoupCard.hidden = true;
+  }
+
   const activeEquipment = equipment.filter(e => active.has(e.id));
-  let rows = `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-    <span style="font-size:0.85rem;">${brain.icon} ${brain.name}</span>
-    <span style="font-family:'Space Grotesk'; font-weight:600;">$${brain.price.toLocaleString()}</span>
-  </div>`;
-  rows += activeEquipment.map(e => `
+  const brainLine = active.has('brain')
+    ? { icon: brainOption.icon, label: brainOption.name, cost: brainOption.price }
+    : { icon: '🖧', label: edgeServer.name, cost: edgeServer.price };
+  const lines = [brainLine].concat(activeEquipment.map(e => ({ icon: e.icon, label: itemLabel(e), cost: itemCost(e) })));
+  const rows = lines.map(l => `
     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-      <span style="font-size:0.85rem;">${e.icon} ${esc(itemLabel(e))}</span>
-      <span style="font-family:'Space Grotesk'; font-weight:600;">$${itemCost(e).toLocaleString()}</span>
+      <span style="font-size:0.85rem;">${l.icon} ${esc(l.label)} <span style="color:var(--text-dim);">(at cost)</span></span>
+      <span style="font-family:'Space Grotesk'; font-weight:600;">$${l.cost.toLocaleString()}</span>
     </div>
   `).join('');
-  document.getElementById('budgetBreakdown').innerHTML = rows;
+  document.getElementById('budgetBreakdown').innerHTML = rows + `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:2px solid var(--border); margin-top:6px;">
+      <span style="font-size:0.85rem;">⚙️ Technology — resold at 1.5× cost</span>
+      <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent2);">$${t.equipmentTotal.toLocaleString()}</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0;">
+      <span style="font-size:0.85rem;">🔧 Installation & labor — priced at cost</span>
+      <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent2);">$${t.laborTotal.toLocaleString()}</span>
+    </div>
+    <div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:4px;">Camera, door, and WiFi counts come from the install questionnaire above. Final numbers confirmed after a site visit.</div>
+  `;
 }
 
 function renderSavingsBreakdown() {
@@ -715,6 +827,7 @@ function markDirty() {
 }
 
 function refresh() {
+  renderBrainToggle();
   renderIncluded();
   renderEquipment();
   renderCapabilities();
@@ -725,19 +838,22 @@ function refresh() {
 
 function resetAll() {
   active = new Set();
+  currentLevel = null;
+  document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
   refresh();
   markDirty();
 }
 
 function copyPlan() {
   const t = computeTotals();
-  const churchName = document.getElementById('churchNameInput').value.trim() || 'Shiloh';
+  const churchName = document.getElementById('churchNameInput').value.trim() || 'Untitled church';
   const activeEquipment = equipment.filter(e => active.has(e.id));
   const savingsLines = [];
   automations.concat(activeEquipment).forEach(f => {
     if (f.replaces) f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
   });
-  const text = `SHILOH BUILD PLAN — ${churchName}\n========================\n\nTotal Investment (at cost): $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n- ${brain.icon} ${brain.name}: $${brain.price.toLocaleString()}\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()}`).join('\n') : '(none)'}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
+  const brainLine = active.has('brain') ? `- ${brainOption.icon} ${brainOption.name}: $${brainOption.price.toLocaleString()} (at cost)` : `- 🖧 ${edgeServer.name}: $${edgeServer.price.toLocaleString()} (at cost)`;
+  const text = `PARTNER PLAN — ${churchName}\n========================\n\nTechnology (1.5x cost): $${t.equipmentTotal.toLocaleString()}\nInstallation & labor (at cost): $${t.laborTotal.toLocaleString()}\nTotal Investment: $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nBASE:\n${brainLine}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()} (at cost)`).join('\n') : '(none)'}\n\nInstall sizing — building: ${installAnswers.sqft.toLocaleString()} sq ft, cameras: ${installAnswers.cameras}, exterior doors: ${installAnswers.doors}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}${active.has('brain') ? `\n\nRECOUP: via software savings in ${t.paybackMonths<999?t.paybackMonths+' months':'—'}. Reseller income from onboarding other churches not modeled yet.` : ''}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 
@@ -746,10 +862,10 @@ function planFromState() {
   const t = computeTotals();
   return {
     id: currentPlanId,
-    churchName: document.getElementById('churchNameInput').value.trim() || 'Shiloh',
-    size: 'shiloh',
+    churchName: document.getElementById('churchNameInput').value.trim() || 'Untitled church',
+    size: 'partner-' + (currentLevel || 'custom'),
     features: Array.from(active),
-    totals: Object.assign({}, t, { pageType: 'shiloh', installAnswers: Object.assign({}, installAnswers) }),
+    totals: Object.assign({}, t, { pageType: 'partner', level: currentLevel, installAnswers: Object.assign({}, installAnswers) }),
     createdBy: (FreedomStore.getConfig().mode === 'supabase' ? (window.__adminEmail || '') : 'demo')
   };
 }
@@ -764,8 +880,10 @@ function applyPlanToState(plan) {
   currentPlanId = plan.id;
   const t = plan.totals || {};
   active = new Set(plan.features || []);
+  currentLevel = t.level || null;
   installAnswers = Object.assign({ sqft:5000, cameras:4, doors:1 }, t.installAnswers || {});
   document.getElementById('churchNameInput').value = plan.churchName || '';
+  document.querySelectorAll('.level-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.level === currentLevel));
   setQuestionnaireInputs();
   refresh();
   var el = document.getElementById('saveStatus');
@@ -777,15 +895,17 @@ function applyPlanToState(plan) {
 function newPlan() {
   currentPlanId = null;
   active = new Set();
+  currentLevel = null;
   installAnswers = { sqft:5000, cameras:4, doors:1 };
   document.getElementById('churchNameInput').value = '';
+  document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
   setQuestionnaireInputs();
   refresh();
   var el = document.getElementById('saveStatus');
   el.textContent = 'Not saved yet';
   el.className = 'save-status';
   dirty = false;
-  history.replaceState(null, '', 'church-upgrade.html');
+  history.replaceState(null, '', 'church-partners.html');
   renderSavedPlans();
 }
 
@@ -800,10 +920,10 @@ function savePlan() {
     dirty = false;
     el.textContent = 'Saved ✓ ' + new Date(saved.updatedAt).toLocaleString();
     el.className = 'save-status saved';
-    history.replaceState(null, '', 'church-upgrade.html?id=' + encodeURIComponent(saved.id));
+    history.replaceState(null, '', 'church-partners.html?id=' + encodeURIComponent(saved.id));
     return FreedomStore.listChurchPlans();
   }).then(function (list) {
-    SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) !== 'partner'; });
+    SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) === 'partner'; });
     renderSavedPlans();
   }).catch(function (e) {
     el.textContent = 'Save failed: ' + e.message;
@@ -814,15 +934,16 @@ function savePlan() {
 function renderSavedPlans() {
   var box = document.getElementById('savedPlansList');
   if (!SAVED_PLANS.length) {
-    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">No saved builds yet. Add equipment below, then Save Build.</div>';
+    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">No saved plans yet. Pick a level below, then Save Plan.</div>';
     return;
   }
   box.innerHTML = SAVED_PLANS.map(function (p) {
     var t = p.totals || {};
+    var levelLabel = t.level ? ('Level: ' + t.level) : 'Custom';
     return '<div class="plan-row' + (p.id === currentPlanId ? ' active' : '') + '" data-id="' + esc(p.id) + '">' +
       '<div class="info" data-open="' + esc(p.id) + '">' +
-      '<div class="name">' + esc(p.churchName || 'Untitled') + '</div>' +
-      '<div class="meta">$' + (t.total || 0).toLocaleString() +
+      '<div class="name">' + esc(p.churchName || 'Untitled church') + '</div>' +
+      '<div class="meta">' + esc(levelLabel) + ' · $' + (t.total || 0).toLocaleString() +
       ' · updated ' + (p.updatedAt ? new Date(p.updatedAt).toLocaleDateString() : '') + '</div>' +
       '</div>' +
       '<button class="del" data-del="' + esc(p.id) + '" type="button">Delete</button>' +
@@ -835,12 +956,12 @@ document.getElementById('savedPlansList').addEventListener('click', function (e)
   var del = e.target.closest('[data-del]');
   if (del) {
     var id = del.getAttribute('data-del');
-    if (!confirm('Delete this saved build? This cannot be undone.')) return;
+    if (!confirm('Delete this saved plan? This cannot be undone.')) return;
     FreedomStore.deleteChurchPlan(id).then(function () {
       if (id === currentPlanId) newPlan();
       return FreedomStore.listChurchPlans();
     }).then(function (list) {
-      SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) !== 'partner'; });
+      SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) === 'partner'; });
       renderSavedPlans();
     });
     return;
@@ -848,7 +969,7 @@ document.getElementById('savedPlansList').addEventListener('click', function (e)
   if (open) {
     var pid = open.getAttribute('data-open');
     var plan = SAVED_PLANS.find(function (p) { return p.id === pid; });
-    if (plan) { applyPlanToState(plan); history.replaceState(null, '', 'church-upgrade.html?id=' + encodeURIComponent(pid)); }
+    if (plan) { applyPlanToState(plan); history.replaceState(null, '', 'church-partners.html?id=' + encodeURIComponent(pid)); }
   }
 });
 
@@ -876,7 +997,7 @@ function openPlanner() {
   setQuestionnaireInputs();
   refresh();
   FreedomStore.listChurchPlans().then(function (list) {
-    SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) !== 'partner'; });
+    SAVED_PLANS = (list || []).filter(function (p) { return (p.totals && p.totals.pageType) === 'partner'; });
     var params = new URLSearchParams(location.search);
     var wantId = params.get('id');
     var plan = wantId ? SAVED_PLANS.find(function (p) { return p.id === wantId; }) : null;

@@ -83,15 +83,29 @@ The catalog is data, not markup. Edit these and push — the app re-renders itse
   tracking links, and the routing contact used by Admin's "Forward to partner"
 - `data/news.json` — news (entries older than 18 months self-hide)
 
-## Church OS planner
+## Church OS planners
 
-`church-upgrade.html` is the Smart Church Upgrade pitch-plan builder — hardware,
-automations, and the 5-year savings case for a prospect church. It's gated behind
-the same admin login as `admin.html` (nothing public), and every plan saves to the
-`church_plans` table (created by `supabase-setup.sql`, admin-only RLS) so a signed-in
-admin sees their saved plans persist across devices and sessions. In demo mode plans
-save to this browser's localStorage instead. Admin → **Church OS** lists every saved
-plan with its investment, savings, and payback; **+ New plan** opens the planner.
+Two pages, two audiences, both gated behind the same admin login as `admin.html`
+(nothing public):
+
+- **`church-upgrade.html`** — Shiloh's own build. The Brain and every free
+  automation come bundled; equipment (doors, WiFi, mesh, SMS, cameras) is
+  click-to-toggle, priced at cost — no markup, since it's our own build.
+- **`church-partners.html`** — everyone else's pricing. Three starting levels
+  (Bare Bones, Full Install, Become a Node) that stay fully customizable —
+  picking one just sets which equipment toggles start on. Technology is
+  resold at 1.5× our cost, installation labor priced at cost, landing at
+  2.5× cost total. The "Become a Node" level includes the Brain and is the
+  MLM/reseller tier — the church becomes its own node, licensed to onboard
+  others.
+
+Every plan from either page saves to the same `church_plans` table (created by
+`supabase-setup.sql`, admin-only RLS) so a signed-in admin sees their saved
+plans persist across devices and sessions — `totals.pageType` ("shiloh" or
+"partner") tells them apart. In demo mode plans save to this browser's
+localStorage instead. Admin → **Church OS** lists every saved plan with its
+investment, savings, and payback, and routes **Open in planner** back to
+whichever page it came from.
 
 ## The corridor research agent
 

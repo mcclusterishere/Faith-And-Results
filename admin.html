@@ -222,11 +222,12 @@
       <!-- church os planner -->
       <section class="pane" id="pane-church">
         <h2>Church OS pitch plans</h2>
-        <p class="note" style="margin-bottom:1rem">Every Smart Church Upgrade plan built for a prospect — hardware,
-          automations, and the 5-year savings case — saved to the database under your admin account. Build or edit
-          one in the <a href="church-upgrade.html">Church OS planner</a>.</p>
+        <p class="note" style="margin-bottom:1rem">Two planners, two audiences: Shiloh's own build is priced at
+          cost, everyone else pays technology at 1.5× cost plus labor at cost. Every plan — hardware, automations,
+          and the 5-year savings case — saves to the database under your admin account.</p>
         <div class="tools">
-          <a class="btn btn--navy" href="church-upgrade.html">+ New plan</a>
+          <a class="btn btn--navy" href="church-upgrade.html">+ New Shiloh build</a>
+          <a class="btn btn--navy" href="church-partners.html">+ New partner plan</a>
         </div>
         <div id="churchPlanList"></div>
       </section>
@@ -683,20 +684,23 @@ Actions → "McCluster OS" → Run workflow (or wait for Monday).</pre>
         document.getElementById("churchPlanList").innerHTML = CHURCH_PLANS.length
           ? CHURCH_PLANS.map(function (p) {
               var t = p.totals || {};
+              var isPartner = t.pageType === "partner";
+              var originPage = isPartner ? "church-partners.html" : "church-upgrade.html";
+              var audience = isPartner ? (t.level ? "partner · level " + esc(t.level) : "partner · custom") : "Shiloh · at cost";
               return '<details class="apprec"><summary><b>' + esc(p.churchName || "Untitled church") +
-                '</b><span class="who">' + esc(p.size || "small") + " church</span>" +
+                '</b><span class="who">' + audience + "</span>" +
                 '<span class="chip">$' + (t.total || 0).toLocaleString() + " investment</span>" +
                 '<span class="chip">$' + (t.yearlySave || 0).toLocaleString() + "/yr saved</span>" +
                 '<span class="when">' + fmtDate(p.updatedAt) + "</span></summary>" +
                 '<div class="appbody"><dl>' +
-                "<dt>Features selected</dt><dd>" + esc((p.features || []).join(", ") || "–") + "</dd>" +
+                "<dt>Equipment selected</dt><dd>" + esc((p.features || []).join(", ") || "–") + "</dd>" +
                 "<dt>Payback</dt><dd>" + esc(t.paybackMonths < 999 ? t.paybackMonths + " months" : "no payback yet") + "</dd>" +
                 "<dt>5-year net benefit</dt><dd>" + (t.netBenefit >= 0 ? "+" : "") + "$" + (t.netBenefit || 0).toLocaleString() + "</dd>" +
                 "</dl><div class=\"acts\">" +
-                '<a class="btn btn--navy" href="church-upgrade.html?id=' + encodeURIComponent(p.id) + '">Open in planner</a>' +
+                '<a class="btn btn--navy" href="' + originPage + '?id=' + encodeURIComponent(p.id) + '">Open in planner</a>' +
                 "</div></div></details>";
             }).join("")
-          : '<div class="empty">No plans yet. Build one in the <a href="church-upgrade.html">Church OS planner</a> and it lands here.</div>';
+          : '<div class="empty">No plans yet. Build one in the <a href="church-upgrade.html">Shiloh build planner</a> or the <a href="church-partners.html">partner planner</a> and it lands here.</div>';
       }
 
       /* ---------------- mccluster os ---------------- */
