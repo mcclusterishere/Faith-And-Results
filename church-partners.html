@@ -470,7 +470,15 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     <div id="recoupCard" class="recoup-card" hidden>
       <div class="title">🔁 Recoup Calculation — Reseller Node</div>
       <div class="line"><span>Recoups via software savings in</span><b id="recoupMonths">–</b></div>
-      <div class="caveat">Additional recoup from onboarding other churches under this node isn't modeled yet — that's the reseller upside on top of this.</div>
+      <div class="caveat">Only the technology markup is ever split — installation labor is priced at cost and stays with whoever performs it. The split is on real equipment sold to a real church, never on recruitment alone.</div>
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.1);">
+        <div style="font-weight:700; font-size:0.85rem; margin-bottom:6px;">If this node onboards a church sized like this one:</div>
+        <div class="line"><span>Technology margin (the resellable pool)</span><b id="mlmMargin">$0</b></div>
+        <div class="line"><span>Freedom, Inc. — 50%</span><b id="mlmFreedomCut">$0</b></div>
+        <div class="line"><span>This node's commission — 50%</span><b id="mlmResellerCut">$0</b></div>
+        <div class="line"><span>Upline override, if onboarded by another node — 10% of the commission</span><b id="mlmUplineCut">$0</b></div>
+      </div>
+      <div class="caveat">Proposed split, not yet finalized — confirm before using in a real offer. Capped at one tier up: an override never compounds past the node that directly onboarded this one, which is what keeps this a dealer/referral structure instead of a pyramid.</div>
     </div>
 
     <div style="margin-bottom:20px;">
@@ -484,7 +492,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     </div>
 
     <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">5-YEAR PROJECTION</div>
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">7-YEAR PROJECTION</div>
       <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
         <span style="font-size:0.85rem; color:var(--text-dim);">Total Spent</span>
         <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent2);" id="totalSpent">$0</span>
@@ -740,10 +748,10 @@ function computeTotals() {
     if (f.replaces) f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
   });
   const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
-  const totalSpent5yr = total + (200*5);
-  const totalSaved5yr = yearlySave*5;
-  const netBenefit = totalSaved5yr - totalSpent5yr;
-  return { atCost, equipmentTotal, laborTotal, total, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+  const totalSpent7yr = total + (200*7);
+  const totalSaved7yr = yearlySave*7;
+  const netBenefit = totalSaved7yr - totalSpent7yr;
+  return { atCost, equipmentTotal, laborTotal, total, yearlySave, paybackMonths, totalSpent7yr, totalSaved7yr, netBenefit };
 }
 
 function renderBudget() {
@@ -753,8 +761,8 @@ function renderBudget() {
   document.getElementById('budgetBar').style.width = Math.min(100,(t.total/10000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add equipment to see payback';
-  document.getElementById('totalSpent').textContent = '$'+t.totalSpent5yr.toLocaleString();
-  document.getElementById('totalSaved').textContent = '$'+t.totalSaved5yr.toLocaleString();
+  document.getElementById('totalSpent').textContent = '$'+t.totalSpent7yr.toLocaleString();
+  document.getElementById('totalSaved').textContent = '$'+t.totalSaved7yr.toLocaleString();
   document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
@@ -764,6 +772,14 @@ function renderBudget() {
   if (active.has('brain')) {
     recoupCard.hidden = false;
     document.getElementById('recoupMonths').textContent = t.paybackMonths<999 ? paybackText : 'not yet — add equipment';
+    var techMargin = Math.round(t.atCost * 0.5);
+    var freedomCut = Math.round(techMargin * 0.5);
+    var resellerCut = techMargin - freedomCut;
+    var uplineCut = Math.round(resellerCut * 0.10);
+    document.getElementById('mlmMargin').textContent = '$'+techMargin.toLocaleString();
+    document.getElementById('mlmFreedomCut').textContent = '$'+freedomCut.toLocaleString();
+    document.getElementById('mlmResellerCut').textContent = '$'+resellerCut.toLocaleString();
+    document.getElementById('mlmUplineCut').textContent = '$'+uplineCut.toLocaleString()+' (paid by the reseller\'s cut, not on top of it)';
   } else {
     recoupCard.hidden = true;
   }

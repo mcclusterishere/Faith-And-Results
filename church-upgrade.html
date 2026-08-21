@@ -430,7 +430,7 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
     </div>
 
     <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">5-YEAR PROJECTION</div>
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">7-YEAR PROJECTION</div>
       <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
         <span style="font-size:0.85rem; color:var(--text-dim);">Total Spent</span>
         <span style="font-family:'Space Grotesk'; font-weight:700; color:var(--accent);" id="totalSpent">$0</span>
@@ -647,10 +647,10 @@ function computeTotals() {
     if (f.replaces) f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
   });
   const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
-  const totalSpent5yr = total + (200*5);
-  const totalSaved5yr = yearlySave*5;
-  const netBenefit = totalSaved5yr - totalSpent5yr;
-  return { total, equipmentTotal, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+  const totalSpent7yr = total + (200*7);
+  const totalSaved7yr = yearlySave*7;
+  const netBenefit = totalSaved7yr - totalSpent7yr;
+  return { total, equipmentTotal, yearlySave, paybackMonths, totalSpent7yr, totalSaved7yr, netBenefit };
 }
 
 function renderBudget() {
@@ -660,8 +660,8 @@ function renderBudget() {
   document.getElementById('budgetBar').style.width = Math.min(100,(t.total/5000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add equipment to see payback';
-  document.getElementById('totalSpent').textContent = '$'+t.totalSpent5yr.toLocaleString();
-  document.getElementById('totalSaved').textContent = '$'+t.totalSaved5yr.toLocaleString();
+  document.getElementById('totalSpent').textContent = '$'+t.totalSpent7yr.toLocaleString();
+  document.getElementById('totalSaved').textContent = '$'+t.totalSaved7yr.toLocaleString();
   document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
