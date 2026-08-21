@@ -214,33 +214,23 @@ a { color:var(--accent); }
 .feature-item {
   display:flex; align-items:center; gap:14px; padding:16px;
   background:var(--bg-glass); border:1px solid var(--border);
-  border-radius:14px; cursor:pointer; transition:all 0.25s ease;
+  border-radius:14px; cursor:default; transition:all 0.25s ease;
   position:relative; overflow:hidden;
 }
 .feature-item::before {
   content:''; position:absolute; inset:0;
   background:linear-gradient(90deg,var(--accent),transparent); opacity:0; transition:opacity 0.3s;
 }
-.feature-item:hover::before { opacity:0.05; }
-.feature-item:hover { border-color:rgba(255,255,255,0.15); }
-.feature-item.active {
+.feature-item.included {
   border-color:var(--accent);
   background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%);
 }
-.feature-item.active::before { opacity:0.1; }
-.feature-toggle {
-  width:48px; height:26px; border-radius:13px;
-  background:rgba(255,255,255,0.1); position:relative; flex-shrink:0; transition:all 0.3s;
+.feature-item.included::before { opacity:0.1; }
+.feature-check {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:rgba(0,212,170,0.15); border:1px solid var(--accent); color:var(--accent);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.95rem;
 }
-.feature-item.active .feature-toggle {
-  background:var(--accent); box-shadow:0 0 16px var(--accent-glow);
-}
-.feature-toggle::after {
-  content:''; position:absolute; width:20px; height:20px;
-  background:#fff; border-radius:50%; top:3px; left:3px;
-  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-.feature-item.active .feature-toggle::after { left:25px; }
 .feature-info { flex:1; position:relative; z-index:1; }
 .feature-name { font-weight:600; font-size:0.95rem; }
 .feature-desc { font-size:0.78rem; color:var(--text-dim); margin-top:2px; }
@@ -314,29 +304,48 @@ a { color:var(--accent); }
   font-size:0.55rem; font-weight:800; padding:2px 6px;
   background:var(--accent3); color:#fff; border-radius:4px;
 }
+.arch-node.remote {
+  border-color:var(--warning);
+  background:linear-gradient(135deg, rgba(245,158,11,0.1) 0%, transparent 100%);
+}
+.arch-node.remote::after {
+  content:'REMOTE'; position:absolute; top:-6px; right:-6px;
+  font-size:0.55rem; font-weight:800; padding:2px 6px;
+  background:var(--warning); color:#000; border-radius:4px;
+}
 .arch-connector {
   text-align:center; color:var(--text-dim); font-size:1.2rem; line-height:1;
 }
-.size-selector {
-  display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;
+.package-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;
 }
-.size-btn {
-  flex:1; min-width:120px; padding:16px;
-  background:var(--bg-glass); border:1px solid var(--border);
-  border-radius:14px; color:var(--text); font-family:'Inter',sans-serif;
-  font-size:0.9rem; font-weight:600; cursor:pointer;
-  transition:all 0.3s; text-align:center;
+.package-card {
+  padding:22px; background:var(--bg-glass); border:1px solid var(--border);
+  border-radius:16px; cursor:pointer; transition:all 0.3s ease;
+  display:flex; flex-direction:column; gap:10px;
 }
-.size-btn:hover { border-color:rgba(255,255,255,0.2); }
-.size-btn.active {
+.package-card:hover { border-color:rgba(255,255,255,0.2); }
+.package-card.active {
   border-color:var(--accent);
-  background:linear-gradient(135deg, rgba(0,212,170,0.1) 0%, transparent 100%);
-  box-shadow:0 0 20px var(--accent-glow);
+  background:linear-gradient(135deg, rgba(0,212,170,0.08) 0%, transparent 100%);
+  box-shadow:0 0 24px var(--accent-glow);
 }
-.size-btn .size-members {
-  display:block; font-size:0.75rem; color:var(--text-dim);
-  font-weight:400; margin-top:4px;
+.package-badge {
+  display:inline-block; align-self:flex-start; font-size:0.68rem; font-weight:800;
+  text-transform:uppercase; letter-spacing:0.06em; padding:4px 11px; border-radius:100px;
+  background:rgba(124,58,237,0.15); border:1px solid var(--accent3); color:#c4a6f7;
 }
+.package-badge.node { background:rgba(0,212,170,0.15); border-color:var(--accent); color:var(--accent); }
+.package-name {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem;
+}
+.package-tagline { font-size:0.82rem; color:var(--text-dim); }
+.package-price {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.9rem; color:var(--accent);
+}
+.package-includes { list-style:none; display:flex; flex-direction:column; gap:6px; font-size:0.82rem; color:var(--text-dim); margin-top:4px; }
+.package-includes li::before { content:'✓ '; color:var(--accent); font-weight:700; }
+.q-field label { display:block; font-size:0.82rem; color:var(--text-dim); margin-bottom:6px; font-weight:600; }
 .plan-row {
   display:flex; align-items:center; gap:12px; padding:14px 16px;
   background:var(--bg-glass); border:1px solid var(--border); border-radius:14px;
@@ -380,11 +389,11 @@ a { color:var(--accent); }
 .save-status { font-size:0.8rem; color:var(--text-dim); margin-top:10px; text-align:center; }
 .save-status.dirty { color:var(--warning); }
 .save-status.saved { color:var(--success); }
-input[type=text].church-input {
+input[type=text].church-input, input[type=number].church-input {
   width:100%; font-family:inherit; font-size:1rem; padding:14px 16px;
   background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; color:var(--text);
 }
-input[type=text].church-input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+input[type=text].church-input:focus, input[type=number].church-input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
 @keyframes slideUp {
   from { opacity:0; transform:translateY(30px); }
   to { opacity:1; transform:translateY(0); }
@@ -444,7 +453,7 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
 <div class="container">
 
 <div class="hero animate-in">
-  <div class="hero-badge">One Brain. Ten Bodies. Zero Monthly Bills.</div>
+  <div class="hero-badge">One Brain. Many Buildings. Zero Monthly Bills.</div>
   <h1>Smart Church Upgrade</h1>
   <p>Build a persistent AI that runs your entire building — streaming, sound, security, and more. Own your tech. Cut the software rent.</p>
   <div class="hero-stats">
@@ -515,25 +524,37 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
 
 <div class="card animate-in delay-1" style="margin-top:32px;">
   <div class="card-header">
-    <div class="card-icon">🏛️</div>
+    <div class="card-icon">📦</div>
     <div>
-      <div class="card-title">Church Size</div>
-      <div class="card-subtitle">Pick your starting point. We'll scale the recommendation.</div>
+      <div class="card-title">Choose a Package</div>
+      <div class="card-subtitle">Three fixed packages. No add-ons — everything's already included.</div>
     </div>
   </div>
-  <div class="size-selector">
-    <button class="size-btn active" data-size="small" onclick="setSize('small')">
-      Small Church
-      <span class="size-members">Under 100 members</span>
-    </button>
-    <button class="size-btn" data-size="medium" onclick="setSize('medium')">
-      Medium Church
-      <span class="size-members">100–500 members</span>
-    </button>
-    <button class="size-btn" data-size="large" onclick="setSize('large')">
-      Large Church
-      <span class="size-members">500+ members</span>
-    </button>
+  <div class="package-grid" id="packageGrid"></div>
+  <div id="installQuestionnaire" hidden style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
+    <div style="font-weight:600; margin-bottom:4px;">Size the install for this building</div>
+    <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:16px;">
+      This building gets the edge server, not the brain — the brain stays at the central node. A few
+      questions so it can price its own install. The number below is an estimate, confirmed after a
+      site visit.
+    </p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;">
+      <div class="q-field">
+        <label for="qSqft">Building size (sq ft)</label>
+        <input type="number" id="qSqft" class="church-input" min="0" step="500">
+      </div>
+      <div class="q-field">
+        <label for="qCameras">Security cameras needed</label>
+        <input type="number" id="qCameras" class="church-input" min="0" step="1">
+      </div>
+      <div class="q-field">
+        <label for="qDoors">Exterior doors needing smart access</label>
+        <input type="number" id="qDoors" class="church-input" min="0" step="1">
+      </div>
+    </div>
+    <div style="margin-top:16px; font-size:0.85rem; color:var(--text-dim);">
+      Estimated install: <span id="installEstimateDisplay" style="color:var(--success); font-weight:700; font-family:'Space Grotesk';">$0</span>
+    </div>
   </div>
 </div>
 
@@ -579,7 +600,7 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
     <div class="card-icon">📊</div>
     <div>
       <div class="card-title">Building Capabilities</div>
-      <div class="card-subtitle">What your church can do with selected features</div>
+      <div class="card-subtitle">What your church can do with this package</div>
     </div>
   </div>
   <div class="capability-grid" id="capabilityGrid"></div>
@@ -664,34 +685,35 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
 <script>
 const features = {
   hardware: [
-    { id:'gpu', name:'AI Brain (RTX A6000 48GB)', desc:'The supercomputer that thinks, sees, and codes. 48GB memory runs multiple AI models at once.', price:1500, icon:'🧠', required:true, capabilities:{intelligence:100,vision:80,coding:100,speed:100} },
-    { id:'workstation', name:'Workstation Body (Dell T7910)', desc:'The body that houses the brain. 256GB RAM, quiet, built for 24/7 operation.', price:450, icon:'🖥️', required:true, capabilities:{intelligence:20,vision:0,coding:10,speed:30} },
-    { id:'ram', name:'Extra RAM (128GB DDR3)', desc:'More desk space for the brain to juggle multiple tasks simultaneously.', price:200, icon:'💾', required:false, capabilities:{intelligence:10,vision:0,coding:5,speed:20} },
-    { id:'coral', name:'Vision Accelerator (Coral TPU)', desc:'Dedicated chip for facial recognition and camera analysis. Instant face ID.', price:100, icon:'👁️', required:false, capabilities:{intelligence:0,vision:40,coding:0,speed:30} }
+    { id:'gpu', name:'AI Brain (RTX A6000 48GB)', desc:'The supercomputer that thinks, sees, and codes. Lives at the central node only.', price:1500, icon:'🧠', capabilities:{intelligence:100,vision:80,coding:100,speed:100} },
+    { id:'workstation', name:'Workstation Body (Dell T7910)', desc:'The body that houses the brain. 256GB RAM, quiet, built for 24/7 operation. Central node only.', price:450, icon:'🖥️', capabilities:{intelligence:20,vision:0,coding:10,speed:30} },
+    { id:'edgeserver', name:'Edge Server (Dell R620, configured & installed)', desc:'Connects this building to the AI Brain at your central node over the network. No local GPU needed here.', price:250, icon:'🖧', capabilities:{intelligence:0,vision:0,coding:0,speed:20} }
   ],
   software: [
-    { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', price:0, icon:'📡', required:false, capabilities:{streaming:100,automation:60,security:0,community:20},
+    { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', price:0, icon:'📡', capabilities:{streaming:100,automation:60,security:0,community:20},
       replaces:[{name:'Restream.io Professional plan', monthly:41},{name:'Weekly livestream / camera operator stipend', monthly:150}] },
-    { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume.', price:0, icon:'🎛️', required:false, capabilities:{streaming:40,automation:80,security:0,community:10},
+    { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume.', price:0, icon:'🎛️', capabilities:{streaming:40,automation:80,security:0,community:10},
       replaces:[{name:'Sunday sound engineer stipend', monthly:200}] },
-    { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', required:false, capabilities:{streaming:0,automation:90,security:70,community:30},
+    { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', capabilities:{streaming:0,automation:90,security:70,community:30},
       replaces:[{name:'Smart lock / access control subscription (Kisi, Brivo, PDK)', monthly:40}] },
-    { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', required:false, capabilities:{streaming:30,automation:70,security:20,community:40},
+    { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', capabilities:{streaming:30,automation:70,security:20,community:40},
       replaces:[], savingsNote:'Cuts down on staff interruptions for routine questions — a time savings, not counted in the dollar total.' },
-    { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress.', price:0, icon:'🌐', required:false, capabilities:{streaming:0,automation:50,security:0,community:60},
+    { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress.', price:0, icon:'🌐', capabilities:{streaming:0,automation:50,security:0,community:60},
       replaces:[{name:'Website builder & hosting (Squarespace, Wix, or WordPress + host)', monthly:50}] },
-    { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command.', price:0, icon:'🎨', required:false, capabilities:{streaming:0,automation:40,security:0,community:50},
+    { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command.', price:0, icon:'🎨', capabilities:{streaming:0,automation:40,security:0,community:50},
       replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] }
   ],
   network: [
-    { id:'wifi', name:'City Block WiFi (2x Ubiquiti)', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', price:360, icon:'📶', required:false, capabilities:{streaming:0,automation:10,security:30,community:100},
+    { id:'wifi', name:'City Block WiFi (2x Ubiquiti)', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', price:360, icon:'📶', capabilities:{streaming:0,automation:10,security:30,community:100},
       replaces:[{name:'Guest WiFi management platform (Cisco Meraki cloud license)', monthly:20}] },
-    { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', required:false, capabilities:{streaming:0,automation:0,security:50,community:90},
+    { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', capabilities:{streaming:0,automation:0,security:50,community:90},
       replaces:[], savingsNote:'Keeps the church reachable when cell towers fail — a resilience benefit, not counted in the dollar total.' },
-    { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', required:false, capabilities:{streaming:0,automation:20,security:40,community:70},
+    { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', capabilities:{streaming:0,automation:20,security:40,community:70},
       replaces:[{name:'Text/SMS blast service (Textedly, EZTexting)', monthly:25}] }
   ]
 };
+const ALL_FEATURES = [...features.hardware, ...features.software, ...features.network];
+function findFeature(id) { return ALL_FEATURES.find(f => f.id === id); }
 
 const capabilities = [
   { id:'intelligence', name:'AI Intelligence', icon:'🧠' },
@@ -704,14 +726,21 @@ const capabilities = [
   { id:'community', name:'Community Reach', icon:'🤝' }
 ];
 
-const sizePresets = {
-  small: ['gpu','workstation','streaming','sound','voice','website','designer'],
-  medium: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi'],
-  large: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi','mesh','sms']
-};
+/* Package 1 & 2: the central node — this building holds the AI Brain.
+   Package 3: a satellite building this node controls — no brain, just an
+   edge server talking back to the central node, plus a real install job. */
+const packages = [
+  { id:1, name:'The Foundation', tagline:'Everything your central node needs to run itself — owned, not rented.', kind:'node',
+    features:['gpu','workstation','streaming','sound','voice','website','designer'] },
+  { id:2, name:'Foundation + Community WiFi', tagline:'Adds gated WiFi for the block around the building.', kind:'node',
+    features:['gpu','workstation','streaming','sound','voice','website','designer','wifi'] },
+  { id:3, name:'Full Node Install', tagline:'For a building your node controls. Everything except the brain — that stays central.', kind:'satellite',
+    features:['edgeserver','streaming','sound','voice','website','designer','doors','wifi','mesh','sms'] }
+];
 
-let activeFeatures = new Set(sizePresets.small);
-let currentSize = 'small';
+let currentPackageId = 1;
+let installAnswers = { sqft:5000, cameras:4, doors:1 };
+let activeFeatures = new Set(packages[0].features);
 let currentPlanId = null;
 let SAVED_PLANS = [];
 let dirty = false;
@@ -722,29 +751,68 @@ function esc(s) {
     return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
   });
 }
+function currentPackage() { return packages.find(p => p.id === currentPackageId) || packages[0]; }
+
+function computeInstallEstimate() {
+  const cameraCost = (installAnswers.cameras || 0) * 150;
+  const extraDoors = Math.max(0, (installAnswers.doors || 0) - 1);
+  const doorCost = extraDoors * 200;
+  const apsNeeded = Math.max(0, Math.ceil((installAnswers.sqft || 0) / 2500) - 2);
+  const wifiApCost = apsNeeded * 300;
+  return cameraCost + doorCost + wifiApCost;
+}
+
+function renderPackages() {
+  document.getElementById('packageGrid').innerHTML = packages.map(pkg => {
+    const equipmentPrice = pkg.features.reduce((sum,fid) => { const f = findFeature(fid); return sum + (f ? f.price : 0); }, 0);
+    const installEstimate = pkg.kind === 'satellite' ? computeInstallEstimate() : 0;
+    const displayPrice = equipmentPrice + installEstimate;
+    const includes = pkg.features.map(fid => { const f = findFeature(fid); return f ? '<li>' + esc(f.name) + '</li>' : ''; }).join('');
+    const isActive = currentPackageId === pkg.id;
+    const badge = pkg.kind === 'satellite'
+      ? '<span class="package-badge">Satellite Building</span>'
+      : '<span class="package-badge node">Central Node</span>';
+    return '<div class="package-card ' + (isActive?'active':'') + '" onclick="selectPackage(' + pkg.id + ')">' +
+      badge +
+      '<div class="package-name">Package ' + pkg.id + ' — ' + esc(pkg.name) + '</div>' +
+      '<div class="package-tagline">' + esc(pkg.tagline) + '</div>' +
+      '<div class="package-price">$' + displayPrice.toLocaleString() + (pkg.kind==='satellite' ? '<span style="font-size:0.9rem; color:var(--text-dim);">*</span>' : '') + '</div>' +
+      '<ul class="package-includes">' + includes + '</ul>' +
+      '</div>';
+  }).join('');
+  document.getElementById('installQuestionnaire').hidden = currentPackage().kind !== 'satellite';
+}
+
+function selectPackage(id) {
+  currentPackageId = id;
+  activeFeatures = new Set(currentPackage().features);
+  refresh();
+  markDirty();
+}
 
 function renderFeatureItem(f) {
-  const isActive = activeFeatures.has(f.id);
-  return `<div class="feature-item ${isActive?'active':''}" onclick="toggleFeature('${f.id}')">
-    <div class="feature-toggle"></div>
-    <div class="feature-info">
-      <div class="feature-name">${f.icon} ${f.name}</div>
-      <div class="feature-desc">${f.desc}</div>
-    </div>
-    <div class="feature-price">${f.price===0?'FREE':'$'+f.price.toLocaleString()}</div>
-  </div>`;
+  return '<div class="feature-item included">' +
+    '<div class="feature-check">✓</div>' +
+    '<div class="feature-info">' +
+    '<div class="feature-name">' + f.icon + ' ' + esc(f.name) + '</div>' +
+    '<div class="feature-desc">' + esc(f.desc) + '</div>' +
+    '</div>' +
+    '<div class="feature-price">' + (f.price===0?'FREE':'$'+f.price.toLocaleString()) + '</div>' +
+    '</div>';
 }
 
 function renderFeatures() {
-  document.getElementById('hardwareFeatures').innerHTML = features.hardware.map(renderFeatureItem).join('');
-  document.getElementById('softwareFeatures').innerHTML = features.software.map(renderFeatureItem).join('');
-  document.getElementById('networkFeatures').innerHTML = features.network.map(renderFeatureItem).join('');
+  const empty = '<div style="color:var(--text-dim); font-size:0.85rem;">Not included in this package.</div>';
+  const inSection = arr => arr.filter(f => activeFeatures.has(f.id));
+  document.getElementById('hardwareFeatures').innerHTML = inSection(features.hardware).map(renderFeatureItem).join('') || empty;
+  document.getElementById('softwareFeatures').innerHTML = inSection(features.software).map(renderFeatureItem).join('') || empty;
+  document.getElementById('networkFeatures').innerHTML = inSection(features.network).map(renderFeatureItem).join('') || empty;
 }
 
 function renderCapabilities() {
   const scores = {};
   capabilities.forEach(c => scores[c.id] = 0);
-  [...features.hardware, ...features.software, ...features.network].forEach(f => {
+  ALL_FEATURES.forEach(f => {
     if (activeFeatures.has(f.id) && f.capabilities) {
       Object.entries(f.capabilities).forEach(([cap,val]) => { scores[cap] = (scores[cap]||0) + val; });
     }
@@ -764,41 +832,47 @@ function renderCapabilities() {
 }
 
 function renderArch() {
+  const pkg = currentPackage();
   const has = id => activeFeatures.has(id);
   const cloudNodes = [
-    {id:'cf',label:'Cloudflare Workers',active:true,donated:true},
-    {id:'sb',label:'Supabase (Free)',active:true,donated:true}
+    {label:'Cloudflare Workers',active:true,donated:true},
+    {label:'Supabase (Free)',active:true,donated:true}
   ];
   const brainNodes = [];
-  if (has('workstation')) brainNodes.push({id:'ws',label:'Dell T7910',active:true,donated:false});
-  if (has('gpu')) brainNodes.push({id:'gpu',label:'RTX A6000 48GB',active:true,donated:false});
-  if (has('ram')) brainNodes.push({id:'ram',label:'+128GB RAM',active:true,donated:false});
-  if (has('coral')) brainNodes.push({id:'coral',label:'Coral TPU',active:true,donated:false});
-  const workerNodes = [{id:'r620',label:'10x R620 Servers',active:true,donated:true}];
+  if (pkg.kind === 'node') {
+    if (has('workstation')) brainNodes.push({label:'Dell T7910',active:true,donated:false});
+    if (has('gpu')) brainNodes.push({label:'RTX A6000 48GB',active:true,donated:false});
+  } else {
+    brainNodes.push({label:'Hosted at the central node — not installed here',active:true,remote:true});
+  }
+  const workerNodes = [{label:'10x R620 Servers (central fleet)',active:true,donated:true}];
+  if (pkg.kind === 'satellite' && has('edgeserver')) {
+    workerNodes.push({label:'1x R620 Edge Server (this building)',active:true,donated:false});
+  }
   const edgeNodes = [];
-  if (has('wifi')) edgeNodes.push({id:'wifi',label:'2x Ubiquiti APs',active:true,donated:false});
-  if (has('mesh')) edgeNodes.push({id:'mesh',label:'20x Meshtastic',active:true,donated:false});
-  if (has('sms')) edgeNodes.push({id:'sms',label:'SMS Gateway',active:true,donated:false});
-  edgeNodes.push({id:'pi',label:'4x Nebra/Pi Hubs',active:true,donated:true});
+  if (has('wifi')) edgeNodes.push({label:'2x Ubiquiti APs',active:true,donated:false});
+  if (has('mesh')) edgeNodes.push({label:'20x Meshtastic',active:true,donated:false});
+  if (has('sms')) edgeNodes.push({label:'SMS Gateway',active:true,donated:false});
+  edgeNodes.push({label:'4x Nebra/Pi Hubs',active:true,donated:true});
   const serviceNodes = [];
-  if (has('streaming')) serviceNodes.push({id:'stream',label:'📡 Streaming AI',active:true});
-  if (has('sound')) serviceNodes.push({id:'sound',label:'🎛️ Sound AI',active:true});
-  if (has('doors')) serviceNodes.push({id:'door',label:'🚪 Access AI',active:true});
-  if (has('voice')) serviceNodes.push({id:'voice',label:'🎙️ Voice AI',active:true});
-  if (has('website')) serviceNodes.push({id:'web',label:'🌐 Web AI',active:true});
-  if (has('designer')) serviceNodes.push({id:'design',label:'🎨 Design AI',active:true});
-  const renderLayer = nodes => nodes.map(n => `<div class="arch-node ${n.active?'active':''} ${n.donated?'donated':''}">${n.label}</div>`).join('');
+  if (has('streaming')) serviceNodes.push({label:'📡 Streaming AI',active:true});
+  if (has('sound')) serviceNodes.push({label:'🎛️ Sound AI',active:true});
+  if (has('doors')) serviceNodes.push({label:'🚪 Access AI',active:true});
+  if (has('voice')) serviceNodes.push({label:'🎙️ Voice AI',active:true});
+  if (has('website')) serviceNodes.push({label:'🌐 Web AI',active:true});
+  if (has('designer')) serviceNodes.push({label:'🎨 Design AI',active:true});
+  const renderLayer = nodes => nodes.map(n => `<div class="arch-node ${n.active?'active':''} ${n.donated?'donated':''} ${n.remote?'remote':''}">${n.label}</div>`).join('');
   document.getElementById('archDiagram').innerHTML = `
     <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Cloud Layer (Free)</div>
     <div class="arch-layer">${renderLayer(cloudNodes)}</div>
     <div class="arch-connector">▼</div>
-    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">The Brain (New Purchase)</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">The Brain</div>
     <div class="arch-layer">${renderLayer(brainNodes)}</div>
     <div class="arch-connector">▼</div>
     <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">AI Services</div>
-    <div class="arch-layer">${serviceNodes.length?renderLayer(serviceNodes):'<div class="arch-node">No services selected</div>'}</div>
+    <div class="arch-layer">${serviceNodes.length?renderLayer(serviceNodes):'<div class="arch-node">No services in this package</div>'}</div>
     <div class="arch-connector">▼</div>
-    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Storage & Workers (Donated)</div>
+    <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Storage & Workers</div>
     <div class="arch-layer">${renderLayer(workerNodes)}</div>
     <div class="arch-connector">▼</div>
     <div style="text-align:center; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">Edge Devices</div>
@@ -807,8 +881,9 @@ function renderArch() {
 }
 
 function computeTotals() {
-  const allFeatures = [...features.hardware, ...features.software, ...features.network];
-  const total = allFeatures.reduce((sum,f) => activeFeatures.has(f.id)?sum+f.price:sum, 0);
+  const equipmentTotal = ALL_FEATURES.reduce((sum,f) => activeFeatures.has(f.id)?sum+f.price:sum, 0);
+  const installEstimate = currentPackage().kind === 'satellite' ? computeInstallEstimate() : 0;
+  const total = equipmentTotal + installEstimate;
   let yearlySave = 0;
   [...features.software, ...features.network].forEach(f => {
     if (activeFeatures.has(f.id) && f.replaces) {
@@ -819,11 +894,10 @@ function computeTotals() {
   const totalSpent5yr = total + (200*5);
   const totalSaved5yr = yearlySave*5;
   const netBenefit = totalSaved5yr - totalSpent5yr;
-  return { total, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
+  return { total, equipmentTotal, installEstimate, yearlySave, paybackMonths, totalSpent5yr, totalSaved5yr, netBenefit };
 }
 
 function renderBudget() {
-  const allFeatures = [...features.hardware, ...features.software, ...features.network];
   const t = computeTotals();
   const paybackText = t.paybackMonths<=12?`${t.paybackMonths} mo`:t.paybackMonths<=24?`${Math.round(t.paybackMonths/12)} yr`:'Never';
   document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
@@ -836,13 +910,25 @@ function renderBudget() {
   document.getElementById('netBenefit').style.color = t.netBenefit>=0?'var(--success)':'var(--danger)';
   document.getElementById('heroSavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('heroPayback').textContent = paybackText;
-  const breakdown = allFeatures.filter(f => activeFeatures.has(f.id) && f.price>0);
-  document.getElementById('budgetBreakdown').innerHTML = breakdown.map(f => `
+  if (document.getElementById('installEstimateDisplay')) {
+    document.getElementById('installEstimateDisplay').textContent = '$'+t.installEstimate.toLocaleString();
+  }
+  const breakdown = ALL_FEATURES.filter(f => activeFeatures.has(f.id) && f.price>0);
+  let rows = breakdown.map(f => `
     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
       <span style="font-size:0.85rem;">${f.icon} ${f.name}</span>
       <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
     </div>
-  `).join('') || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No paid features selected</div>';
+  `).join('');
+  if (t.installEstimate > 0) {
+    rows += `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+      <span style="font-size:0.85rem;">🔧 Estimated install labor*</span>
+      <span style="font-family:'Space Grotesk'; font-weight:600;">$${t.installEstimate.toLocaleString()}</span>
+    </div>
+    <div style="font-size:0.72rem; color:var(--text-dim); font-style:italic; margin-top:2px;">*Confirmed after a site visit.</div>`;
+  }
+  document.getElementById('budgetBreakdown').innerHTML = rows || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No equipment selected</div>';
 }
 
 function renderSavingsBreakdown() {
@@ -851,7 +937,7 @@ function renderSavingsBreakdown() {
   const withNotes = swNet.filter(f => activeFeatures.has(f.id) && f.savingsNote);
   const box = document.getElementById('savingsBreakdown');
   if (!withCosts.length && !withNotes.length) {
-    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">Turn on a feature that replaces a paid tool or a staff role to see it itemized here.</div>';
+    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">This package does not include anything that replaces a paid tool or staff role.</div>';
     return;
   }
   let html = withCosts.map(f => {
@@ -882,27 +968,8 @@ function markDirty() {
   saveTimer = setTimeout(savePlan, 1200);
 }
 
-function toggleFeature(id) {
-  const f = [...features.hardware, ...features.software, ...features.network].find(x => x.id===id);
-  if (f && f.required) return;
-  if (activeFeatures.has(id)) activeFeatures.delete(id); else activeFeatures.add(id);
-  refresh();
-  markDirty();
-}
-
-function setSize(size) {
-  currentSize = size;
-  activeFeatures = new Set(sizePresets[size]);
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.size===size);
-  });
-  refresh();
-  markDirty();
-}
-
-function resetAll() { setSize('small'); }
-
 function refresh() {
+  renderPackages();
   renderFeatures();
   renderCapabilities();
   renderArch();
@@ -910,11 +977,12 @@ function refresh() {
   renderSavingsBreakdown();
 }
 
+function resetAll() { selectPackage(1); }
+
 function copyPlan() {
-  const allFeatures = [...features.hardware, ...features.software, ...features.network];
-  const selected = allFeatures.filter(f => activeFeatures.has(f.id));
-  const total = selected.reduce((s,f) => s+f.price, 0);
+  const selected = ALL_FEATURES.filter(f => activeFeatures.has(f.id));
   const churchName = document.getElementById('churchNameInput').value.trim() || 'Untitled church';
+  const pkg = currentPackage();
   const t = computeTotals();
   const savingsLines = [];
   [...features.software, ...features.network].forEach(f => {
@@ -922,7 +990,8 @@ function copyPlan() {
       f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
     }
   });
-  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\n========================\n\nTotal Investment: $${total.toLocaleString()}\n\nSELECTED FEATURES:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none selected)'}`;
+  const installLine = t.installEstimate > 0 ? `\n\nESTIMATED INSTALL LABOR: $${t.installEstimate.toLocaleString()} (confirmed after a site visit)\n- Building size: ${installAnswers.sqft.toLocaleString()} sq ft\n- Cameras: ${installAnswers.cameras}\n- Exterior doors: ${installAnswers.doors}` : '';
+  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\nPackage ${pkg.id} — ${pkg.name}\n========================\n\nTotal Investment: $${t.total.toLocaleString()}\n\nINCLUDED:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}${installLine}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 
@@ -932,21 +1001,31 @@ function planFromState() {
   return {
     id: currentPlanId,
     churchName: document.getElementById('churchNameInput').value.trim() || 'Untitled church',
-    size: currentSize,
+    size: 'package-' + currentPackageId,
     features: Array.from(activeFeatures),
-    totals: t,
+    totals: Object.assign({}, t, {
+      packageId: currentPackageId,
+      packageName: currentPackage().name,
+      installAnswers: Object.assign({}, installAnswers)
+    }),
     createdBy: (FreedomStore.getConfig().mode === 'supabase' ? (window.__adminEmail || '') : 'demo')
   };
 }
 
+function setQuestionnaireInputs() {
+  document.getElementById('qSqft').value = installAnswers.sqft;
+  document.getElementById('qCameras').value = installAnswers.cameras;
+  document.getElementById('qDoors').value = installAnswers.doors;
+}
+
 function applyPlanToState(plan) {
   currentPlanId = plan.id;
-  currentSize = plan.size || 'small';
-  activeFeatures = new Set(plan.features || sizePresets[currentSize]);
+  const t = plan.totals || {};
+  currentPackageId = t.packageId || parseInt(String(plan.size||'package-1').replace('package-','')) || 1;
+  activeFeatures = new Set((plan.features && plan.features.length) ? plan.features : currentPackage().features);
+  installAnswers = Object.assign({ sqft:5000, cameras:4, doors:1 }, t.installAnswers || {});
   document.getElementById('churchNameInput').value = plan.churchName || '';
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.size === currentSize);
-  });
+  setQuestionnaireInputs();
   refresh();
   var el = document.getElementById('saveStatus');
   el.textContent = 'Saved ✓ ' + (plan.updatedAt ? new Date(plan.updatedAt).toLocaleString() : 'just now');
@@ -956,12 +1035,11 @@ function applyPlanToState(plan) {
 
 function newPlan() {
   currentPlanId = null;
-  currentSize = 'small';
-  activeFeatures = new Set(sizePresets.small);
+  currentPackageId = 1;
+  activeFeatures = new Set(packages[0].features);
+  installAnswers = { sqft:5000, cameras:4, doors:1 };
   document.getElementById('churchNameInput').value = '';
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.size === 'small');
-  });
+  setQuestionnaireInputs();
   refresh();
   var el = document.getElementById('saveStatus');
   el.textContent = 'Not saved yet';
@@ -996,15 +1074,16 @@ function savePlan() {
 function renderSavedPlans() {
   var box = document.getElementById('savedPlansList');
   if (!SAVED_PLANS.length) {
-    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">No saved plans yet. Build one below, then Save Plan.</div>';
+    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">No saved plans yet. Pick a package below, then Save Plan.</div>';
     return;
   }
   box.innerHTML = SAVED_PLANS.map(function (p) {
     var t = p.totals || {};
+    var pkgLabel = t.packageName || (p.size || '').replace('package-', 'Package ');
     return '<div class="plan-row' + (p.id === currentPlanId ? ' active' : '') + '" data-id="' + esc(p.id) + '">' +
       '<div class="info" data-open="' + esc(p.id) + '">' +
       '<div class="name">' + esc(p.churchName || 'Untitled church') + '</div>' +
-      '<div class="meta">' + esc(p.size || 'small') + ' · $' + (t.total || 0).toLocaleString() +
+      '<div class="meta">' + esc(pkgLabel) + ' · $' + (t.total || 0).toLocaleString() +
       ' · updated ' + (p.updatedAt ? new Date(p.updatedAt).toLocaleDateString() : '') + '</div>' +
       '</div>' +
       '<button class="del" data-del="' + esc(p.id) + '" type="button">Delete</button>' +
@@ -1034,6 +1113,15 @@ document.getElementById('savedPlansList').addEventListener('click', function (e)
 document.getElementById('saveBtn').addEventListener('click', savePlan);
 document.getElementById('newPlanBtn').addEventListener('click', newPlan);
 document.getElementById('churchNameInput').addEventListener('input', markDirty);
+['qSqft','qCameras','qDoors'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', function () {
+    installAnswers.sqft = parseInt(document.getElementById('qSqft').value, 10) || 0;
+    installAnswers.cameras = parseInt(document.getElementById('qCameras').value, 10) || 0;
+    installAnswers.doors = parseInt(document.getElementById('qDoors').value, 10) || 0;
+    refresh();
+    markDirty();
+  });
+});
 
 /* ---------------- gate + boot ---------------- */
 var UNLOCKED = "freedom.adminUnlocked";
@@ -1043,6 +1131,7 @@ function openPlanner() {
   document.getElementById('gate').style.display = 'none';
   document.getElementById('plannerRoot').hidden = false;
   document.getElementById('modeTag').textContent = config.mode === 'supabase' ? 'live database' : 'demo mode (this browser only)';
+  setQuestionnaireInputs();
   refresh();
   FreedomStore.listChurchPlans().then(function (list) {
     SAVED_PLANS = list || [];
