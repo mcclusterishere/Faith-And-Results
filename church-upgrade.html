@@ -572,8 +572,13 @@ input[type=text].church-input:focus { outline:2px solid var(--accent); border-co
       <div class="payback-badge" id="paybackBadge">Pays for itself in 6 months</div>
     </div>
 
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">WHAT THIS REPLACES</div>
+      <div id="savingsBreakdown" style="display:flex; flex-direction:column; gap:12px;"></div>
+    </div>
+
     <div style="margin-top:20px;">
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">BREAKDOWN</div>
+      <div style="font-size:0.85rem; font-weight:600; margin-bottom:12px; color:var(--text-dim);">INVESTMENT BREAKDOWN</div>
       <div id="budgetBreakdown" style="display:flex; flex-direction:column; gap:10px;"></div>
     </div>
 
@@ -622,17 +627,26 @@ const features = {
     { id:'coral', name:'Vision Accelerator (Coral TPU)', desc:'Dedicated chip for facial recognition and camera analysis. Instant face ID.', price:100, icon:'👁️', required:false, capabilities:{intelligence:0,vision:40,coding:0,speed:30} }
   ],
   software: [
-    { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue. Replaces Restream.', price:0, icon:'📡', required:false, capabilities:{streaming:100,automation:60,security:0,community:20} },
-    { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume. Replaces sound engineer.', price:0, icon:'🎛️', required:false, capabilities:{streaming:40,automation:80,security:0,community:10} },
-    { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', required:false, capabilities:{streaming:0,automation:90,security:70,community:30} },
-    { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', required:false, capabilities:{streaming:30,automation:70,security:20,community:40} },
-    { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress. No hosting bills.', price:0, icon:'🌐', required:false, capabilities:{streaming:0,automation:50,security:0,community:60} },
-    { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command. No Canva subscription.', price:0, icon:'🎨', required:false, capabilities:{streaming:0,automation:40,security:0,community:50} }
+    { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', price:0, icon:'📡', required:false, capabilities:{streaming:100,automation:60,security:0,community:20},
+      replaces:[{name:'Restream.io Professional plan', monthly:41},{name:'Weekly livestream / camera operator stipend', monthly:150}] },
+    { id:'sound', name:'Sound Board AI', desc:'Hears pastor cues, auto-routes audio, prevents feedback, adjusts volume.', price:0, icon:'🎛️', required:false, capabilities:{streaming:40,automation:80,security:0,community:10},
+      replaces:[{name:'Sunday sound engineer stipend', monthly:200}] },
+    { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', price:300, icon:'🚪', required:false, capabilities:{streaming:0,automation:90,security:70,community:30},
+      replaces:[{name:'Smart lock / access control subscription (Kisi, Brivo, PDK)', monthly:40}] },
+    { id:'voice', name:'Voice Command Assistant', desc:'Smarter than Siri. Understands context, authorized voices only, ignores random chat.', price:0, icon:'🎙️', required:false, capabilities:{streaming:30,automation:70,security:20,community:40},
+      replaces:[], savingsNote:'Cuts down on staff interruptions for routine questions — a time savings, not counted in the dollar total.' },
+    { id:'website', name:'AI Webmaster', desc:'Builds, hosts, and updates your website. No WordPress.', price:0, icon:'🌐', required:false, capabilities:{streaming:0,automation:50,security:0,community:60},
+      replaces:[{name:'Website builder & hosting (Squarespace, Wix, or WordPress + host)', monthly:50}] },
+    { id:'designer', name:'AI Graphic Designer', desc:'Creates flyers, bulletins, social posts on command.', price:0, icon:'🎨', required:false, capabilities:{streaming:0,automation:40,security:0,community:50},
+      replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] }
   ],
   network: [
-    { id:'wifi', name:'City Block WiFi (2x Ubiquiti)', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', price:360, icon:'📶', required:false, capabilities:{streaming:0,automation:10,security:30,community:100} },
-    { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', required:false, capabilities:{streaming:0,automation:0,security:50,community:90} },
-    { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', required:false, capabilities:{streaming:0,automation:20,security:40,community:70} }
+    { id:'wifi', name:'City Block WiFi (2x Ubiquiti)', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', price:360, icon:'📶', required:false, capabilities:{streaming:0,automation:10,security:30,community:100},
+      replaces:[{name:'Guest WiFi management platform (Cisco Meraki cloud license)', monthly:20}] },
+    { id:'mesh', name:'Emergency Mesh Network (20x Meshtastic)', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', price:600, icon:'📻', required:false, capabilities:{streaming:0,automation:0,security:50,community:90},
+      replaces:[], savingsNote:'Keeps the church reachable when cell towers fail — a resilience benefit, not counted in the dollar total.' },
+    { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', price:300, icon:'💬', required:false, capabilities:{streaming:0,automation:20,security:40,community:70},
+      replaces:[{name:'Text/SMS blast service (Textedly, EZTexting)', monthly:25}] }
   ]
 };
 
@@ -652,8 +666,6 @@ const sizePresets = {
   medium: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi'],
   large: ['gpu','workstation','ram','coral','streaming','sound','doors','voice','website','designer','wifi','mesh','sms']
 };
-
-const yearlyBurn = { streaming:3600, website:600, other:500 };
 
 let activeFeatures = new Set(sizePresets.small);
 let currentSize = 'small';
@@ -755,9 +767,11 @@ function computeTotals() {
   const allFeatures = [...features.hardware, ...features.software, ...features.network];
   const total = allFeatures.reduce((sum,f) => activeFeatures.has(f.id)?sum+f.price:sum, 0);
   let yearlySave = 0;
-  if (activeFeatures.has('streaming')) yearlySave += yearlyBurn.streaming;
-  if (activeFeatures.has('website')) yearlySave += yearlyBurn.website;
-  if (activeFeatures.has('designer') || activeFeatures.has('sound')) yearlySave += yearlyBurn.other;
+  [...features.software, ...features.network].forEach(f => {
+    if (activeFeatures.has(f.id) && f.replaces) {
+      f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
+    }
+  });
   const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
   const totalSpent5yr = total + (200*5);
   const totalSaved5yr = yearlySave*5;
@@ -786,6 +800,34 @@ function renderBudget() {
       <span style="font-family:'Space Grotesk'; font-weight:600;">$${f.price.toLocaleString()}</span>
     </div>
   `).join('') || '<div style="color:var(--text-dim); font-size:0.85rem; padding:8px 0;">No paid features selected</div>';
+}
+
+function renderSavingsBreakdown() {
+  const swNet = [...features.software, ...features.network];
+  const withCosts = swNet.filter(f => activeFeatures.has(f.id) && f.replaces && f.replaces.length);
+  const withNotes = swNet.filter(f => activeFeatures.has(f.id) && f.savingsNote);
+  const box = document.getElementById('savingsBreakdown');
+  if (!withCosts.length && !withNotes.length) {
+    box.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem;">Turn on a feature that replaces a paid tool or a staff role to see it itemized here.</div>';
+    return;
+  }
+  let html = withCosts.map(f => {
+    const rows = f.replaces.map(r => `
+      <div style="display:flex; justify-content:space-between; gap:12px; padding:3px 0 3px 2px; font-size:0.82rem; color:var(--text-dim);">
+        <span>${r.name}</span>
+        <span style="font-family:'Space Grotesk'; color:var(--success); font-weight:600; white-space:nowrap;">$${(r.monthly*12).toLocaleString()}/yr</span>
+      </div>`).join('');
+    return `<div>
+      <div style="font-weight:600; font-size:0.85rem; margin-bottom:2px;">${f.icon} ${f.name} replaces:</div>
+      ${rows}
+    </div>`;
+  }).join('');
+  if (withNotes.length) {
+    html += '<div style="border-top:1px solid var(--border); padding-top:10px;">' +
+      withNotes.map(f => `<div style="font-size:0.78rem; color:var(--text-dim); font-style:italic; margin-bottom:6px;">${f.icon} ${f.savingsNote}</div>`).join('') +
+      '</div>';
+  }
+  box.innerHTML = html;
 }
 
 function markDirty() {
@@ -822,6 +864,7 @@ function refresh() {
   renderCapabilities();
   renderArch();
   renderBudget();
+  renderSavingsBreakdown();
 }
 
 function copyPlan() {
@@ -829,7 +872,14 @@ function copyPlan() {
   const selected = allFeatures.filter(f => activeFeatures.has(f.id));
   const total = selected.reduce((s,f) => s+f.price, 0);
   const churchName = document.getElementById('churchNameInput').value.trim() || 'Untitled church';
-  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\n========================\n\nTotal Investment: $${total.toLocaleString()}\n\nSELECTED FEATURES:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}\n\nThis plan replaces $${(activeFeatures.has('streaming')?3600:0)+(activeFeatures.has('website')?600:0)+((activeFeatures.has('designer')||activeFeatures.has('sound'))?500:0)} in yearly software costs.`;
+  const t = computeTotals();
+  const savingsLines = [];
+  [...features.software, ...features.network].forEach(f => {
+    if (activeFeatures.has(f.id) && f.replaces) {
+      f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
+    }
+  });
+  const text = `SMART CHURCH UPGRADE PLAN — ${churchName}\n========================\n\nTotal Investment: $${total.toLocaleString()}\n\nSELECTED FEATURES:\n${selected.map(f => `- ${f.icon} ${f.name}: $${f.price===0?'FREE':f.price.toLocaleString()}`).join('\n')}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none selected)'}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 
