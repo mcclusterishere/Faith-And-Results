@@ -474,8 +474,8 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
       <div style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.1);">
         <div style="font-weight:700; font-size:0.85rem; margin-bottom:6px;">If this node onboards a church sized like this one:</div>
         <div class="line"><span>Technology margin (the resellable pool)</span><b id="mlmMargin">$0</b></div>
-        <div class="line"><span>Freedom, Inc. — 50%</span><b id="mlmFreedomCut">$0</b></div>
-        <div class="line"><span>This node's commission — 50%</span><b id="mlmResellerCut">$0</b></div>
+        <div class="line"><span>Freedom, Inc. — 67%</span><b id="mlmFreedomCut">$0</b></div>
+        <div class="line"><span>This node's commission — 33%</span><b id="mlmResellerCut">$0</b></div>
         <div class="line"><span>Upline override, if onboarded by another node — 10% of the commission</span><b id="mlmUplineCut">$0</b></div>
       </div>
       <div class="caveat">Proposed split, not yet finalized — confirm before using in a real offer. Capped at one tier up: an override never compounds past the node that directly onboarded this one, which is what keeps this a dealer/referral structure instead of a pyramid.</div>
@@ -773,8 +773,8 @@ function renderBudget() {
     recoupCard.hidden = false;
     document.getElementById('recoupMonths').textContent = t.paybackMonths<999 ? paybackText : 'not yet — add equipment';
     var techMargin = Math.round(t.atCost * 0.5);
-    var freedomCut = Math.round(techMargin * 0.5);
-    var resellerCut = techMargin - freedomCut;
+    var resellerCut = Math.round(techMargin * 0.33);
+    var freedomCut = techMargin - resellerCut;
     var uplineCut = Math.round(resellerCut * 0.10);
     document.getElementById('mlmMargin').textContent = '$'+techMargin.toLocaleString();
     document.getElementById('mlmFreedomCut').textContent = '$'+freedomCut.toLocaleString();
