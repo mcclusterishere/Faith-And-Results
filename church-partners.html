@@ -467,6 +467,11 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
       <div class="payback-badge" id="paybackBadge">Pays for itself in 6 months</div>
     </div>
 
+    <div class="savings-card" style="margin-top:12px;">
+      <div class="savings-value" id="hoursSaved" style="color:var(--accent2);">0 hrs/wk</div>
+      <div class="savings-label">Staff &amp; Volunteer Time Freed Up (not in the $ total)</div>
+    </div>
+
     <div id="recoupCard" class="recoup-card" hidden>
       <div class="title">🔁 Recoup Calculation — Reseller Node</div>
       <div class="line"><span>Recoups via software savings in</span><b id="recoupMonths">–</b></div>
@@ -536,20 +541,31 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 const automations = [
   { id:'streaming', name:'Streaming Automation', icon:'📡',
     capabilities:{streaming:100,automation:60,security:0,community:20},
-    replaces:[{name:'Restream.io Professional plan', monthly:41}],
+    replaces:[{name:'Restream.io Professional plan', monthly:41}], hoursPerWeek:2,
     savingsNote:'Most churches run this with a volunteer, not paid staff. This is the backup for when they can’t make it — no training required, nothing to remember.' },
   { id:'sound', name:'Sound Board AI', icon:'🎛️',
     capabilities:{streaming:40,automation:80,security:0,community:10},
-    replaces:[], savingsNote:'Most churches run sound with a volunteer, not paid staff. This is the safety net when they’re out sick or running late — the AI doesn’t need training to cover for them.' },
+    replaces:[], hoursPerWeek:1.5,
+    savingsNote:'Most churches run sound with a volunteer, not paid staff. This is the safety net when they’re out sick or running late — the AI doesn’t need training to cover for them.' },
   { id:'voice', name:'Voice Command Assistant', icon:'🎙️',
     capabilities:{streaming:30,automation:70,security:20,community:40},
-    replaces:[], savingsNote:'Cuts down on staff interruptions for routine questions — a time savings, not counted in the dollar total.' },
+    replaces:[], hoursPerWeek:3,
+    savingsNote:'Cuts down on staff interruptions for routine questions — a time savings, not counted in the dollar total.' },
   { id:'website', name:'AI Webmaster', icon:'🌐',
-    capabilities:{streaming:0,automation:50,security:0,community:60},
-    replaces:[{name:'Website builder & hosting (Squarespace, Wix, or WordPress + host)', monthly:50}] },
+    capabilities:{streaming:0,automation:50,security:0,community:60}, hoursPerWeek:4,
+    replaces:[
+      {name:'Website builder & hosting (Squarespace, Wix, or WordPress + host)', monthly:50},
+      {name:'Email newsletter platform (Mailchimp, Constant Contact)', monthly:20}
+    ] },
   { id:'designer', name:'AI Graphic Designer', icon:'🎨',
-    capabilities:{streaming:0,automation:40,security:0,community:50},
-    replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] }
+    capabilities:{streaming:0,automation:40,security:0,community:50}, hoursPerWeek:3,
+    replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] },
+  { id:'transcription', name:'AI Sermon Transcription & Captions', icon:'📝',
+    capabilities:{streaming:20,automation:30,security:0,community:30}, hoursPerWeek:2.5,
+    replaces:[{name:'Sermon transcription/captioning service (Otter.ai Business, Rev.com)', monthly:24}] },
+  { id:'backup', name:'Local Backup & File Storage', icon:'💾',
+    capabilities:{streaming:0,automation:30,security:40,community:0}, hoursPerWeek:0.5,
+    replaces:[{name:'Cloud storage & backup subscription (Google Workspace Business, Dropbox Business, Backblaze)', monthly:18}] }
 ];
 
 const brainOption = { id:'brain', name:'Include the Brain (MINISFORUM MS-S1 MAX, 128GB/2TB)', desc:'This church becomes its own node — licensed to onboard and control others under it. Without this, the Brain stays with whoever onboarded this church.', icon:'🖥️', price:3800 };
@@ -557,25 +573,25 @@ const edgeServer = { id:'edgeserver', name:'Edge Server (Dell R620, configured &
 
 const equipment = [
   { id:'doors', name:'Smart Access System', desc:'Auto-generates door codes for renters, unlocks/locks on schedule, logs entries.', icon:'🚪',
-    unitCost:150, unit:'door', qtyKey:'doors',
+    unitCost:150, unit:'door', qtyKey:'doors', hoursPerWeek:2,
     capabilities:{streaming:0,automation:90,security:70,community:30},
     replaces:[{name:'Smart lock / access control subscription (Kisi, Brivo, PDK)', monthly:40}] },
   { id:'wifi', name:'City Block WiFi', desc:'Gated community WiFi with captive portal, vouchers, and bandwidth limits.', icon:'📶',
-    unitCost:180, unit:'AP', qtyFromSqft:true,
+    unitCost:180, unit:'AP', qtyFromSqft:true, hoursPerWeek:0.5,
     capabilities:{streaming:0,automation:10,security:30,community:100},
     replaces:[{name:'Guest WiFi management platform (Cisco Meraki cloud license)', monthly:20}] },
   { id:'mesh', name:'Emergency Mesh Network', desc:'Off-grid texting for members. Works when cell towers fail. 5+ mile range.', icon:'📻',
-    price:600,
+    price:600, hoursPerWeek:0,
     capabilities:{streaming:0,automation:0,security:50,community:90},
     replaces:[], savingsNote:'Keeps the church reachable when cell towers fail — a resilience benefit, not counted in the dollar total.' },
   { id:'sms', name:'Local SMS Gateway', desc:'Your own cell tower inside the building. Flip phones can text prayer requests.', icon:'💬',
-    price:300,
+    price:300, hoursPerWeek:1,
     capabilities:{streaming:0,automation:20,security:40,community:70},
     replaces:[{name:'Text/SMS blast service (Textedly, EZTexting)', monthly:25}] },
   { id:'cameras', name:'Security Camera System', desc:'AI-monitored PoE cameras. Flags anything unusual and alerts the right person automatically.', icon:'📹',
-    unitCost:120, unit:'camera', qtyKey:'cameras',
+    unitCost:120, unit:'camera', qtyKey:'cameras', hoursPerWeek:2.5,
     capabilities:{streaming:0,automation:20,security:60,community:0},
-    replaces:[] }
+    replaces:[{name:'Monitored security/alarm service (professional monitoring contract)', monthly:50}] }
 ];
 
 const capabilities = [
@@ -609,6 +625,7 @@ function esc(s) {
   });
 }
 function findEquipment(id) { return equipment.find(e => e.id === id); }
+function fmtHours(n) { return n % 1 === 0 ? String(n) : n.toFixed(1); }
 
 function itemCost(item) {
   if (item.price !== undefined) return item.price;
@@ -744,14 +761,16 @@ function computeTotals() {
   const laborTotal = Math.round(atCost * 1.0);
   const total = equipmentTotal + laborTotal;
   let yearlySave = 0;
+  let hoursPerWeekSaved = 0;
   automations.concat(activeEquipment).forEach(f => {
     if (f.replaces) f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
+    if (f.hoursPerWeek) hoursPerWeekSaved += f.hoursPerWeek;
   });
   const paybackMonths = yearlySave > 0 ? Math.ceil((total/yearlySave)*12) : 999;
   const totalSpent7yr = total + (200*7);
   const totalSaved7yr = yearlySave*7;
   const netBenefit = totalSaved7yr - totalSpent7yr;
-  return { atCost, equipmentTotal, laborTotal, total, yearlySave, paybackMonths, totalSpent7yr, totalSaved7yr, netBenefit };
+  return { atCost, equipmentTotal, laborTotal, total, yearlySave, hoursPerWeekSaved, paybackMonths, totalSpent7yr, totalSaved7yr, netBenefit };
 }
 
 function renderBudget() {
@@ -761,6 +780,7 @@ function renderBudget() {
   document.getElementById('budgetBar').style.width = Math.min(100,(t.total/10000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add equipment to see payback';
+  document.getElementById('hoursSaved').textContent = fmtHours(t.hoursPerWeekSaved)+' hrs/wk';
   document.getElementById('totalSpent').textContent = '$'+t.totalSpent7yr.toLocaleString();
   document.getElementById('totalSaved').textContent = '$'+t.totalSaved7yr.toLocaleString();
   document.getElementById('netBenefit').textContent = (t.netBenefit>=0?'+':'')+'$'+t.netBenefit.toLocaleString();
@@ -820,9 +840,11 @@ function renderSavingsBreakdown() {
         <span>${r.name}</span>
         <span style="font-family:'Space Grotesk'; color:var(--success); font-weight:600; white-space:nowrap;">$${(r.monthly*12).toLocaleString()}/yr</span>
       </div>`).join('');
+    const hrs = f.hoursPerWeek ? `<div style="font-size:0.78rem; color:var(--accent2); margin-top:2px;">≈${fmtHours(f.hoursPerWeek)} hrs/week of staff &amp; volunteer time freed up</div>` : '';
     return `<div>
       <div style="font-weight:600; font-size:0.85rem; margin-bottom:2px;">${f.icon} ${f.name} replaces:</div>
       ${rows}
+      ${hrs}
     </div>`;
   }).join('');
   if (withNotes.length) {
@@ -869,7 +891,7 @@ function copyPlan() {
     if (f.replaces) f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
   });
   const brainLine = active.has('brain') ? `- ${brainOption.icon} ${brainOption.name}: $${brainOption.price.toLocaleString()} (at cost)` : `- 🖧 ${edgeServer.name}: $${edgeServer.price.toLocaleString()} (at cost)`;
-  const text = `PARTNER PLAN — ${churchName}\n========================\n\nTechnology (1.5x cost): $${t.equipmentTotal.toLocaleString()}\nInstallation & labor (at cost): $${t.laborTotal.toLocaleString()}\nTotal Investment: $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nBASE:\n${brainLine}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()} (at cost)`).join('\n') : '(none)'}\n\nInstall sizing — building: ${installAnswers.sqft.toLocaleString()} sq ft, cameras: ${installAnswers.cameras}, exterior doors: ${installAnswers.doors}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}${active.has('brain') ? `\n\nRECOUP: via software savings in ${t.paybackMonths<999?t.paybackMonths+' months':'—'}. Reseller income from onboarding other churches not modeled yet.` : ''}`;
+  const text = `PARTNER PLAN — ${churchName}\n========================\n\nTechnology (1.5x cost): $${t.equipmentTotal.toLocaleString()}\nInstallation & labor (at cost): $${t.laborTotal.toLocaleString()}\nTotal Investment: $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nBASE:\n${brainLine}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()} (at cost)`).join('\n') : '(none)'}\n\nInstall sizing — building: ${installAnswers.sqft.toLocaleString()} sq ft, cameras: ${installAnswers.cameras}, exterior doors: ${installAnswers.doors}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}\n\nTIME SAVED: ≈${fmtHours(t.hoursPerWeekSaved)} hrs/week of staff & volunteer time (≈${Math.round(t.hoursPerWeekSaved*52)} hrs/year) — not counted in the dollar total above.${active.has('brain') ? `\n\nRECOUP: via software savings in ${t.paybackMonths<999?t.paybackMonths+' months':'—'}. Reseller income from onboarding other churches not modeled yet.` : ''}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 
