@@ -471,8 +471,9 @@ input[type=text].church-input:focus, input[type=number].church-input:focus { out
 
 <script src="js/store.js"></script>
 <script>
-const brain = { id:'brain', name:'AI Brain + Body', desc:'RTX A6000 48GB + Dell T7910 workstation. Everything downstream runs on this.', price:1950, icon:'🧠',
-  capabilities:{intelligence:100,vision:80,coding:100,speed:100} };
+const brain = { id:'brain', name:'MINISFORUM MS-S1 MAX (128GB/2TB)', desc:'Ryzen AI Max+ 395, 16-core/32-thread, Radeon 8060S, 128GB LPDDR5X unified memory, 2TB NVMe, dual 10GbE, USB4. Runs 70B-class quantized models, RAG, sermon analysis, transcription, and the internal AI API.', price:3800, icon:'🖥️',
+  capabilities:{intelligence:100,vision:65,coding:90,speed:80} };
+const networking = { id:'networking', name:'10GbE Networking Backbone', desc:'Switch + up to 2× 10GbE R620 NICs + DAC/SFP+ cabling — connects the MS-S1 MAX to the active R620 fleet. Costs less if the R620s already have compatible 10GbE interfaces.', price:490, icon:'🔌' };
 
 const automations = [
   { id:'streaming', name:'Streaming Automation', desc:'Auto-starts live stream, switches cameras, plays media, ends on cue.', icon:'📡',
@@ -554,8 +555,10 @@ function itemLabel(item) {
 }
 
 function renderIncluded() {
-  const rows = [{icon:brain.icon, name:brain.name, note:'$'+brain.price.toLocaleString()}]
-    .concat(automations.map(a => ({icon:a.icon, name:a.name, note:'included'})));
+  const rows = [
+    {icon:brain.icon, name:brain.name, note:'$'+brain.price.toLocaleString()},
+    {icon:networking.icon, name:networking.name, note:'$'+networking.price.toLocaleString()}
+  ].concat(automations.map(a => ({icon:a.icon, name:a.name, note:'included'})));
   document.getElementById('includedList').innerHTML = rows.map(r =>
     '<div class="included-row"><span>' + r.icon + '</span><b>' + esc(r.name) + '</b><span style="margin-left:auto; color:var(--text-dim);">' + r.note + '</span></div>'
   ).join('');
@@ -610,8 +613,13 @@ function renderArch() {
     {label:'Cloudflare Workers',active:true,donated:true},
     {label:'Supabase (Free)',active:true,donated:true}
   ];
-  const brainNodes = [{label:'Dell T7910',active:true,donated:false},{label:'RTX A6000 48GB',active:true,donated:false}];
-  const workerNodes = [{label:'10x R620 Servers (central fleet)',active:true,donated:true}];
+  const brainNodes = [{label:'MINISFORUM MS-S1 MAX (128GB/2TB)',active:true,donated:false}];
+  const workerNodes = [
+    {label:'R620 #1 — Production/Data (Postgres, pgvector, RAG)',active:true,donated:true},
+    {label:'R620 #2 — Storage/Backup',active:true,donated:true},
+    {label:'R620 #3 — Dev/Test (on-demand)',active:true,donated:true},
+    {label:'R620 #4–10 — spare, powered off',active:false,donated:true}
+  ];
   const edgeNodes = [];
   if (has('wifi')) edgeNodes.push({label:'Ubiquiti APs',active:true,donated:false});
   if (has('mesh')) edgeNodes.push({label:'20x Meshtastic',active:true,donated:false});
@@ -641,7 +649,7 @@ function renderArch() {
 function computeTotals() {
   const activeEquipment = equipment.filter(e => active.has(e.id));
   const equipmentTotal = activeEquipment.reduce((sum,e) => sum + itemCost(e), 0);
-  const total = brain.price + equipmentTotal;
+  const total = brain.price + networking.price + equipmentTotal;
   let yearlySave = 0;
   automations.concat(activeEquipment).forEach(f => {
     if (f.replaces) f.replaces.forEach(r => { yearlySave += r.monthly * 12; });
@@ -657,7 +665,7 @@ function renderBudget() {
   const t = computeTotals();
   const paybackText = t.paybackMonths<=12?`${t.paybackMonths} mo`:t.paybackMonths<=24?`${Math.round(t.paybackMonths/12)} yr`:'Never';
   document.getElementById('budgetTotal').textContent = '$'+t.total.toLocaleString();
-  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/5000)*100)+'%';
+  document.getElementById('budgetBar').style.width = Math.min(100,(t.total/8000)*100)+'%';
   document.getElementById('yearlySavings').textContent = '$'+t.yearlySave.toLocaleString();
   document.getElementById('paybackBadge').textContent = t.paybackMonths<999?`Pays for itself in ${paybackText}`:'Add equipment to see payback';
   document.getElementById('totalSpent').textContent = '$'+t.totalSpent7yr.toLocaleString();
@@ -670,6 +678,10 @@ function renderBudget() {
   let rows = `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
     <span style="font-size:0.85rem;">${brain.icon} ${brain.name}</span>
     <span style="font-family:'Space Grotesk'; font-weight:600;">$${brain.price.toLocaleString()}</span>
+  </div>
+  <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+    <span style="font-size:0.85rem;">${networking.icon} ${networking.name}</span>
+    <span style="font-family:'Space Grotesk'; font-weight:600;">$${networking.price.toLocaleString()}</span>
   </div>`;
   rows += activeEquipment.map(e => `
     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
@@ -737,7 +749,7 @@ function copyPlan() {
   automations.concat(activeEquipment).forEach(f => {
     if (f.replaces) f.replaces.forEach(r => savingsLines.push(`- ${r.name}: $${(r.monthly*12).toLocaleString()}/yr (replaced by ${f.name})`));
   });
-  const text = `SHILOH BUILD PLAN — ${churchName}\n========================\n\nTotal Investment (at cost): $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n- ${brain.icon} ${brain.name}: $${brain.price.toLocaleString()}\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()}`).join('\n') : '(none)'}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
+  const text = `SHILOH BUILD PLAN — ${churchName}\n========================\n\nTotal Investment (at cost): $${t.total.toLocaleString()}\n\nALWAYS INCLUDED:\n- ${brain.icon} ${brain.name}: $${brain.price.toLocaleString()}\n- ${networking.icon} ${networking.name}: $${networking.price.toLocaleString()}\n${automations.map(a => `- ${a.icon} ${a.name}: included`).join('\n')}\n\nADDED:\n${activeEquipment.length ? activeEquipment.map(e => `- ${e.icon} ${itemLabel(e)}: $${itemCost(e).toLocaleString()}`).join('\n') : '(none)'}\n\nREPLACES $${t.yearlySave.toLocaleString()}/YR IN SOFTWARE & STAFF COSTS:\n${savingsLines.length ? savingsLines.join('\n') : '(none)'}`;
   navigator.clipboard.writeText(text).then(() => alert('Plan copied to clipboard!'));
 }
 

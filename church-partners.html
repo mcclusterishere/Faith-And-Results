@@ -552,7 +552,7 @@ const automations = [
     replaces:[{name:'Adobe Creative Cloud or Canva Pro subscription', monthly:30}] }
 ];
 
-const brainOption = { id:'brain', name:'Include the Brain (RTX A6000 48GB + Dell T7910)', desc:'This church becomes its own node — licensed to onboard and control others under it. Without this, the Brain stays with whoever onboarded this church.', icon:'🧠', price:1950 };
+const brainOption = { id:'brain', name:'Include the Brain (MINISFORUM MS-S1 MAX, 128GB/2TB)', desc:'This church becomes its own node — licensed to onboard and control others under it. Without this, the Brain stays with whoever onboarded this church.', icon:'🖥️', price:3800 };
 const edgeServer = { id:'edgeserver', name:'Edge Server (Dell R620, configured & installed)', price:250 };
 
 const equipment = [
@@ -706,7 +706,7 @@ function renderArch() {
     {label:'Supabase (Free)',active:true,donated:true}
   ];
   const brainNodes = has('brain')
-    ? [{label:'Dell T7910',active:true,donated:false},{label:'RTX A6000 48GB (this church’s own node)',active:true,donated:false}]
+    ? [{label:'MINISFORUM MS-S1 MAX (128GB/2TB, this church’s own node)',active:true,donated:false}]
     : [{label:'Hosted at the onboarding church’s node — not installed here',active:true,remote:true}];
   const workerNodes = [{label:'10x R620 Servers (central fleet)',active:true,donated:true}];
   if (!has('brain')) workerNodes.push({label:'1x R620 Edge Server (this building)',active:true,donated:false});
