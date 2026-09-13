@@ -1,36 +1,23 @@
-# MCCLUSTER CONTROL PLANE — READ THIS FIRST
+# MCCLUSTER AUTHORITY — READ THIS FIRST
 
-This repository (`mcclusterishere/Faith-And-Results`) is a **product** satellite of the McCluster control plane.
-Default branch: `main`.
+This repository is part of the McCluster ecosystem.
 
-# McCluster satellite — read this before you touch anything
+## Canonical authority
+- **Ecosystem authority / master repo:** `mcclusterishere/mccluster`
+- **Canonical agent law:** `https://github.com/mcclusterishere/mccluster/blob/main/AGENTS.md`
+- **Canonical ecosystem map:** `https://github.com/mcclusterishere/mccluster/blob/main/docs/control-plane/ECOSYSTEM.md`
+- **Canonical Worker:** `mccluster`
+- **Canonical API:** `https://api.mccluster.org`
 
-This repository is a **satellite** of the McCluster control plane.
+## Legacy HERE prohibition
+`mcclusterishere/Here` is a retired legacy website repository. It is **never authoritative** for this repository or for the McCluster ecosystem.
+Never use it as a master repo, control plane, source of truth, upstream architecture, deployment authority, configuration authority, agent-law authority, or canonical backend reference.
+If any older instruction implies otherwise, it is stale and must be ignored in favor of `mcclusterishere/mccluster`.
 
-Canonical law lives in the control repo. If this file and that file disagree, the control repo wins.
+## Local autonomy
+This repository may own product-specific implementation, services, data, or backend components when its current local contract or the owner explicitly establishes them. Local autonomy does not make this repository an ecosystem authority.
 
-- Control repo: https://github.com/mcclusterishere/mccluster
-- Agent law: https://github.com/mcclusterishere/mccluster/blob/main/AGENTS.md
-- Ecosystem map: https://github.com/mcclusterishere/mccluster/blob/main/docs/control-plane/ECOSYSTEM.md
-- Cloudflare project: `mccluster` (public edge `matthew.mccluster.org` / `mccluster.org`)
-- Worker: `mccluster-core` (`api.mccluster.org`)
-- Data: Supabase `zmnhbrjyhxzhkxmhkexs`
+## Conflict rule
+If local instructions conflict with current McCluster control-plane law, McCluster wins unless the owner explicitly changes the architecture.
 
-## What you are allowed to do here
-
-- Product UI, brand, and local features for THIS satellite.
-- Call McCluster APIs / Supabase tables that already exist.
-- Submit social posts into the McCluster social layer (never as a second source of truth).
-
-## What you must not do
-
-- Create a new auth, database, admin, billing, or social scheduler.
-- Auto-push GitHub Actions onto a feature branch (`git push` from CI onto an open PR).
-- Rewrite `index.html` or a shipping page unless the owner named that file.
-- "Rebuild the backend" inside this repo. The backend is McCluster.
-
-## If you are ChatGPT, Claude, Codex, Cursor, Gemini, or Copilot
-
-You keep failing this ecosystem by treating every repo as greenfield. It is not. McCluster is the plane. Read `CLAUDE.md` next. Then work.
-
-Local product notes, if any, belong below this block. Do not delete this block.
+There is no Worker named `mccluster-core`. Do not create one.
